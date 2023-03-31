@@ -1,9 +1,6 @@
 # BapUtilities
 <p align="center">
   <a href="https://discord.gg/HzheJutA" target="_blank">
-    <img alt="discord" src="https://img.shields.io/discord/807302538558308352?color=4166f5&label=discord&style=flat-square" />
-  </a>
-</p>
 
 Welcome to Bap-Utilities a mod made for skyblock!
 This is our first minecraft mod that we are making so if there is any bugs or issues with the mod pls tell us on discord (Tomassy#1435 or Jerry#3756)
