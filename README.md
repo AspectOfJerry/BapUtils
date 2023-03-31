@@ -9,3 +9,5 @@ So far we haven't done much besides think about what we want in this mod
   <summary>Dungeons</summary>
  
 -Trust feature to let other players take your own party if you go afk 
+-Add better dragon name in the m7 boss fight
+-Display dragon hp
