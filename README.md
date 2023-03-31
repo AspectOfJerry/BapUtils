@@ -1,8 +1,7 @@
 # BapUtilities
-<p align="center">
+<p align="left">
   <a href="https://discord.gg/HzheJutA" target="_blank">
-    <img src="https://worldwish.org/wp-content/uploads/2022/11/Discord-Logo-small-transparent.png" width="100" height="100">
-    <img alt="discord" src="https://worldwish.org/wp-content/uploads/2022/11/Discord-Logo-small-transparent.png" />
+    <img src="https://worldwish.org/wp-content/uploads/2022/11/Discord-Logo-small-transparent.png" width="200" height="60">
   </a>
 </p>
 
