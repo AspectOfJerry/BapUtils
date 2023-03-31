@@ -1,7 +1,7 @@
 # BapUtilities
 <p align="center">
   <a href="https://discord.gg/HzheJutA" target="_blank">
-    <img alt="discord" src="[?Discord=&logo=appveyor](https://img.shields.io/discord/807302538558308352?color=4166f5&label=discord&style=flat-square)" />
+    <img alt="discord" src="https://global-uploads.webflow.com/5e157548d6f7910beea4e2d6/62a07b53139aec4c1fd07771_discord-logo.png" />
   </a>
 </p>
 
