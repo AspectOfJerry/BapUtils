@@ -7,6 +7,5 @@ So far we haven't done much besides think about what we want in this mod
 
 <details>
   <summary>Dungeons</summary>
-  
-###Dungeons 
+ 
 -Trust feature to let other players take your own party if you go afk 
