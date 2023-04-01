@@ -18,8 +18,3 @@ For more information, please see [https://bap.aspectofjerry.dev](https://bap.asp
 - Display dungeon secret route (might not happen or will take a really long time to make).
 
 </details>
-
-## Contact
-
-Discord server:<br><br>
-[![Discord invite logo](./docs/assets/small_logo_blurple_RGB.png)](https://discord.gg/Bq8WDeHHkU)
