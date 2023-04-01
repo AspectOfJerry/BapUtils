@@ -12,14 +12,16 @@ For more information, please see [https://bap.aspectofjerry.dev](https://bap.asp
 <details open>
   <summary>Dungeons</summary>
 
-- Trust feature to let other players take your own party if you go afk.
-- Better dragon name in the m7 boss fight (might not happen because there is already a sbe/skytils feature that let you do this).
-- Display dragon HP.
-- Display dungeon secret route (might not happen or will take a really long time to make).
+ <ul>
+  <li>Trust feature to let other players take your own party if you go afk.</li>
+  <li>Better dragon name in the m7 boss fight (might not happen because there is already a sbe/skytils feature that let you do this).</li>
+  <li>Display dragon HP.</li>
+  <li>Display dungeon secret route (might not happen or will take a really long time to make).</li>
+</ul> 
 
 </details>
 
 ## Contact
 
-Discord server:<br>
+Discord server:<br><br>
 [![Discord invite logo](./assets/small_logo_blurple_RGB.png)](https://discord.gg/Bq8WDeHHkU)

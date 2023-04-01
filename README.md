@@ -21,5 +21,5 @@ For more information, please see [https://bap.aspectofjerry.dev](https://bap.asp
 
 ## Contact
 
-Discord server:<br>
+Discord server:<br><br>
 [![Discord invite logo](./docs/assets/small_logo_blurple_RGB.png)](https://discord.gg/Bq8WDeHHkU)
