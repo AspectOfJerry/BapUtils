@@ -1,8 +1,8 @@
 [
 {
-  "modid": "examplemod",
+  "modid": "BapUtilities",
   "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "description": "A mod for cool things in hypixel skyblock.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
