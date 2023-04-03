@@ -23,10 +23,5 @@ For more information, please see [https://bap.aspectofjerry.dev](https://bap.asp
 
 <details close>
   <summary>Socials</summary>
-
 - We don't have one yet lmao
-
-<details close>
-  <summary>Dicrod<summary>
-
 </details>
