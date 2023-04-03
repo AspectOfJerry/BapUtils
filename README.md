@@ -23,5 +23,8 @@ For more information, please see [https://bap.aspectofjerry.dev](https://bap.asp
 
 <details close>
   <summary>Socials</summary>
-- We don't have one yet lmao
+  
+- We don't have one yet lmao.
+- Maybe we do hmmmm.
+- Maybe not ig?.
 </details>
