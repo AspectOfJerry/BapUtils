@@ -17,4 +17,8 @@ For more information, please see [https://bap.aspectofjerry.dev](https://bap.asp
 - Display dragon HP.
 - Display dungeon secret route (might not happen or will take a really long time to make).
 
+## Socials/Discord server *TBD*
+
+- We don't have one yet lmao
+
 </details>
