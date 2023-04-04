@@ -9,7 +9,7 @@ For more information, please see [https://bap.aspectofjerry.dev](https://bap.asp
 
 ## Features *(TBD)*
 
-<details close>
+<details>
   <summary>Dungeons</summary>
 
 - Trust feature to let other players take your own party if you go afk.
@@ -21,7 +21,7 @@ For more information, please see [https://bap.aspectofjerry.dev](https://bap.asp
 
 ## Socials/Discord server *TBD*
 
-<details close>
+<details>
   <summary>Socials</summary>
   
 - We don't have one yet lmao.
