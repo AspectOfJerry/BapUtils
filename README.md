@@ -1,6 +1,6 @@
 # BapUtilities
 
-Welcome to BapUtilities, a Skyblock mod!
+Welcome to BapUtilities, a Skyblock mod that we will work on this summer even tho we had plans to release it this month (ig we just skill issued)!
 
 This is our first Minecraft mod, so if there are any bugs or issues with the mod, please open an issue on GitHub or contact us on Discord (Tomassy#1435 or Jerry#3756).
 So far, we haven't done much besides thinking about the features.
