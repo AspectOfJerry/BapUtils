@@ -10,6 +10,6 @@ public class BapUtils {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        System.out.println("Hello from BapUtils! You are on Forge version 1.8.9.");
+        System.out.println("HELLO from BapUtils! You are on Forge version 1.8.9.");
     }
 }
