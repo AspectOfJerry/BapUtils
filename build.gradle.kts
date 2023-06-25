@@ -51,6 +51,7 @@ sourceSets.main {
 repositories {
     mavenCentral()
     maven("https://repo.spongepowered.org/maven/")
+    maven("https://repo.essential.gg/repository/maven-public")
     // If you don't want to log in with your real minecraft account, remove this line
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
 }
@@ -63,6 +64,9 @@ dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
+    implementation("gg.essential:elementa-$mcVersion-forge:590")
+    implementation("gg.essential:vigilance-$mcVersion-forge:284")
+
 
     // If you don't want mixins, remove these lines
     shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
@@ -74,6 +78,16 @@ dependencies {
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.0")
 
 }
+
+tasks.shadowJar {
+    archiveClassifier.set("dev")
+    relocate("gg.essential.vigilance", "net.jerrydev.vigilance")
+    // vigilance dependencies
+    relocate("gg.essential.elementa", "net.jerrydev.elementa")
+    // elementa dependencies
+    relocate("gg.essential.universalcraft", "net.jerrydev.universalcraft")
+}
+tasks.jar { dependsOn(tasks.shadowJar) }
 
 // Tasks:
 
