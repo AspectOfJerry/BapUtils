@@ -1,11 +1,11 @@
-# BapUtilities
+# BapUtils
 
-Welcome to BapUtilities, a Skyblock mod that we will work on this summer even tho we had plans to release it this month (ig we just skill issued)!
+Welcome to BapUtils, a Hypixel Skyblock mod that we will work on this summer.
 
-This is our first Minecraft mod, so if there are any bugs or issues with the mod, please open an issue on GitHub or contact us on Discord (Tomassy#1435 or Jerry#3756).
+This is our first Minecraft mod for servers, so if there are any bugs or issues with the mod, please open an issue on GitHub or contact us on Discord (@tomassy or @jerrydev).
 So far, we haven't done much besides thinking about the features.
 
-For more information, please see [https://bap.aspectofjerry.dev](https://bap.aspectofjerry.dev). [https://aspectofjerry.dev/bap](https://aspectofjerry.dev/bap) will be available later.
+For more information, please see [https://bap.jerrydev.dev](https://bap.jerrydev.dev). [https://jerrydev.net/bap](https://jerrydev.net/bap) will be available later.
 
 ## Features *(TBD)*
 
