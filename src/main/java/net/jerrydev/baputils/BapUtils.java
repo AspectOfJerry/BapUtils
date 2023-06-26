@@ -1,6 +1,7 @@
 package net.jerrydev.baputils;
 
 import net.jerrydev.baputils.commands.BapCommand;
+import net.jerrydev.baputils.gui.DemoGui;
 import net.jerrydev.baputils.listeners.ChatHandler;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.client.ClientCommandHandler;
