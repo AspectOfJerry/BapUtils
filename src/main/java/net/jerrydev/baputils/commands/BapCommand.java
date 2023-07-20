@@ -54,9 +54,9 @@ public class BapCommand extends CommandBase {
                     new Thread(() -> {
                         try {
                             // ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/party list");
-                            Thread.sleep(250);
+                            Thread.sleep(50);
                             Minecraft.getMinecraft().thePlayer.sendChatMessage("/party list");
-                            Thread.sleep(250);
+                            Thread.sleep(50);
                             Minecraft.getMinecraft().thePlayer.sendChatMessage("baputils > takeover > " + StringHex.stringToHex(args[1]));
                             /*
                             try {
