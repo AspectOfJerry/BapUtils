@@ -11,9 +11,9 @@ plugins {
 
 val baseGroup: String = "net.jerrydev.baputils"
 val mcVersion: String = "1.8.9"
-val version: String = "1.0.0"
+val version: String = "0.1.0"
 val mixinGroup = "$baseGroup.mixin"
-val modid = rootProject.name
+val modid: String = "baputils"
 
 // Toolchains:
 java {

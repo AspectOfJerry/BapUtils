@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 // Party Takeover command
+@Deprecated
 public class PtoEncrypt {
     public static String encryptString(String plainText, int SECRET_KEY) throws Exception {
         SecretKeySpec secretKeySpec = new SecretKeySpec(getKeyBytes(SECRET_KEY), "AES");
