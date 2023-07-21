@@ -1,12 +1,9 @@
 package net.jerrydev.baputils.listeners;
 
 import net.jerrydev.baputils.utils.PtoEncrypt;
+import net.jerrydev.baputils.utils.StringHex;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.tileentity.TileEntityBeaconRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
-import net.minecraft.network.play.client.C0APacketAnimation;
-import net.minecraft.tileentity.TileEntityBeacon;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,7 +16,43 @@ import static java.lang.Thread.sleep;
 
 public class ChatHandler {
     @SubscribeEvent
-    public void ChatHandler(ClientChatReceivedEvent event) {
+    public void onChatReceived(ClientChatReceivedEvent event) {
+        if (event.message.getUnformattedText().replaceAll("§[0-9a-fk-or]", "").replaceAll("\\[.*?\\\\]\\s", "").matches("(?i)Party > .*: baputils > takeover > .*")) {
+            String message = event.message.getUnformattedText().replaceAll("§[0-9a-fk-or]", "").replaceAll("\\[.*?]\\s", "");
+            String[] messageSplit = message.split(" ");
+
+            String playerHex = messageSplit[messageSplit.length - 1];
+            String playerString = StringHex.hexToString(playerHex);
+            messageSplit[messageSplit.length - 1] = playerString;
+            message = String.join(" ", messageSplit);
+
+            String regExpPattern = "(?i)Party > (.*): baputils > takeover > "
+                    + Pattern.quote(Minecraft.getMinecraft().thePlayer.getName());
+
+            if (message.matches(regExpPattern)) {
+                Pattern regex = Pattern.compile(regExpPattern, Pattern.CASE_INSENSITIVE);
+                Matcher matcher = regex.matcher(message);
+                if (matcher.matches()) {
+                    String playerName = matcher.group(1);
+
+                    // Transfer the party
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(50);
+                            Minecraft.getMinecraft().thePlayer.sendChatMessage("baputils > Transferring the party...");
+                            Thread.sleep(50);
+                            Minecraft.getMinecraft().thePlayer.sendChatMessage("/party transfer " + playerName);
+                            System.out.println(playerName);
+                        } catch (InterruptedException err) {
+                            err.printStackTrace();
+                            Minecraft.getMinecraft().thePlayer.sendChatMessage("baputils > Takeover failed! An error occurred while transferring the party.");
+                        }
+                    }).start();
+                }
+            }
+        }
+
+        /*
         if (event.message.getUnformattedText().replaceAll("§[0-9a-fk-or]", "").replaceAll("\\[.*?\\\\]\\s", "").matches("(?i)Party > .*: \\$t\\/.*")) {
             // decrypt
             String message = event.message.getUnformattedText().replaceAll("§[0-9a-fk-or]", "").replaceAll("\\[.*?]\\s", "");
@@ -50,16 +83,17 @@ public class ChatHandler {
                     new Thread(() -> {
                         try {
                             Thread.sleep(100);
-                            Minecraft.getMinecraft().thePlayer.sendChatMessage("$baputils: Transferring the party.");
+                            Minecraft.getMinecraft().thePlayer.sendChatMessage("baputils > Transferring the party.");
                             Thread.sleep(100);
                             Minecraft.getMinecraft().thePlayer.sendChatMessage("/party transfer " + playerName);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
-                            Minecraft.getMinecraft().thePlayer.sendChatMessage("$baputils: Takeover failed! An error occurred while transferring the party.");
+                            Minecraft.getMinecraft().thePlayer.sendChatMessage("baputils > Takeover failed! An error occurred while transferring the party.");
                         }
                     }).start();
                 }
             }
         }
+        */
     }
 }
