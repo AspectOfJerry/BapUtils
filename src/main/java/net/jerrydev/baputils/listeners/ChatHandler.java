@@ -17,17 +17,13 @@ import static java.lang.Thread.sleep;
 public class ChatHandler {
     @SubscribeEvent
     public void onChatReceived(ClientChatReceivedEvent event) {
-        if (event.message.getUnformattedText().replaceAll("§[0-9a-fk-or]", "").replaceAll("\\[.*?\\\\]\\s", "").matches("(?i)Party > .*: baputils > takeover > .*")) {
+        if (event.message.getUnformattedText().replaceAll("§[0-9a-fk-or]", "").replaceAll("\\[.*?\\\\]\\s", "").matches("(?i)Party > .*: !ptme .*")) {
             String message = event.message.getUnformattedText().replaceAll("§[0-9a-fk-or]", "").replaceAll("\\[.*?]\\s", "");
             String[] messageSplit = message.split(" ");
 
-            String playerHex = messageSplit[messageSplit.length - 1];
-            String playerString = StringHex.hexToString(playerHex);
-            messageSplit[messageSplit.length - 1] = playerString;
-            message = String.join(" ", messageSplit);
+            System.out.println(message);
 
-            String regExpPattern = "(?i)Party > (.*): baputils > takeover > "
-                    + Pattern.quote(Minecraft.getMinecraft().thePlayer.getName());
+            String regExpPattern = "(?i)Party > (.*): !ptme ";
 
             if (message.matches(regExpPattern)) {
                 Pattern regex = Pattern.compile(regExpPattern, Pattern.CASE_INSENSITIVE);

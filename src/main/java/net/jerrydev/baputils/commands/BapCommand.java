@@ -57,7 +57,7 @@ public class BapCommand extends CommandBase {
                             Thread.sleep(50);
                             Minecraft.getMinecraft().thePlayer.sendChatMessage("/party list");
                             Thread.sleep(50);
-                            Minecraft.getMinecraft().thePlayer.sendChatMessage("baputils > takeover > " + StringHex.stringToHex(args[1]));
+                            Minecraft.getMinecraft().thePlayer.sendChatMessage("!ptme ");
                             /*
                             try {
                                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/party chat " + "$t/" + PtoEncrypt.encryptString("baputils/pto/" + args[1], (int) ((System.currentTimeMillis() / 1000) / 2) * 2));
