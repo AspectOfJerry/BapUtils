@@ -8,6 +8,7 @@ import java.util.Base64;
 // Party Takeover command
 @Deprecated
 public class PtoEncrypt {
+    @Deprecated
     public static String encryptString(String plainText, int SECRET_KEY) throws Exception {
         SecretKeySpec secretKeySpec = new SecretKeySpec(getKeyBytes(SECRET_KEY), "AES");
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -16,6 +17,7 @@ public class PtoEncrypt {
         return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 
+    @Deprecated
     public static String decryptString(String encryptedText, int SECRET_KEY) throws Exception {
         SecretKeySpec secretKeySpec = new SecretKeySpec(getKeyBytes(SECRET_KEY), "AES");
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -25,6 +27,7 @@ public class PtoEncrypt {
         return new String(decryptedBytes, StandardCharsets.UTF_8);
     }
 
+    @Deprecated
     private static byte[] getKeyBytes(int timestamp) {
         long paddedTimestamp = (long) timestamp << 32; // Left shift the timestamp by 32 bits
         byte[] keyBytes = new byte[16]; // AES-128 key length
