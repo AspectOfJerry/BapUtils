@@ -7,6 +7,7 @@ public class StringHex {
         for (char c : input.toCharArray()) {
             stringBuilder.append(String.format("%02X", (int) c));
         }
+
         return stringBuilder.toString();
     }
 
@@ -16,6 +17,7 @@ public class StringHex {
         for (int i = 0; i < input.length(); i += 2) {
             stringBuilder.append((char) Integer.parseInt(input.substring(i, i + 2), 16));
         }
+
         return stringBuilder.toString();
     }
 }
