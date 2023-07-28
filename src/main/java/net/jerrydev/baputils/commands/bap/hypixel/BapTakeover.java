@@ -1,23 +1,24 @@
 package net.jerrydev.baputils.commands.bap.hypixel;
 
 import net.jerrydev.baputils.BapUtils;
-import net.jerrydev.baputils.utils.ChatColorCodes;
 import net.jerrydev.baputils.utils.ChatColors;
 import net.jerrydev.baputils.utils.StringHex;
-import net.jerrydev.baputils.utils.interfaces.IBapCommand;
+import net.jerrydev.baputils.utils.IBapBaseCommand;
 import net.minecraft.client.Minecraft;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BapTakeover implements IBapCommand {
+public class BapTakeover implements IBapBaseCommand {
     public static void execute(String playerName) {
         new Thread(() -> {
             try {
-                // ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/party list");
                 Thread.sleep(50);
+
+                // ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/party list");
                 BapUtils.queueServerMessage("/party list", false);
                 Thread.sleep(50);
+
                 BapUtils.queueServerMessage("takeover > " + StringHex.stringToHex(playerName));
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -41,17 +42,20 @@ public class BapTakeover implements IBapCommand {
             Matcher matcher = regex.matcher(message);
             if (matcher.matches()) {
                 String playerName = matcher.group(1);
+
                 // Transfer the party
                 new Thread(() -> {
                     try {
                         Thread.sleep(50);
+
                         BapUtils.queueServerMessage("Transferring...");
                         Thread.sleep(50);
+
                         BapUtils.queueServerMessage("/party transfer " + playerName, false);
                         System.out.println(playerName);
                     } catch (InterruptedException err) {
                         err.printStackTrace();
-                        BapUtils.queueClientMessage(ChatColors.colorize(ChatColorCodes.RED, "Takeover failed! An error occurred while transferring the party."));
+                        BapUtils.queueClientMessage(ChatColors.colorize(ChatColors.CCodes.RED, "Takeover failed! An error occurred while transferring the party."));
                     }
                 }).start();
             }

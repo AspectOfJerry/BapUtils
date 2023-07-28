@@ -11,7 +11,7 @@ plugins {
 
 val baseGroup: String = "net.jerrydev.baputils"
 val mcVersion: String = "1.8.9"
-val version: String = "0.1.0"
+val version: String = "0.1.2-beta"
 val mixinGroup = "$baseGroup.mixin"
 val modid: String = "baputils"
 

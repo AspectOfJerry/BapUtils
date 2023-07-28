@@ -1,18 +1,19 @@
 [
-  {
-    "modid": "${modid}",
-    "name": "Xample Mod",
-    "description": "A mod that is used as an example.",
-    "version": "${version}",
-    "mcversion": "1.8.9",
-    "url": "https://github.com/romangraef/Forge1.8.9Template/",
-    "updateUrl": "",
-    "authorList": [
-      "You"
-    ],
-    "credits": "",
-    "logoFile": "",
-    "screenshots": [],
-    "dependencies": []
-  }
+    {
+        "modid": "${modid}",
+        "name": "BapUtils",
+        "description": "A Hypixel Skyblock utility mod!",
+        "version": "${version}",
+        "mcversion": "1.8.9",
+        "url": "https://github.com/AspectOfJerry/BapUtils",
+        "updateUrl": "https://github.com/AspectOfJerry/BapUtils/releases",
+        "authorList": [
+            "AspectOfJerry (@jerrydev)",
+            "Tomassy (@tomassy)"
+        ],
+        "credits": "",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": []
+    }
 ]

@@ -1,12 +1,12 @@
 # BapUtils
 
-Welcome to BapUtils, a Hypixel Skyblock mod that we will work on this summer.
+Welcome to BapUtils, a Hypixel Skyblock mod with random utility features.
 
 This is our first Minecraft mod for Hypixel Skyblock, so if there are any bugs or issues with the mod, please open an
 issue on
 GitHub or contact us on Discord (@tomassy or @jerrydev).
 
-For more information, please see <https://bap.jerrydev.dev>. <https://jerrydev.net/bap> will be available later.
+For more information, please visit <https://bap.jerrydev.dev>. <https://jerrydev.net/bap> will be available later.
 
 ## Features (TBD)
 
@@ -36,13 +36,15 @@ For more information, please see <https://bap.jerrydev.dev>. <https://jerrydev.n
 
 ### Commands (/)
 
-| Names                  | Parameters  | Description                                                        |
-|------------------------|-------------|--------------------------------------------------------------------|
-| bap                    | ?subcommand | Main command                                                       |
-| color(s), colorcode(s) | *none*      | Displays the Minecraft (§) color codes. Use as a reference.        |
-| hello, hi              | *none*      | Sends a hello message. Use to check if mod is loaded               |
-| takeover,pto,to        | playerName  | Take `playerName`'s party. Both players need to be trusted         |
-| trust, allow           | playerName  | Trust `playerName` (saved by uuid). This unlocks certain commands. |
+| Names                                 | Parameters    | Description                                                        |
+|---------------------------------------|---------------|--------------------------------------------------------------------|
+| bap                                   | *?subcommand* | Main command                                                       |
+| aliases, alias, al(s), as             | *none*        | Shows aliases for `/bap`.                                          |
+| colorcodes(s), color(s), ccode(s), cc | *none*        | Displays the Minecraft (§/&) color codes. Use as a reference.      |
+| dev, test                             | *N/A*         | Development command with experimental features.                    |
+| hello, hi                             | *none*        | Sends a hello message. Use to check if mod is loaded               |
+| takeover, pto, to                     | playerName    | Take `playerName`'s party. Both players need to be trusted         |
+| trust, allow                          | playerName    | Trust `playerName` (saved by uuid). This unlocks certain commands. |
 
 ## Developer reference
 
