@@ -7,6 +7,7 @@ import net.jerrydev.baputils.commands.bap.BapHello;
 import net.jerrydev.baputils.commands.bap.BapTrust;
 import net.jerrydev.baputils.commands.bap.hypixel.BapDungeonJoin;
 import net.jerrydev.baputils.commands.bap.hypixel.BapTakeover;
+import net.jerrydev.baputils.gui.BapGui;
 import net.jerrydev.baputils.utils.ChatColors;
 import net.jerrydev.baputils.utils.ChatColors.CCodes;
 import net.minecraft.command.CommandBase;
@@ -40,7 +41,6 @@ public class BapCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length == 0) {
-            // nothing for the main command yet
             BapUtils.queueClientMessage(
                     ChatColors.colorize(CCodes.DARK_RED, "Th")
                             + ChatColors.colorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "e")
@@ -56,6 +56,7 @@ public class BapCommand extends CommandBase {
             );
 
             // Display main GUI
+            BapUtils.setDisplayGui(new BapGui());
 
             return;
         }
@@ -92,7 +93,7 @@ public class BapCommand extends CommandBase {
                 if (args.length == 1) {
                     BapUtils.queueClientMessage(ChatColors.colorize(CCodes.RED, "Error: ")
                             + ChatColors.colorize(Arrays.asList(CCodes.RED, CCodes.ITALIC), "at DungeonJoin")
-                            + ChatColors.colorize(CCodes.RED, " - You must specify a dungeon."));
+                            + ChatColors.colorize(CCodes.RED, " - You must specify a dungeon floor [e0/f0-f7, m1-m7]."));
                     return;
                 } else if (args.length == 2) {
                     BapUtils.queueClientMessage(ChatColors.colorize(CCodes.RED, "Error: ")

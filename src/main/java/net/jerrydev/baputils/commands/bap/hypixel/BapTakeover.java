@@ -52,7 +52,6 @@ public class BapTakeover implements IBapBaseCommand {
                         Thread.sleep(50);
 
                         BapUtils.queueServerMessage("/party transfer " + playerName, false);
-                        System.out.println(playerName);
                     } catch (InterruptedException err) {
                         err.printStackTrace();
                         BapUtils.queueClientMessage(ChatColors.colorize(ChatColors.CCodes.RED, "Takeover failed! An error occurred while transferring the party."));

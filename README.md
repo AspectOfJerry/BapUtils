@@ -2,6 +2,8 @@
 
 Welcome to BapUtils, a Hypixel Skyblock mod with random utility features.
 
+To find the latest release, please visit 
+
 This is our first Minecraft mod for Hypixel Skyblock, so if there are any bugs or issues with the mod, please open an
 issue on
 GitHub or contact us on Discord (@tomassy or @jerrydev).
