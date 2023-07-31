@@ -5,12 +5,11 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class PeriodicTick {
     @Nullable
-    public static GuiScreen displayGui = null;
+    public static GuiScreen activeGui = null;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onTick(TickEvent.ClientTickEvent event) {
@@ -18,9 +17,9 @@ public class PeriodicTick {
             return;
         }
 
-        if (displayGui != null) {
-            Minecraft.getMinecraft().displayGuiScreen(displayGui);
-            displayGui = null;
+        if (activeGui != null) {
+            Minecraft.getMinecraft().displayGuiScreen(activeGui);
+            activeGui = null;
         }
     }
 }

@@ -50,6 +50,8 @@ For more information, please visit <https://bap.jerrydev.dev>. <https://jerrydev
 
 ## Developer reference
 
+If you encounter issues with IntelliJ such as folders not showing, delete the `.idea` folder and reimport the project.
+
 - Forge 1.8.9 11.15.1.2318
 - Gradle JVM: Java 17
 - Project SDK: Java 1.8

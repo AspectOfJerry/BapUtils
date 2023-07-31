@@ -11,7 +11,6 @@ public class BapTrust implements IBapBaseCommand {
     public static void execute(String playerName) {
         final String playerUUID = "";
 
-        BapUtils.queueClientMessage(ChatColors.colorize(Arrays.asList(CCodes.RED, CCodes.ITALIC), "This command is currently under development."));
-        return;
+        BapUtils.queueClientMessage(ChatColors.colorize(Arrays.asList(CCodes.GRAY, CCodes.ITALIC), "This command is currently under development... zzz..."));
     }
 }

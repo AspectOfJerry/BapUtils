@@ -1,18 +1,20 @@
 plugins {
     idea
     java
-    kotlin("jvm") version "1.8.21"
     id("gg.essential.loom") version "0.10.0.+"
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    kotlin("jvm") version "1.8.21"
 }
 
-//Constants:
+// Constants:
+group = "net.jerrydev"
+version = "0.1.2-beta.2"
 
-val baseGroup: String = "net.jerrydev.baputils"
+// val baseGroup = "net.jerrydev" // "net.jerrydev.baputils" breaks mixins
 val mcVersion: String = "1.8.9"
-val version: String = "0.1.2-beta"
-val mixinGroup = "$baseGroup.mixin"
+// val version: String = "0.1.2-beta.2"
+val mixinGroup = "$group.mixin"
 val modid: String = "baputils"
 
 // Toolchains:
@@ -43,8 +45,14 @@ loom {
     }
 }
 
+tasks.compileJava {
+    dependsOn(tasks.processResources)
+}
+
 sourceSets.main {
-    output.setResourcesDir(file("$buildDir/classes/java/main"))
+    kotlin.destinationDirectory.set(java.destinationDirectory)
+    java.srcDir(file("$projectDir/src/main/kotlin"))
+    output.setResourcesDir(java.destinationDirectory)
 }
 
 // Dependencies:
@@ -53,6 +61,7 @@ repositories {
     mavenCentral()
     maven("https://repo.spongepowered.org/maven/")
     maven("https://repo.essential.gg/repository/maven-public")
+
     // If you don't want to log in with your real minecraft account, remove this line
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
 }
@@ -67,28 +76,20 @@ dependencies {
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
     implementation("gg.essential:elementa-$mcVersion-forge:590")
     implementation("gg.essential:vigilance-$mcVersion-forge:284")
+    implementation("gg.essential:universalcraft-$mcVersion-forge:1.8.9-forge")
 
+    shadowImpl(kotlin("stdlib-jdk8"))
 
     // If you don't want mixins, remove these lines
     shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         isTransitive = false
     }
-    annotationProcessor("org.spongepowered:mixin:0.8.4-SNAPSHOT")
+    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT")
 
     // If you don't want to log in with your real minecraft account, remove this line
-    runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.0")
+    runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
 
 }
-
-tasks.shadowJar {
-    archiveClassifier.set("dev")
-    relocate("gg.essential.vigilance", "net.jerrydev.vigilance")
-    // vigilance dependencies
-    relocate("gg.essential.elementa", "net.jerrydev.elementa")
-    // elementa dependencies
-    relocate("gg.essential.universalcraft", "net.jerrydev.universalcraft")
-}
-tasks.jar { dependsOn(tasks.shadowJar) }
 
 // Tasks:
 
@@ -123,20 +124,24 @@ tasks.processResources {
 
 
 val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
-    archiveClassifier.set("")
+    archiveClassifier.set("all")
     from(tasks.shadowJar)
     input.set(tasks.shadowJar.get().archiveFile)
 }
 
+
 tasks.jar {
     archiveClassifier.set("without-deps")
     destinationDirectory.set(layout.buildDirectory.dir("badjars"))
+    dependsOn(tasks.shadowJar)
 }
 
 tasks.shadowJar {
-    destinationDirectory.set(layout.buildDirectory.dir("badjars"))
+    destinationDirectory.set(layout.buildDirectory.dir("badjars")) // is this needed
+    archiveBaseName.set("BapUtils")
     archiveClassifier.set("all-dev")
     configurations = listOf(shadowImpl)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     doLast {
         configurations.forEach {
             println("Copying jars into mod: ${it.files}")
@@ -144,7 +149,12 @@ tasks.shadowJar {
     }
 
     // If you want to include other dependencies and shadow them, you can relocate them in here
-    fun relocate(name: String) = relocate(name, "$baseGroup.deps.$name")
+    fun relocate(name: String) = relocate(name, "$group.deps.$name")
+    println("Relocating packages to net.jerrydev.<>")
+    relocate("gg.essential.elementa", "net.jerrydev.elementa")
+    // elementa dependencies
+    relocate("gg.essential.universalcraft", "net.jerrydev.universalcraft")
+    relocate("gg.essential.vigilance", "net.jerrydev.vigilance")
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)

@@ -1,9 +1,9 @@
 package net.jerrydev.baputils.commands.bap.hypixel;
 
 import net.jerrydev.baputils.BapUtils;
+import net.jerrydev.baputils.utils.CatacombsFloors;
 import net.jerrydev.baputils.utils.ChatColors;
 import net.jerrydev.baputils.utils.ChatColors.CCodes;
-import net.jerrydev.baputils.utils.DungeonsCata;
 import net.jerrydev.baputils.utils.IBapBaseCommand;
 import net.jerrydev.baputils.utils.StringHex;
 import net.minecraft.client.Minecraft;
@@ -36,7 +36,7 @@ public class BapDungeonJoin implements IBapBaseCommand {
         messageSplit[messageSplit.length - 1] = playerString;
         message = String.join(" ", messageSplit);
 
-        String regExpPattern = "(?i)Party > (.*): bap > dungeonjoin(.*) > "
+        String regExpPattern = "(?i)Party > (.*): bap > dungeonjoin(.*) "
                 + Pattern.quote(Minecraft.getMinecraft().thePlayer.getName());
 
         if (message.matches(regExpPattern)) {
@@ -46,7 +46,7 @@ public class BapDungeonJoin implements IBapBaseCommand {
                 final String sender = matcher.group(1);
                 final String floorName = matcher.group(2);
                 // @SuppressWarnings("ConstantConditions")
-                DungeonsCata.CatacombsFloors floor = DungeonsCata.CatacombsFloors.getFloorByName(floorName.replace(".", ""));
+                CatacombsFloors floor = CatacombsFloors.getFloorByName(floorName.replace(".", ""));
 
                 if (floor == null) {
                     BapUtils.queueClientMessage(ChatColors.colorize(CCodes.RED, "Error: "

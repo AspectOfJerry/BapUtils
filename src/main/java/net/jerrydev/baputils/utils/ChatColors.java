@@ -83,5 +83,4 @@ public class ChatColors {
             this.colorCode = _codeCode;
         }
     }
-
 }

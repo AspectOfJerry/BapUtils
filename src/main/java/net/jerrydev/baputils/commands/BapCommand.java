@@ -7,7 +7,7 @@ import net.jerrydev.baputils.commands.bap.BapHello;
 import net.jerrydev.baputils.commands.bap.BapTrust;
 import net.jerrydev.baputils.commands.bap.hypixel.BapDungeonJoin;
 import net.jerrydev.baputils.commands.bap.hypixel.BapTakeover;
-import net.jerrydev.baputils.gui.BapGui;
+import net.jerrydev.baputils.guis.BapGui;
 import net.jerrydev.baputils.utils.ChatColors;
 import net.jerrydev.baputils.utils.ChatColors.CCodes;
 import net.minecraft.command.CommandBase;
@@ -56,7 +56,7 @@ public class BapCommand extends CommandBase {
             );
 
             // Display main GUI
-            BapUtils.setDisplayGui(new BapGui());
+            BapUtils.setActiveGui(new BapGui());
 
             return;
         }
@@ -79,9 +79,7 @@ public class BapCommand extends CommandBase {
             case "pto":
             case "to":
                 if (args.length == 1) {
-                    BapUtils.queueClientMessage(ChatColors.colorize(CCodes.RED, "Error: ")
-                            + ChatColors.colorize(Arrays.asList(CCodes.RED, CCodes.ITALIC), "at Takeover")
-                            + ChatColors.colorize(CCodes.RED, " - You must specify a player."));
+                    BapUtils.throwCommandException("You must specify a player.", "Takeover");
                     return;
                 }
 
@@ -91,14 +89,9 @@ public class BapCommand extends CommandBase {
             case "dgj":
             case "dj":
                 if (args.length == 1) {
-                    BapUtils.queueClientMessage(ChatColors.colorize(CCodes.RED, "Error: ")
-                            + ChatColors.colorize(Arrays.asList(CCodes.RED, CCodes.ITALIC), "at DungeonJoin")
-                            + ChatColors.colorize(CCodes.RED, " - You must specify a dungeon floor [e0/f0-f7, m1-m7]."));
-                    return;
+                    BapUtils.throwCommandException("You must specify a dungeon floor (^e0$|^[fm][0-7]$).", "DungeonJoin");
                 } else if (args.length == 2) {
-                    BapUtils.queueClientMessage(ChatColors.colorize(CCodes.RED, "Error: ")
-                            + ChatColors.colorize(Arrays.asList(CCodes.RED, CCodes.ITALIC), "at DungeonJoin")
-                            + ChatColors.colorize(CCodes.RED, " - You must specify a player."));
+                    BapUtils.throwCommandException("You must specify a player.", "DungeonJoin");
                     return;
                 }
 
@@ -111,9 +104,7 @@ public class BapCommand extends CommandBase {
             case "trust":
             case "allow":
                 if (args.length == 1) {
-                    BapUtils.queueClientMessage(ChatColors.colorize(CCodes.RED, "Error: ")
-                            + ChatColors.colorize(Arrays.asList(CCodes.RED, CCodes.ITALIC), "at Trust")
-                            + ChatColors.colorize(CCodes.RED, " - You must specify a player."));
+                    BapUtils.throwCommandException("Your must specify a player.", "Trust");
                     return;
                 }
 

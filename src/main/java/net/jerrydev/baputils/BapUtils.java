@@ -4,27 +4,35 @@ import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.events.ChatHandler;
 import net.jerrydev.baputils.events.PeriodicTick;
 import net.jerrydev.baputils.utils.ChatColors;
-import net.jerrydev.baputils.utils.DevTemp;
+import net.jerrydev.baputils.utils.ChatColors.CCodes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.command.CommandException;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NonBlocking;
 
-@Mod(modid = BapUtils.MODID, version = "0.1.2-beta")
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+@Mod(modid = BapUtils.MODID, version = "0.1.2-beta.2")
 public class BapUtils {
     public static final String MODID = "baputils";
     public static final String chatClientPrefix = "[Bap]";
     public static final String chatServerPrefix = "bap";
-    @DevTemp
+
     public static final boolean isDev = true;
 
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        System.out.println("[Bap] HELLO from BapUtils! You are on Minecraft Forge version 1.8.9.");
+        System.out.println(chatClientPrefix + " HELLO from BapUtils! You are on Minecraft Forge version 1.8.9.");
 
         // Register slash (/) commands
         ClientCommandHandler.instance.registerCommand(new BapCommand());
@@ -34,9 +42,14 @@ public class BapUtils {
         MinecraftForge.EVENT_BUS.register(new PeriodicTick());
     }
 
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent event) {
+        System.out.println(chatClientPrefix + " BapUtils has been initialized!");
+    }
+
     // utils
-    public static void setDisplayGui(GuiScreen gui) {
-        PeriodicTick.displayGui = gui;
+    public static void setActiveGui(GuiScreen gui) {
+        PeriodicTick.activeGui = gui;
     }
 
     public static void queueServerMessage(String message) {
@@ -56,10 +69,30 @@ public class BapUtils {
     }
 
     public static void queueClientMessage(String message) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ChatColors.colorize(ChatColors.CCodes.AQUA, chatClientPrefix) + " " + message));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ChatColors.colorize(CCodes.AQUA, chatClientPrefix) + " " + message));
     }
 
     public static void queueClientMessage(String message, boolean addPrefix) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(addPrefix ? ChatColors.colorize(ChatColors.CCodes.AQUA, chatClientPrefix) + " " + message : message));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(addPrefix ? ChatColors.colorize(CCodes.AQUA, chatClientPrefix) + " " + message : message));
+    }
+
+    public static void throwCommandException(String message) throws CommandException {
+        throw new CommandException(ChatColors.colorize(CCodes.AQUA, chatClientPrefix) + ChatColors.colorize(CCodes.RED, " CommandException: " + message));
+    }
+
+    public static void throwCommandException(String message, String causedBy) throws CommandException {
+        throw new CommandException(ChatColors.colorize(CCodes.AQUA, chatClientPrefix) + ChatColors.colorize(CCodes.RED, " CommandException ", false)
+                + ChatColors.colorize(CCodes.ITALIC, "caused by " + causedBy) + ChatColors.colorize(CCodes.RED, ": " + message));
+    }
+
+    @NonBlocking // currently blocking
+    public static String httpGetRequest(String _url) throws IOException {
+        URL url = new URL(_url);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setInstanceFollowRedirects(false);
+        connection.setReadTimeout(5000);
+
+        return IOUtils.toString(connection.getInputStream());
     }
 }

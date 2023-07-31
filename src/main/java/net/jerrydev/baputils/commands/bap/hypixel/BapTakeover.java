@@ -2,8 +2,8 @@ package net.jerrydev.baputils.commands.bap.hypixel;
 
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.utils.ChatColors;
-import net.jerrydev.baputils.utils.StringHex;
 import net.jerrydev.baputils.utils.IBapBaseCommand;
+import net.jerrydev.baputils.utils.StringHex;
 import net.minecraft.client.Minecraft;
 
 import java.util.regex.Matcher;
@@ -53,7 +53,6 @@ public class BapTakeover implements IBapBaseCommand {
 
                         BapUtils.queueServerMessage("/party transfer " + playerName, false);
                     } catch (InterruptedException err) {
-                        err.printStackTrace();
                         BapUtils.queueClientMessage(ChatColors.colorize(ChatColors.CCodes.RED, "Takeover failed! An error occurred while transferring the party."));
                     }
                 }).start();
