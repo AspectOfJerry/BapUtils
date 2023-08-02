@@ -1,15 +1,26 @@
-package net.jerrydev.baputils.commands.bap.hypixel;
+package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
-import net.jerrydev.baputils.utils.ChatColors;
-import net.jerrydev.baputils.utils.IBapBaseCommand;
+import net.jerrydev.baputils.utils.ChatColors.CCodes;
+import net.jerrydev.baputils.utils.IBapCommand;
 import net.jerrydev.baputils.utils.StringHex;
 import net.minecraft.client.Minecraft;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BapTakeover implements IBapBaseCommand {
+import static net.jerrydev.baputils.utils.ChatColors.ccolorize;
+
+public class BapTakeover implements IBapCommand {
+    public static final String commandName = "takeover";
+    public static final List<String> commandAliases = Arrays.asList("ptake", "take", "pto", "to");
+    public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
+            + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases))
+            + ccolorize(CCodes.YELLOW, " <player>");
+    public static byte requiredParams = 1;
+
     public static void execute(String playerName) {
         new Thread(() -> {
             try {
@@ -53,7 +64,7 @@ public class BapTakeover implements IBapBaseCommand {
 
                         BapUtils.queueServerMessage("/party transfer " + playerName, false);
                     } catch (InterruptedException err) {
-                        BapUtils.queueClientMessage(ChatColors.colorize(ChatColors.CCodes.RED, "Takeover failed! An error occurred while transferring the party."));
+                        BapUtils.queueClientMessage(ccolorize(CCodes.RED, "Takeover failed! An error occurred while transferring the party."));
                     }
                 }).start();
             }

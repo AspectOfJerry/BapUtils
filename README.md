@@ -2,7 +2,7 @@
 
 Welcome to BapUtils, a Hypixel Skyblock mod with random utility features.
 
-To find the latest release, please visit 
+To find the latest release, please visit
 
 This is our first Minecraft mod for Hypixel Skyblock, so if there are any bugs or issues with the mod, please open an
 issue on
@@ -38,15 +38,18 @@ For more information, please visit <https://bap.jerrydev.dev>. <https://jerrydev
 
 ### Commands (/)
 
-| Names                                 | Parameters    | Description                                                        |
-|---------------------------------------|---------------|--------------------------------------------------------------------|
-| bap                                   | *?subcommand* | Main command                                                       |
-| aliases, alias, al(s), as             | *none*        | Shows aliases for `/bap`.                                          |
-| colorcodes(s), color(s), ccode(s), cc | *none*        | Displays the Minecraft (§/&) color codes. Use as a reference.      |
-| dev, test                             | *N/A*         | Development command with experimental features.                    |
-| hello, hi                             | *none*        | Sends a hello message. Use to check if mod is loaded               |
-| takeover, pto, to                     | playerName    | Take `playerName`'s party. Both players need to be trusted         |
-| trust, allow                          | playerName    | Trust `playerName` (saved by uuid). This unlocks certain commands. |
+| Names                             | Parameters           | Description                                                        |
+|-----------------------------------|----------------------|--------------------------------------------------------------------|
+| bap                               | *?subcommand*        | Main command                                                       |
+| aliases, alias, al(s), as         | *none*               | Shows command aliases.                                             |
+| color(s), colour(s), ccode(s), cc | *none*               | Displays the Minecraft (§/&) color codes. Use as a reference.      |
+| dev, test                         | *N/A*                | Development command with experimental features.                    |
+| dungeonjoin, (d)join, run, dj     | floorName playerName | Joins a dungeon run on the party leader's behalf.                  |
+| help, ?                           | *none*               | Shows some info about commands.                                    |
+| hello, hi, hey, world             | *none*               | Sends a hello message. Use to check if mod is loaded.              |
+| takeover, ptake, pto, to          | playerName           | Take `playerName`'s party. Both players need to be trusted.        |
+| trust, friend, allow, add         | playerName           | Trust `playerName` (saved by uuid). This unlocks certain commands. |
+| uuid, player, id                  | playerName           | Get `playerName`'s Minecraft UUID.                                 |
 
 ## Developer reference
 

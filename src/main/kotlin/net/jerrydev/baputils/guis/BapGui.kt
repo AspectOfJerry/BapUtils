@@ -8,6 +8,8 @@ import gg.essential.elementa.constraints.animation.Animations
 import gg.essential.elementa.dsl.*
 import net.jerrydev.baputils.BapUtils
 import net.jerrydev.baputils.core.BapConfig
+import java.awt.Desktop
+import java.net.URI
 
 class BapGui : WindowScreen(ElementaVersion.V2) {
     init {
@@ -21,7 +23,6 @@ class BapGui : WindowScreen(ElementaVersion.V2) {
             y = SiblingConstraint(10f)
             textScale = PixelConstraint(3.2f)
         }
-
         UIText("> Mod configuration <").childOf(super.window).constrain {
             x = CenterConstraint()
             y = SiblingConstraint(80f)
@@ -45,13 +46,12 @@ class BapGui : WindowScreen(ElementaVersion.V2) {
                 )
             }
         }
-
-        UIText("> Website <").childOf(super.window).constrain {
+        UIText("> Help <").childOf(super.window).constrain {
             x = CenterConstraint()
             y = SiblingConstraint(20f)
             textScale = PixelConstraint(2.2f)
         }.onMouseClick { (event) ->
-            BapUtils.setActiveGui(BapConfig.gui())
+            BapUtils.setActiveGui(null)
         }.onMouseEnter {
             animate {
                 setTextScaleAnimation(
@@ -69,13 +69,12 @@ class BapGui : WindowScreen(ElementaVersion.V2) {
                 )
             }
         }
-
-        UIText("> Button e <").childOf(super.window).constrain {
+        UIText("> Documentation <").childOf(super.window).constrain {
             x = CenterConstraint()
             y = SiblingConstraint(20f)
             textScale = PixelConstraint(2.2f)
         }.onMouseClick { (event) ->
-            BapUtils.setActiveGui(BapConfig.gui())
+            Desktop.getDesktop().browse(URI("https://bap.jerrydev.net/"))
         }.onMouseEnter {
             animate {
                 setTextScaleAnimation(
@@ -93,13 +92,12 @@ class BapGui : WindowScreen(ElementaVersion.V2) {
                 )
             }
         }
-
-        UIText("> Button heh <").childOf(super.window).constrain {
+        UIText("> Repository <").childOf(super.window).constrain {
             x = CenterConstraint()
             y = SiblingConstraint(20f)
             textScale = PixelConstraint(2.2f)
         }.onMouseClick { (event) ->
-            BapUtils.setActiveGui(BapConfig.gui())
+            Desktop.getDesktop().browse(URI("https://github.com/AspectOfJerry/BapUtils/"))
         }.onMouseEnter {
             animate {
                 setTextScaleAnimation(
@@ -117,15 +115,5 @@ class BapGui : WindowScreen(ElementaVersion.V2) {
                 )
             }
         }
-
-        /* UIBlock().childOf(window).constrain {
-            x = CenterConstraint()
-            y = SiblingConstraint(25f)
-            width = PixelConstraint(100f)
-            height = PixelConstraint(50f)
-        }.onMouseClick { (event) ->
-            BapUtils.setDisplayGui(ModConfig().gui());
-        } */
-
     }
 }

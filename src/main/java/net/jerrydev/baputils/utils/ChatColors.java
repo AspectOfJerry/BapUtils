@@ -3,11 +3,11 @@ package net.jerrydev.baputils.utils;
 import java.util.List;
 
 public class ChatColors {
-    public static String colorize(CCodes color, String message) {
+    public static String ccolorize(CCodes color, String message) {
         return color.colorCode + message + CCodes.RESET.colorCode;
     }
 
-    public static String colorize(List<CCodes> colorsL, String message) {
+    public static String ccolorize(List<CCodes> colorsL, String message) {
         String colors = "";
 
         for (CCodes color : colorsL) {
@@ -17,7 +17,7 @@ public class ChatColors {
         return colors + message + CCodes.RESET.colorCode;
     }
 
-    public static String colorize(CCodes color, String message, boolean addReset) {
+    public static String ccolorize(CCodes color, String message, boolean addReset) {
         return color.colorCode + message + (addReset ? CCodes.RESET.colorCode : "");
     }
 

@@ -2,7 +2,7 @@ package net.jerrydev.baputils;
 
 import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.events.ChatHandler;
-import net.jerrydev.baputils.events.PeriodicTick;
+import net.jerrydev.baputils.events.ClientPeriodic;
 import net.jerrydev.baputils.utils.ChatColors;
 import net.jerrydev.baputils.utils.ChatColors.CCodes;
 import net.minecraft.client.Minecraft;
@@ -39,7 +39,7 @@ public class BapUtils {
 
         // Register events
         MinecraftForge.EVENT_BUS.register(new ChatHandler());
-        MinecraftForge.EVENT_BUS.register(new PeriodicTick());
+        MinecraftForge.EVENT_BUS.register(new ClientPeriodic());
     }
 
     @Mod.EventHandler
@@ -49,7 +49,7 @@ public class BapUtils {
 
     // utils
     public static void setActiveGui(GuiScreen gui) {
-        PeriodicTick.activeGui = gui;
+        ClientPeriodic.activeGui = gui;
     }
 
     public static void queueServerMessage(String message) {
@@ -69,22 +69,23 @@ public class BapUtils {
     }
 
     public static void queueClientMessage(String message) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ChatColors.colorize(CCodes.AQUA, chatClientPrefix) + " " + message));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ChatColors.ccolorize(CCodes.AQUA, chatClientPrefix) + " " + message));
     }
 
     public static void queueClientMessage(String message, boolean addPrefix) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(addPrefix ? ChatColors.colorize(CCodes.AQUA, chatClientPrefix) + " " + message : message));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(addPrefix ? ChatColors.ccolorize(CCodes.AQUA, chatClientPrefix) + " " + message : message));
     }
 
     public static void throwCommandException(String message) throws CommandException {
-        throw new CommandException(ChatColors.colorize(CCodes.AQUA, chatClientPrefix) + ChatColors.colorize(CCodes.RED, " CommandException: " + message));
+        throw new CommandException(ChatColors.ccolorize(CCodes.AQUA, chatClientPrefix) + ChatColors.ccolorize(CCodes.RED, " CommandException: " + message));
     }
 
     public static void throwCommandException(String message, String causedBy) throws CommandException {
-        throw new CommandException(ChatColors.colorize(CCodes.AQUA, chatClientPrefix) + ChatColors.colorize(CCodes.RED, " CommandException ", false)
-                + ChatColors.colorize(CCodes.ITALIC, "caused by " + causedBy) + ChatColors.colorize(CCodes.RED, ": " + message));
+        throw new CommandException(ChatColors.ccolorize(CCodes.AQUA, chatClientPrefix) + ChatColors.ccolorize(CCodes.RED, " CommandException ", false)
+                + ChatColors.ccolorize(CCodes.ITALIC, "caused by " + causedBy) + ChatColors.ccolorize(CCodes.RED, ": " + message));
     }
 
+    @Deprecated // to avoid using it
     @NonBlocking // currently blocking
     public static String httpGetRequest(String _url) throws IOException {
         URL url = new URL(_url);

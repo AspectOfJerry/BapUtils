@@ -1,15 +1,26 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
-import net.jerrydev.baputils.utils.ChatColors;
-import net.jerrydev.baputils.utils.IBapBaseCommand;
+import net.jerrydev.baputils.utils.ChatColors.CCodes;
+import net.jerrydev.baputils.utils.IBapCommand;
 
-public class BapColors implements IBapBaseCommand {
+import java.util.Arrays;
+import java.util.List;
+
+import static net.jerrydev.baputils.utils.ChatColors.ccolorize;
+
+public class BapColors implements IBapCommand {
+    public static final String commandName = "colors";
+    public static final List<String> commandAliases = Arrays.asList("colours", "color", "colour", "ccodes", "ccode", "cc");
+    public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
+            + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
+    public static byte requiredParams = 0;
+
     public static void execute() {
         BapUtils.queueClientMessage("Minecraft color codes:");
 
-        for (ChatColors.CCodes c : ChatColors.CCodes.values()) {
-            BapUtils.queueClientMessage(c.colorCode.replaceAll("§", "&") + " | " + ChatColors.colorize(c, c.toString()), false);
+        for (CCodes c : CCodes.values()) {
+            BapUtils.queueClientMessage(c.colorCode.replaceAll("§", "&") + " | " + ccolorize(c, c.toString()), false);
         }
     }
 }

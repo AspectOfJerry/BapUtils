@@ -74,9 +74,9 @@ dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
-    implementation("gg.essential:elementa-$mcVersion-forge:590")
-    implementation("gg.essential:vigilance-$mcVersion-forge:284")
-    implementation("gg.essential:universalcraft-$mcVersion-forge:1.8.9-forge")
+    implementation("gg.essential:elementa-1.8.9-forge:590")
+    implementation("gg.essential:vigilance-1.8.9-forge:284")
+    implementation("gg.essential:universalcraft-1.8.9-forge:211") // do i need this? confirm build number.
 
     shadowImpl(kotlin("stdlib-jdk8"))
 
@@ -124,7 +124,7 @@ tasks.processResources {
 
 
 val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
-    archiveClassifier.set("all")
+    archiveClassifier.set("")
     from(tasks.shadowJar)
     input.set(tasks.shadowJar.get().archiveFile)
 }
@@ -139,9 +139,17 @@ tasks.jar {
 tasks.shadowJar {
     destinationDirectory.set(layout.buildDirectory.dir("badjars")) // is this needed
     archiveBaseName.set("BapUtils")
-    archiveClassifier.set("all-dev")
+    archiveClassifier.set("dev")
     configurations = listOf(shadowImpl)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    println("Relocating packages to net.jerrydev.<>")
+    relocate("gg.essential:vigilance", "net.jerrydev.vigilance")
+    // vigilance dependencies
+    relocate("gg.essential:elementa", "net.jerrydev.elementa")
+    // elementa dependencies
+    relocate("gg.essential:universalcraft", "net.jerrydev.universalcraft")
+
     doLast {
         configurations.forEach {
             println("Copying jars into mod: ${it.files}")
@@ -150,11 +158,6 @@ tasks.shadowJar {
 
     // If you want to include other dependencies and shadow them, you can relocate them in here
     fun relocate(name: String) = relocate(name, "$group.deps.$name")
-    println("Relocating packages to net.jerrydev.<>")
-    relocate("gg.essential.elementa", "net.jerrydev.elementa")
-    // elementa dependencies
-    relocate("gg.essential.universalcraft", "net.jerrydev.universalcraft")
-    relocate("gg.essential.vigilance", "net.jerrydev.vigilance")
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)
