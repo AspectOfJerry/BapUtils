@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class ChatHandler {
     @SubscribeEvent
     public void onChatReceived(ClientChatReceivedEvent event) {
-        if (BapConfig.INSTANCE.getPartyTakeoverMaster() && ChatColors.stripColorCodes(event.message.getUnformattedText())
+        if (/*BapConfig.INSTANCE.getPartyTakeoverMaster() &&*/ ChatColors.stripColorCodes(event.message.getUnformattedText())
                 .replaceAll("\\[.*?\\\\]\\s", "").matches("(?i)Party > .*: bap > takeover > .*")) {
 
             String message = ChatColors.stripColorCodes(event.message.getUnformattedText()).replaceAll("\\[.*?]\\s", "");
@@ -18,7 +18,7 @@ public class ChatHandler {
             return;
         }
 
-        if (BapConfig.INSTANCE.getDungeonJoinMaster() && ChatColors.stripColorCodes(event.message.getUnformattedText())
+        if (/*BapConfig.INSTANCE.getDungeonJoinMaster() &&*/ ChatColors.stripColorCodes(event.message.getUnformattedText())
                 .replaceAll("\\[.*?\\\\]\\s", "").matches("(?i)Party > .*: bap > dungeonjoin.* > .*")) {
 
             String message = ChatColors.stripColorCodes(event.message.getUnformattedText()).replaceAll("\\[.*?]\\s", "");

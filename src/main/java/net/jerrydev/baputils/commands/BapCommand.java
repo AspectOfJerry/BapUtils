@@ -55,7 +55,8 @@ public class BapCommand extends CommandBase {
             );
 
             // Display main GUI
-            BapUtils.setActiveGui(new BapGui());
+            //BapUtils.setActiveGui(new BapGui()); // crashes the game outside of development
+            BapUtils.queueClientMessage(ccolorize(CCodes.DARK_GRAY, "The GUI is currently disabled due to game crashes.") + ccolorize(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC), " You don't want that don't you?"));
 
             return;
         }
@@ -146,7 +147,7 @@ public class BapCommand extends CommandBase {
     }
 
     public static void checkArgsLen(int input, int expected, String usage) {
-        if ((input == 0) && !(expected <= 0)) {
+        if ((input == 0) && (expected > 0)) {
             BapUtils.queueClientMessage("Command usage: " + usage);
             return;
         }

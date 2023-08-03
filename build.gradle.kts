@@ -143,18 +143,18 @@ tasks.shadowJar {
     configurations = listOf(shadowImpl)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
+    doLast {
+        configurations.forEach {
+            println("Copying jars into mod: ${it.files}")
+        }
+    }
+
     println("Relocating packages to net.jerrydev.<>")
     relocate("gg.essential:vigilance", "net.jerrydev.vigilance")
     // vigilance dependencies
     relocate("gg.essential:elementa", "net.jerrydev.elementa")
     // elementa dependencies
     relocate("gg.essential:universalcraft", "net.jerrydev.universalcraft")
-
-    doLast {
-        configurations.forEach {
-            println("Copying jars into mod: ${it.files}")
-        }
-    }
 
     // If you want to include other dependencies and shadow them, you can relocate them in here
     fun relocate(name: String) = relocate(name, "$group.deps.$name")
