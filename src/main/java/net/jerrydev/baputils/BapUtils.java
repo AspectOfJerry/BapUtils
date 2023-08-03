@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@Mod(modid = BapUtils.MODID, version = "0.1.2-beta.2")
+@Mod(modid = BapUtils.MODID, version = "0.1.2-rc")
 public class BapUtils {
     public static final String MODID = "baputils";
     public static final String chatClientPrefix = "[Bap]";
