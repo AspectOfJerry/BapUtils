@@ -1,7 +1,7 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
-import net.jerrydev.baputils.guis.BapGui;
+//import net.jerrydev.baputils.guis.BapGui;
 import net.jerrydev.baputils.utils.ChatColors.CCodes;
 
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class BapOptions {
     public static byte requiredParams = 0;
 
     public static void execute() {
-        BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "The options GUI is currently disabled due to game crashes."));
-        BapUtils.setActiveGui(new BapGui());
+        BapUtils.queueClientMessage(ccolorize(CCodes.YELLOW, "The options GUI is currently disabled due to game crashes."));
+        //BapUtils.setActiveGui(new BapGui());
     }
 }

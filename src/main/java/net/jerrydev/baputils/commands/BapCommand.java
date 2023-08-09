@@ -2,7 +2,6 @@ package net.jerrydev.baputils.commands;
 
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.commands.bap.*;
-import net.jerrydev.baputils.guis.BapGui;
 import net.jerrydev.baputils.utils.ChatColors.CCodes;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

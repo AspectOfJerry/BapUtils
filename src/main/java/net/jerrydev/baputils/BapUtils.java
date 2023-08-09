@@ -3,7 +3,6 @@ package net.jerrydev.baputils;
 import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.events.ChatHandler;
 import net.jerrydev.baputils.events.ClientPeriodic;
-import net.jerrydev.baputils.utils.ChatColors;
 import net.jerrydev.baputils.utils.ChatColors.CCodes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -27,7 +26,7 @@ import static net.jerrydev.baputils.utils.ChatColors.ccolorize;
 @Mod(modid = Constants.kModId, version = Constants.kModVersion, clientSideOnly = true)
 public class BapUtils {
     // dev
-    public static final boolean isDev = true;
+    public static final boolean isDev = false;
 
 
     @Mod.EventHandler
