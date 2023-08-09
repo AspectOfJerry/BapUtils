@@ -1,6 +1,7 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
+import net.jerrydev.baputils.guis.BapGui;
 import net.jerrydev.baputils.utils.ChatColors.CCodes;
 import net.jerrydev.baputils.utils.IBapCommand;
 
@@ -18,7 +19,10 @@ public class BapDev implements IBapCommand {
     public static byte requiredParams = -1;
 
     public static void execute() {
-        BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
+        //BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
+
+        BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "BapGui (kt) options gui test"));
+        BapUtils.setActiveGui(new BapGui());
 
         // minecraft username to uuid
         /* try {

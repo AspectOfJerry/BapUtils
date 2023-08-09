@@ -1,6 +1,5 @@
 package net.jerrydev.baputils.commands;
 
-import kotlin.jvm.JvmOverloads;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.commands.bap.*;
 import net.jerrydev.baputils.guis.BapGui;
@@ -56,29 +55,30 @@ public class BapCommand extends CommandBase {
 
             // Display main GUI
             //BapUtils.setActiveGui(new BapGui()); // crashes the game outside of development
-            BapUtils.queueClientMessage(ccolorize(CCodes.DARK_GRAY, "The GUI is currently disabled due to game crashes.") + ccolorize(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC), " You don't want that don't you?"));
 
+            BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "The GUI is currently disabled due to game crashes."));
+            BapUtils.queueClientMessage("BapUtils' configuration is set to:");
+            BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- Global toggle: ") + ccolorize(CCodes.GREEN, "true"));
+            BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- Allow Party Takeover: ") + ccolorize(CCodes.GREEN, "true"));
+            BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- Party Takeover trusted only: ") + ccolorize(CCodes.RED, "false"));
+            BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- Allow DungeonJoin: ") + ccolorize(CCodes.GREEN, "true"));
+            BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- DungeonJoin trusted only: ") + ccolorize(CCodes.RED, "false"));
             return;
         }
 
         final String subcommand = args[0].toLowerCase();
 
-        if ((BapAliases.commandName + BapAliases.commandAliases).contains(subcommand)) {
-            // bap aliases
-            checkArgsLen(args.length - 1, BapAliases.requiredParams, BapAliases.commandUsage);
-
-            BapAliases.execute();
-        } else if ((BapColors.commandName + BapColors.commandAliases).contains(subcommand)) {
+        if (BapColors.commandName.equals(subcommand) || BapColors.commandAliases.contains(subcommand)) {
             // bap colors
             checkArgsLen(args.length - 1, BapColors.requiredParams, BapColors.commandUsage);
 
             BapColors.execute();
-        } else if ((BapDev.commandName + BapDev.commandAliases).contains(subcommand)) {
+        } else if (BapDev.commandName.equals(subcommand) || BapDev.commandAliases.contains(subcommand)) {
             // bap dev
             checkArgsLen(args.length - 1, BapDev.requiredParams, BapDev.commandUsage);
 
             BapDev.execute();
-        } else if ((BapDungeonJoin.commandName + BapDungeonJoin.commandAliases).contains(subcommand)) {
+        } else if (BapDungeonJoin.commandName.equals(subcommand) || BapDungeonJoin.commandAliases.contains(subcommand)) {
             // bap dungeonjoin <String> <String>
             checkArgsLen(args.length - 1, BapDungeonJoin.requiredParams, BapDungeonJoin.commandUsage);
 
@@ -91,17 +91,27 @@ public class BapCommand extends CommandBase {
             }
 
             BapDungeonJoin.execute(args[1], args[2]);
-        } else if ((BapHello.commandName + BapHello.commandAliases).contains(subcommand)) {
+        } else if (BapHello.commandName.equals(subcommand) || BapHello.commandAliases.contains(subcommand)) {
             // bap hello
             checkArgsLen(args.length - 1, BapHello.requiredParams, BapHello.commandUsage);
 
             BapHello.execute();
-        } else if ((BapHelp.commandName + BapHelp.commandAliases).contains(subcommand)) {
+        } else if (BapHelp.commandName.equals(subcommand) || BapHelp.commandAliases.contains(subcommand)) {
             // bap help
             checkArgsLen(args.length - 1, BapHelp.requiredParams, BapHelp.commandUsage);
 
             BapHelp.execute();
-        } else if ((BapTakeover.commandName + BapTakeover.commandAliases).contains(subcommand)) {
+        } else if (BapOptions.commandName.equals(subcommand) || BapOptions.commandAliases.contains(subcommand)) {
+            // bap options
+            checkArgsLen(args.length - 1, BapOptions.requiredParams, BapOptions.commandUsage);
+
+            BapOptions.execute();
+        } else if (BapSettings.commandName.equals(subcommand) || BapSettings.commandAliases.contains(subcommand)) {
+            // bap settings
+            checkArgsLen(args.length - 1, BapSettings.requiredParams, BapSettings.commandUsage);
+
+            BapSettings.execute();
+        } else if (BapTakeover.commandName.equals(subcommand) || BapTakeover.commandAliases.contains(subcommand)) {
             // bap takeover <String>
             checkArgsLen(args.length - 1, BapTakeover.requiredParams, BapTakeover.commandUsage);
 
@@ -111,7 +121,7 @@ public class BapCommand extends CommandBase {
             }
 
             BapTakeover.execute(args[1]);
-        } else if ((BapTrust.commandName + BapTrust.commandAliases).contains(subcommand)) {
+        } else if (BapTrust.commandName.equals(subcommand) || BapTrust.commandAliases.contains(subcommand)) {
             // bap trust <String>
             checkArgsLen(args.length - 1, BapTrust.requiredParams, BapTrust.commandUsage);
 
@@ -121,7 +131,7 @@ public class BapCommand extends CommandBase {
             }
 
             BapTrust.execute(args[1]);
-        } else if ((BapUuid.commandName + BapUuid.commandAliases).contains(subcommand)) {
+        } else if (BapUuid.commandName.equals(subcommand) || BapUuid.commandAliases.contains(subcommand)) {
             // bap uuid <String>
             checkArgsLen(args.length - 1, BapUuid.requiredParams, BapUuid.commandUsage);
 
@@ -131,6 +141,9 @@ public class BapCommand extends CommandBase {
             }
 
             BapUuid.execute(args[1]);
+        } else {
+            BapUtils.throwCommandException("Unknown subcommand: " + subcommand);
+            BapUtils.queueClientMessage(ccolorize(CCodes.DARK_GRAY, "Use /bap help for a list of commands."));
         }
     }
 

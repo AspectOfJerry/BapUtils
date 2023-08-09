@@ -1,3 +1,5 @@
+//@file:JvmName("BapConfigGui")
+
 package net.jerrydev.baputils.core
 
 import gg.essential.vigilance.Vigilant
@@ -5,7 +7,7 @@ import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
 import java.io.File
 
-object BapConfig : Vigilant(File("./config/jerrydev/baputils/modconfig.toml")) {
+object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml")) {
     @Property(
         type = PropertyType.SWITCH,
         name = "Global toggle",

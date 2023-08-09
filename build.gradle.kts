@@ -9,7 +9,7 @@ plugins {
 
 // Constants:
 group = "net.jerrydev"
-version = "0.1.2-rc"
+version = "0.1.2-rc.2"
 
 // val baseGroup = "net.jerrydev" // "net.jerrydev.baputils" breaks mixins
 val mcVersion: String = "1.8.9"
@@ -78,7 +78,7 @@ dependencies {
     implementation("gg.essential:vigilance-1.8.9-forge:284")
     implementation("gg.essential:universalcraft-1.8.9-forge:211") // do i need this? confirm build number.
 
-    shadowImpl(kotlin("stdlib-jdk8"))
+    shadowImpl("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20-RC")
 
     // If you don't want mixins, remove these lines
     shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {

@@ -8,10 +8,10 @@ public class ChatColors {
     }
 
     public static String ccolorize(List<CCodes> colorsL, String message) {
-        String colors = "";
+        StringBuilder colors = new StringBuilder();
 
         for (CCodes color : colorsL) {
-            colors += color.colorCode;
+            colors.append(color.colorCode);
         }
 
         return colors + message + CCodes.RESET.colorCode;
@@ -28,7 +28,8 @@ public class ChatColors {
      * @return RGBfied message
      */
     public static String RGBfy(String message) {
-        final CCodes[] rgbCCodes = {CCodes.DARK_RED, CCodes.RED, CCodes.GOLD, CCodes.YELLOW, CCodes.GREEN, CCodes.DARK_GREEN, CCodes.AQUA, CCodes.DARK_AQUA, CCodes.BLUE, CCodes.DARK_BLUE, CCodes.LIGHT_PURPLE, CCodes.DARK_PURPLE};
+        final CCodes[] rgbCCodes = {CCodes.DARK_RED, CCodes.RED, CCodes.GOLD, CCodes.YELLOW, CCodes.GREEN, CCodes.DARK_GREEN,
+                CCodes.AQUA, CCodes.DARK_AQUA, CCodes.BLUE, CCodes.DARK_BLUE, CCodes.LIGHT_PURPLE, CCodes.DARK_PURPLE};
         return "";
     }
 

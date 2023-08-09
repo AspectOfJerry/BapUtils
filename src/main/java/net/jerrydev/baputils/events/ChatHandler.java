@@ -2,7 +2,6 @@ package net.jerrydev.baputils.events;
 
 import net.jerrydev.baputils.commands.bap.BapDungeonJoin;
 import net.jerrydev.baputils.commands.bap.BapTakeover;
-import net.jerrydev.baputils.core.BapConfig;
 import net.jerrydev.baputils.utils.ChatColors;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

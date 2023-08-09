@@ -21,18 +21,18 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@Mod(modid = BapUtils.MODID, version = "0.1.2-rc")
-public class BapUtils {
-    public static final String MODID = "baputils";
-    public static final String chatClientPrefix = "[Bap]";
-    public static final String chatServerPrefix = "bap";
+import static net.jerrydev.baputils.Constants.*;
+import static net.jerrydev.baputils.utils.ChatColors.ccolorize;
 
+@Mod(modid = Constants.kModId, version = Constants.kModVersion, clientSideOnly = true)
+public class BapUtils {
+    // dev
     public static final boolean isDev = true;
 
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        System.out.println(chatClientPrefix + " HELLO from BapUtils! You are on Minecraft Forge version 1.8.9.");
+        System.out.println(kChatClientPrefix + " HELLO from " + kModName + "! You are on Minecraft Forge version 1.8.9.");
 
         // Register slash (/) commands
         ClientCommandHandler.instance.registerCommand(new BapCommand());
@@ -44,7 +44,7 @@ public class BapUtils {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        System.out.println(chatClientPrefix + " BapUtils has been initialized!");
+        System.out.println(kChatClientPrefix + " BapUtils has been initialized!");
     }
 
     // utils
@@ -57,7 +57,7 @@ public class BapUtils {
             message = message.replace("/", "./");
         }
 
-        Minecraft.getMinecraft().thePlayer.sendChatMessage(chatServerPrefix + " > " + message);
+        Minecraft.getMinecraft().thePlayer.sendChatMessage(kChatServerPrefix + " > " + message);
     }
 
     public static void queueServerMessage(String message, boolean addPrefix) {
@@ -65,28 +65,28 @@ public class BapUtils {
             message = message.replace("/", "./");
         }
 
-        Minecraft.getMinecraft().thePlayer.sendChatMessage(addPrefix ? chatServerPrefix + " > " + message : message);
+        Minecraft.getMinecraft().thePlayer.sendChatMessage(addPrefix ? kChatServerPrefix + " > " + message : message);
     }
 
     public static void queueClientMessage(String message) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ChatColors.ccolorize(CCodes.AQUA, chatClientPrefix) + " " + message));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(CCodes.AQUA, kChatClientPrefix) + " " + message));
     }
 
     public static void queueClientMessage(String message, boolean addPrefix) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(addPrefix ? ChatColors.ccolorize(CCodes.AQUA, chatClientPrefix) + " " + message : message));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(addPrefix ? ccolorize(CCodes.AQUA, kChatClientPrefix) + " " + message : message));
     }
 
     public static void throwCommandException(String message) throws CommandException {
-        throw new CommandException(ChatColors.ccolorize(CCodes.AQUA, chatClientPrefix) + ChatColors.ccolorize(CCodes.RED, " CommandException: " + message));
+        throw new CommandException(ccolorize(CCodes.AQUA, kChatClientPrefix) + ccolorize(CCodes.RED, " Error: " + message));
     }
 
     public static void throwCommandException(String message, String causedBy) throws CommandException {
-        throw new CommandException(ChatColors.ccolorize(CCodes.AQUA, chatClientPrefix) + ChatColors.ccolorize(CCodes.RED, " CommandException ", false)
-                + ChatColors.ccolorize(CCodes.ITALIC, "caused by " + causedBy) + ChatColors.ccolorize(CCodes.RED, ": " + message));
+        throw new CommandException(ccolorize(CCodes.AQUA, kChatClientPrefix) + ccolorize(CCodes.RED, " Error ", false)
+                + ccolorize(CCodes.ITALIC, "caused by " + causedBy) + ccolorize(CCodes.RED, ": " + message));
     }
 
     @Deprecated // to avoid using it
-    @NonBlocking // currently blocking
+    @NonBlocking
     public static String httpGetRequest(String _url) throws IOException {
         URL url = new URL(_url);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

@@ -1,3 +1,5 @@
+//@file:JvmName("BapGui")
+
 package net.jerrydev.baputils.guis
 
 import gg.essential.elementa.ElementaVersion
@@ -7,28 +9,30 @@ import gg.essential.elementa.constraints.*
 import gg.essential.elementa.constraints.animation.Animations
 import gg.essential.elementa.dsl.*
 import net.jerrydev.baputils.BapUtils
-import net.jerrydev.baputils.core.BapConfig
+import net.jerrydev.baputils.core.BapSettingsGui
 import java.awt.Desktop
 import java.net.URI
 
 class BapGui : WindowScreen(ElementaVersion.V2) {
+    val bapTitleText = UIText("BapUtils").childOf(super.window).constrain {
+        x = CenterConstraint()
+        y = PixelConstraint(45f)
+        textScale = PixelConstraint(6.2f)
+    }
+
     init {
-        UIText("BapUtils").childOf(super.window).constrain {
-            x = CenterConstraint()
-            y = PixelConstraint(45f)
-            textScale = PixelConstraint(6.2f)
-        }
+        bapTitleText
         UIText("Options menu").childOf(super.window).constrain {
             x = CenterConstraint()
             y = SiblingConstraint(10f)
             textScale = PixelConstraint(3.2f)
         }
-        UIText("> Mod configuration <").childOf(super.window).constrain {
+        UIText("> Mod settings <").childOf(super.window).constrain {
             x = CenterConstraint()
             y = SiblingConstraint(80f)
             textScale = PixelConstraint(2.2f)
         }.onMouseClick { (event) ->
-            BapUtils.setActiveGui(BapConfig.gui())
+            BapUtils.setActiveGui(BapSettingsGui.gui())
         }.onMouseEnter {
             animate {
                 setTextScaleAnimation(
