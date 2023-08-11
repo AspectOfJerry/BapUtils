@@ -60,36 +60,43 @@ public class BapCommand extends CommandBase {
             BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- Global toggle: ") + ccolorize(CCodes.GREEN, "true"));
             BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- Allow Party Takeover: ") + ccolorize(CCodes.GREEN, "true"));
             BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- Party Takeover trusted only: ") + ccolorize(CCodes.RED, "false"));
-            BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- Allow DungeonJoin: ") + ccolorize(CCodes.GREEN, "true"));
-            BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- DungeonJoin trusted only: ") + ccolorize(CCodes.RED, "false"));
+            BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- Allow JoinDungeon: ") + ccolorize(CCodes.GREEN, "true"));
+            BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "- JoinDungeon trusted only: ") + ccolorize(CCodes.RED, "false"));
             return;
         }
 
         final String subcommand = args[0].toLowerCase();
 
-        if (BapColors.commandName.equals(subcommand) || BapColors.commandAliases.contains(subcommand)) {
+        if (BapCache.commandName.equals(subcommand) || BapCache.commandAliases.contains(subcommand)) {
+            // bap cache
+            checkArgsLen(args.length - 1, BapCache.requiredParams, BapCache.commandUsage);
+
+            BapCache.execute();
+        } else if (BapColors.commandName.equals(subcommand) || BapColors.commandAliases.contains(subcommand)) {
             // bap colors
             checkArgsLen(args.length - 1, BapColors.requiredParams, BapColors.commandUsage);
 
             BapColors.execute();
+        } else if (BapDebug.commandName.equals(subcommand) || BapDebug.commandAliases.contains(subcommand)) {
+            // bap debug
+            checkArgsLen(args.length - 1, BapDebug.requiredParams, BapDebug.commandUsage);
+
+            BapDebug.execute();
         } else if (BapDev.commandName.equals(subcommand) || BapDev.commandAliases.contains(subcommand)) {
             // bap dev
             checkArgsLen(args.length - 1, BapDev.requiredParams, BapDev.commandUsage);
 
             BapDev.execute();
-        } else if (BapDungeonJoin.commandName.equals(subcommand) || BapDungeonJoin.commandAliases.contains(subcommand)) {
-            // bap dungeonjoin <String> <String>
-            checkArgsLen(args.length - 1, BapDungeonJoin.requiredParams, BapDungeonJoin.commandUsage);
+        } else if (BapJoinDungeon.commandName.equals(subcommand) || BapJoinDungeon.commandAliases.contains(subcommand)) {
+            // bap joindungeon <String>
+            checkArgsLen(args.length - 1, BapJoinDungeon.requiredParams, BapJoinDungeon.commandUsage);
 
             if (args.length == 1) {
-                BapUtils.throwCommandException("You must specify a dungeon floor (^e0$|^[fm][0-7]$).", "DungeonJoin");
-                return;
-            } else if (args.length == 2) {
-                BapUtils.throwCommandException("You must specify a player.", "DungeonJoin");
+                BapUtils.throwCommandException("You must specify a dungeon floor (^e0$|^[fm][0-7]$).");
                 return;
             }
 
-            BapDungeonJoin.execute(args[1], args[2]);
+            BapJoinDungeon.execute(args[1]);
         } else if (BapHello.commandName.equals(subcommand) || BapHello.commandAliases.contains(subcommand)) {
             // bap hello
             checkArgsLen(args.length - 1, BapHello.requiredParams, BapHello.commandUsage);
@@ -111,21 +118,16 @@ public class BapCommand extends CommandBase {
 
             BapSettings.execute();
         } else if (BapTakeover.commandName.equals(subcommand) || BapTakeover.commandAliases.contains(subcommand)) {
-            // bap takeover <String>
+            // bap takeover
             checkArgsLen(args.length - 1, BapTakeover.requiredParams, BapTakeover.commandUsage);
 
-            if (args.length == 1) {
-                BapUtils.throwCommandException("You must specify a player.", "Takeover");
-                return;
-            }
-
-            BapTakeover.execute(args[1]);
+            BapTakeover.execute();
         } else if (BapTrust.commandName.equals(subcommand) || BapTrust.commandAliases.contains(subcommand)) {
             // bap trust <String>
             checkArgsLen(args.length - 1, BapTrust.requiredParams, BapTrust.commandUsage);
 
             if (args.length == 1) {
-                BapUtils.throwCommandException("Your must specify a player.", "Trust");
+                BapUtils.throwCommandException("Your must specify a player.");
                 return;
             }
 
@@ -135,7 +137,7 @@ public class BapCommand extends CommandBase {
             checkArgsLen(args.length - 1, BapUuid.requiredParams, BapUuid.commandUsage);
 
             if (args.length == 1) {
-                BapUtils.throwCommandException("You must specify a player.", "Uuid");
+                BapUtils.throwCommandException("You must specify a player.");
                 return;
             }
 
@@ -148,7 +150,7 @@ public class BapCommand extends CommandBase {
 
 
     public static void checkArgsLen(int input, int expected) {
-        if (input > expected) {
+        if ((input > expected) && (expected > 0)) {
             BapUtils.queueClientMessage(ccolorize(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC),
                     "Warning: expected " + expected + " arguments, but got " + input + "."));
         }

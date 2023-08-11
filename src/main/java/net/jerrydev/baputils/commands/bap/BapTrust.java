@@ -19,7 +19,7 @@ public class BapTrust implements IBapCommand {
     public static byte requiredParams = 1;
 
     public static void execute(String playerName) {
-        final String playerUUID = "";
+        final String playerUuid = "";
 
         BapUtils.queueClientMessage(ChatColors.ccolorize(Arrays.asList(CCodes.GRAY, CCodes.ITALIC), "This command is currently under development... zzz..."));
     }

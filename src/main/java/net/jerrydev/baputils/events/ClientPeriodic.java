@@ -1,5 +1,6 @@
 package net.jerrydev.baputils.events;
 
+import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -21,8 +22,10 @@ public class ClientPeriodic {
 
         if (activeGui != null) {
             if (Minecraft.getMinecraft().thePlayer.openContainer == Minecraft.getMinecraft().thePlayer.inventoryContainer) {
+                Debug.cout("Displaying gui");
                 Minecraft.getMinecraft().displayGuiScreen(activeGui);
                 activeGui = null;
+                Debug.cout("Cleared active gui");
             }
         }
     }

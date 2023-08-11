@@ -35,21 +35,21 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Allow DungeonJoin",
+        name = "Allow JoinDungeon",
         description = "Allows other players to join a dungeon run on your behalf.",
         category = "Party",
         subcategory = "Dungeons"
     )
-    var dungeonJoinMaster = true
+    var joinDungeonMaster = true
 
     @Property(
         type = PropertyType.CHECKBOX,
-        name = "DungeonJoin trusted only",
+        name = "JoinDungeon trusted only",
         description = "Only allow trusted players to join a dungeon run on your behalf (/trust).",
         category = "Party",
         subcategory = "Dungeons"
     )
-    var dungeonJoinTrustedOnly = true
+    var joinDungeonTrustedOnly = true
 
 
     init {
@@ -91,6 +91,6 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
         )
 
         super.addDependency("partyTakeoverTrustedOnly", "partyTakeoverMaster")
-        super.addDependency("dungeonJoinTrustedOnly", "dungeonJoinMaster")
+        super.addDependency("joinDungeonTrustedOnly", "joinDungeonMaster")
     }
 }

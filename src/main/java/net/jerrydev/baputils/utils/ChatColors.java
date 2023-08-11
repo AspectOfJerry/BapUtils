@@ -54,6 +54,16 @@ public class ChatColors {
         return message.replaceAll("§[0-9a-fk-or]", "");
     }
 
+    /**
+     * Removes Hypixel's rank prefixes from a string.
+     *
+     * @param message Message to clean
+     * @return Cleaned string
+     */
+    public static String removeHypixelRanks(String message) {
+        return message.replace("\\[.*?\\]\\s", "");
+    }
+
     public enum CCodes {
         BLACK("§0"),
         DARK_BLUE("§1"),

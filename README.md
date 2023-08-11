@@ -38,19 +38,19 @@ For more information, please visit <https://bap.jerrydev.dev>. <https://jerrydev
 
 ### Commands (/)
 
-| Names                              | Parameters           | Description                                                        |
-|------------------------------------|----------------------|--------------------------------------------------------------------|
-| bap                                | *?subcommand*        | Main command                                                       |
-| color(s), colour(s), ccode(s), cc  | *none*               | Displays the Minecraft (§/&) color codes. Use as a reference.      |
-| dev, test                          | *N/A*                | Development command with experimental features.                    |
-| dungeonjoin, (d)join, run, dj      | floorName playerName | Joins a dungeon run on the party leader's behalf.                  |
-| help, ?                            | *none*               | Shows info about commands and their aliases.                       |
-| hello, hi, hey, world              | *none*               | Sends a hello message. Use to check if mod is loaded.              |
-| options, menu, gui                 | *none*               | Opens the Options* GUI                                             |
-| settings, preferences, config, cfg | *none*               | Opens the Settings* GUI                                            |
-| takeover, ptake, pto, to           | playerName           | Take `playerName`'s party. Both players need to be trusted.        |
-| trust, friend, allow, add          | playerName           | Trust `playerName` (saved by uuid). This unlocks certain commands. |
-| uuid, player, id                   | playerName           | Get `playerName`'s Minecraft UUID.                                 |
+| Names                           | Parameters    | Description                                                        |
+|---------------------------------|---------------|--------------------------------------------------------------------|
+| bap, baputilities, baputils, bp | *?subcommand* | Main command                                                       |
+| color(s), colour(s), cc         | *none*        | Displays the Minecraft (§/&) color codes. Use as a reference.      |
+| dev, test                       | *N/A*         | Development command with experimental features.                    |
+| joindungeon, dung, join, jd     | floorName     | Joins a dungeon run on the party leader's behalf.                  |
+| help, ?                         | *none*        | Shows info about commands and their aliases.                       |
+| hello, hi, hey, world           | *none*        | Sends a hello message. Use to check if mod is loaded.              |
+| options, menu, gui              | *none*        | Opens the Options* GUI.                                            |
+| settings, config, cfg           | *none*        | Opens the Settings* GUI.                                           |
+| takeover, ptake, pto, to        | *none*        | Take the leader's party.                                           |
+| trust, friend, allow, add       | playerName    | Trust `playerName` (saved by uuid). This unlocks certain commands. |
+| uuid, player, id                | playerName    | Get `playerName`'s Minecraft UUID.                                 |
 
 *In the context of BapUtils, the terms *Options* and *Settings* are employed in the same fashion as in Minecraft: the
 *settings* are within the *options* menu.
@@ -75,6 +75,5 @@ The BapUtils mod version is hardcoded at 3 locations. You must modify all 3 for 
 
 Documentation: <https://github.com/DJtheRedstoner/DevAuth>
 
-Add JVM Properties: "-D<propertyName>=<value>"
-`"-Ddevauth.enabled=true"`
+Add JVM Property: `"-Ddevauth.enabled=true"`
 See the DevAuth repo README for more information

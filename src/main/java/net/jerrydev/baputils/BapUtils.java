@@ -13,12 +13,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import org.apache.commons.io.IOUtils;
-import org.jetbrains.annotations.NonBlocking;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 
 import static net.jerrydev.baputils.Constants.*;
 import static net.jerrydev.baputils.utils.ChatColors.ccolorize;
@@ -28,6 +24,7 @@ public class BapUtils {
     // dev
     public static final boolean isDev = false;
 
+    private static final CloseableHttpClient httpClient = HttpClients.createDefault();
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
@@ -75,24 +72,15 @@ public class BapUtils {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(addPrefix ? ccolorize(CCodes.AQUA, kChatClientPrefix) + " " + message : message));
     }
 
+    public static void queueErrorMessage(String message) {
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(CCodes.DARK_RED, kChatClientPrefix) + " Error: " + ccolorize(CCodes.RED, message)));
+    }
+
+    public static void queueWarnMessage(String message) {
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(CCodes.RED, kChatClientPrefix) + " Error: " + ccolorize(CCodes.GOLD, message)));
+    }
+
     public static void throwCommandException(String message) throws CommandException {
-        throw new CommandException(ccolorize(CCodes.AQUA, kChatClientPrefix) + ccolorize(CCodes.RED, " Error: " + message));
-    }
-
-    public static void throwCommandException(String message, String causedBy) throws CommandException {
-        throw new CommandException(ccolorize(CCodes.AQUA, kChatClientPrefix) + ccolorize(CCodes.RED, " Error ", false)
-                + ccolorize(CCodes.ITALIC, "caused by " + causedBy) + ccolorize(CCodes.RED, ": " + message));
-    }
-
-    @Deprecated // to avoid using it
-    @NonBlocking
-    public static String httpGetRequest(String _url) throws IOException {
-        URL url = new URL(_url);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setInstanceFollowRedirects(false);
-        connection.setReadTimeout(5000);
-
-        return IOUtils.toString(connection.getInputStream());
+        throw new CommandException(ccolorize(CCodes.RED, kChatClientPrefix) + ccolorize(CCodes.RED, " Error: " + message));
     }
 }
