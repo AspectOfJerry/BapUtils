@@ -47,7 +47,7 @@ public class ChatHandler {
         }
 
         if (/*BapConfig.INSTANCE.getPartyTakeoverMaster() &&*/
-                event.type == 0 && removeHypixelRanks(stripColorCodes(event.message.getUnformattedText())).matches("(?i)Party > .*: bap > \\$takeover")) {
+            event.type == 0 && removeHypixelRanks(stripColorCodes(event.message.getUnformattedText())).matches("(?i)Party > .*: bap > \\$takeover")) {
             String message = stripColorCodes(removeHypixelRanks(event.message.getUnformattedText()));
 
             BapTakeover.handleChat(message);
@@ -55,7 +55,7 @@ public class ChatHandler {
         }
 
         if (/*BapConfig.INSTANCE.getJoinDungeonMaster() &&*/
-                event.type == 0 && removeHypixelRanks(stripColorCodes(event.message.getUnformattedText())).matches("(?i)Party > .*: bap > \\$joindungeon.*")) {
+            event.type == 0 && removeHypixelRanks(stripColorCodes(event.message.getUnformattedText())).matches("(?i)Party > .*: bap > \\$joindungeon.*")) {
             String message = stripColorCodes(removeHypixelRanks(event.message.getUnformattedText()));
 
             BapJoinDungeon.handleChat(message);

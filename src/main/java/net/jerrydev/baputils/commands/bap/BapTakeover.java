@@ -6,27 +6,26 @@ import net.jerrydev.baputils.RuntimeData;
 import net.jerrydev.baputils.utils.ChatColors.CCodes;
 import net.jerrydev.baputils.utils.Debug;
 import net.jerrydev.baputils.utils.IBapCommand;
-import net.jerrydev.baputils.utils.StringHex;
 import net.minecraft.client.Minecraft;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static net.jerrydev.baputils.BapUtils.clientVerbose;
 import static net.jerrydev.baputils.utils.ChatColors.ccolorize;
 
 public class BapTakeover implements IBapCommand {
     public static final String commandName = "takeover";
     public static final List<String> commandAliases = Arrays.asList("ptake", "take", "pto", "to");
     public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-            + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases))
-            + ccolorize(CCodes.YELLOW, " <player>");
+        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
     public static byte requiredParams = 0;
 
     public static void execute() {
         new Thread(() -> {
             try {
                 // ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/party list");
-                BapUtils.queueServerMessage("/party list", false);
+                BapUtils.queueCommand("/party list");
                 Debug.cout("Sleeping for " + Constants.kChatDelayMs + "ms on " + Debug.getThreadInfoFormatted());
                 Thread.sleep(Constants.kChatDelayMs);
                 Debug.cout("Resumed " + Debug.getThreadInfoFormatted());
@@ -45,7 +44,7 @@ public class BapTakeover implements IBapCommand {
 
         new Thread(() -> {
             try {
-                BapUtils.queueServerMessage("/party list", false);
+                BapUtils.queueCommand("party list");
                 Debug.cout("Sleeping for 100ms on " + Debug.getThreadInfoFormatted());
                 Thread.sleep(100);
                 Debug.cout("Resumed " + Debug.getThreadInfoFormatted());
@@ -53,16 +52,16 @@ public class BapTakeover implements IBapCommand {
                 if (RuntimeData.latestPartyLeader == null) {
                     BapUtils.queueWarnMessage("Couldn't find the latest party leader, what's going on!? Attempting a transfer anyway.");
                     Debug.cout("Check the cached party leader using /bap cache");
-                    BapUtils.queueServerMessage("/party transfer " + sender, false);
-                    return;
                 }
 
-                if (!RuntimeData.latestPartyLeader.equals(Minecraft.getMinecraft().thePlayer.getName())) {
+                if (!RuntimeData.latestPartyLeader.equals(Minecraft.getMinecraft().thePlayer.getName())
+                    && RuntimeData.latestPartyLeader != null) {
+                    clientVerbose("We are not party leader");
                     Debug.cout("We are not leader; not attempting a transfer. Latest party leader is: " + RuntimeData.latestPartyLeader);
                     return;
                 }
 
-                BapUtils.queueServerMessage("/party transfer " + sender, false);
+                BapUtils.queueCommand("party transfer " + sender);
             } catch (InterruptedException err) {
                 BapUtils.queueErrorMessage("Takeover failed! An unknown error occurred while transferring the party.");
             }

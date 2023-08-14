@@ -4,6 +4,7 @@ import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.events.ChatHandler;
 import net.jerrydev.baputils.events.ClientPeriodic;
 import net.jerrydev.baputils.utils.ChatColors.CCodes;
+import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.CommandException;
@@ -16,13 +17,15 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
+import java.util.Arrays;
+
 import static net.jerrydev.baputils.Constants.*;
 import static net.jerrydev.baputils.utils.ChatColors.ccolorize;
 
 @Mod(modid = Constants.kModId, version = Constants.kModVersion, clientSideOnly = true)
 public class BapUtils {
     // dev
-    public static final boolean isDev = false;
+    public static final boolean isLocalDev = false;
 
     private static final CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -48,36 +51,43 @@ public class BapUtils {
         ClientPeriodic.activeGui = gui;
     }
 
-    public static void queueServerMessage(String message) {
-        if (message.startsWith("/") && isDev) {
-            message = message.replace("/", "./");
-        }
+    public static void clientVerbose(String message) {
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+            ccolorize(CCodes.GRAY, kChatClientPrefix) + " " + ccolorize(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC), message)
+        ));
+    }
 
+    public static void queueServerMessage(String message) {
         Minecraft.getMinecraft().thePlayer.sendChatMessage(kChatServerPrefix + " > " + message);
     }
 
-    public static void queueServerMessage(String message, boolean addPrefix) {
-        if (message.startsWith("/") && isDev) {
-            message = message.replace("/", "./");
-        }
-
-        Minecraft.getMinecraft().thePlayer.sendChatMessage(addPrefix ? kChatServerPrefix + " > " + message : message);
+    public static void queueCommand(String command) {
+        Debug.cout("Executing: /" + command);
+        Minecraft.getMinecraft().thePlayer.sendChatMessage((isLocalDev ? "." : "") + "/" + command);
     }
 
     public static void queueClientMessage(String message) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(CCodes.AQUA, kChatClientPrefix) + " " + message));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+            ccolorize(CCodes.AQUA, kChatClientPrefix) + " " + message
+        ));
     }
 
     public static void queueClientMessage(String message, boolean addPrefix) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(addPrefix ? ccolorize(CCodes.AQUA, kChatClientPrefix) + " " + message : message));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+            addPrefix ? ccolorize(CCodes.AQUA, kChatClientPrefix) + " " + message : message
+        ));
     }
 
     public static void queueErrorMessage(String message) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(CCodes.DARK_RED, kChatClientPrefix) + " Error: " + ccolorize(CCodes.RED, message)));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+            ccolorize(CCodes.DARK_RED, kChatClientPrefix) + ccolorize(CCodes.RED, " Error: " + message)
+        ));
     }
 
     public static void queueWarnMessage(String message) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(CCodes.RED, kChatClientPrefix) + " Error: " + ccolorize(CCodes.GOLD, message)));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
+            ccolorize(CCodes.RED, kChatClientPrefix) + ccolorize(CCodes.GOLD, " Warning: " + message)
+        ));
     }
 
     public static void throwCommandException(String message) throws CommandException {

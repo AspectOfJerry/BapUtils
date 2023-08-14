@@ -14,12 +14,12 @@ public class BapDebug {
     @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     public static final List<String> commandAliases = Arrays.asList("verbose");
     public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-            + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
+        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
     public static byte requiredParams = 0;
 
     public static void execute() {
         RuntimeData.clientDebugVerbose = !RuntimeData.clientDebugVerbose;
         BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "Debug mode is now set to: ", false)
-                + (RuntimeData.clientDebugVerbose ? ccolorize(CCodes.GREEN, "true") : ccolorize(CCodes.RED, "false")));
+            + (RuntimeData.clientDebugVerbose ? ccolorize(CCodes.GREEN, "true") : ccolorize(CCodes.RED, "false")));
     }
 }

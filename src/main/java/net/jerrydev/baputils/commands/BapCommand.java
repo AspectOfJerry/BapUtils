@@ -39,17 +39,17 @@ public class BapCommand extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length == 0) {
             BapUtils.queueClientMessage(
-                    ccolorize(CCodes.DARK_RED, "Th")
-                            + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "e")
-                            + ccolorize(CCodes.DARK_RED, " GUI ")
-                            + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "i")
-                            + ccolorize(CCodes.DARK_RED, "s co")
-                            + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "m")
-                            + ccolorize(CCodes.DARK_RED, "in")
-                            + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "g")
-                            + ccolorize(CCodes.DARK_RED, " so")
-                            + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "o")
-                            + ccolorize(CCodes.DARK_RED, "n...")
+                ccolorize(CCodes.DARK_RED, "Th")
+                    + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "e")
+                    + ccolorize(CCodes.DARK_RED, " GUI ")
+                    + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "i")
+                    + ccolorize(CCodes.DARK_RED, "s co")
+                    + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "m")
+                    + ccolorize(CCodes.DARK_RED, "in")
+                    + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "g")
+                    + ccolorize(CCodes.DARK_RED, " so")
+                    + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "o")
+                    + ccolorize(CCodes.DARK_RED, "n...")
             );
 
             // Display main GUI
@@ -152,11 +152,11 @@ public class BapCommand extends CommandBase {
     public static void checkArgsLen(int input, int expected) {
         if ((input > expected) && (expected > 0)) {
             BapUtils.queueClientMessage(ccolorize(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC),
-                    "Warning: expected " + expected + " arguments, but got " + input + "."));
+                "Warning: expected " + expected + " arguments, but got " + input + "."));
         }
         if (input < expected) {
             BapUtils.queueClientMessage(ccolorize(Arrays.asList(CCodes.GRAY, CCodes.ITALIC),
-                    "Expected " + expected + " arguments, but got " + input + "."));
+                "Expected " + expected + " arguments, but got " + input + "."));
         }
     }
 

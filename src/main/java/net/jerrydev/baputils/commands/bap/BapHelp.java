@@ -16,7 +16,7 @@ public class BapHelp implements IBapCommand {
     @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     public static final List<String> commandAliases = Arrays.asList("?");
     public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-            + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
+        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
     public static byte requiredParams = 0;
 
     public static void execute() {
@@ -29,45 +29,45 @@ public class BapHelp implements IBapCommand {
 
         BapUtils.queueClientMessage("BapUtils commands with their aliases:");
         for (String s : Arrays.asList(
-                ccolorize(CCodes.YELLOW, "/bap")
-                        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", bapAliases))
-                        + "\n " + ccolorize(CCodes.GRAY, "- Displays the main GUI"),
+            ccolorize(CCodes.YELLOW, "/bap")
+                + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", bapAliases))
+                + "\n " + ccolorize(CCodes.GRAY, "- Displays the main GUI"),
 
-                BapCache.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Displays currently cached info"),
+            BapCache.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Displays currently cached info"),
 
-                BapDebug.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Toggles debug mode with more verbose output"),
+            BapDebug.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Toggles debug mode with more verbose output"),
 
-                BapColors.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Displays (&) color codes"),
+            BapColors.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Displays (&) color codes"),
 
-                BapDev.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Experimental command"),
+            BapDev.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Experimental command"),
 
-                BapHello.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Say hello to the world"),
+            BapHello.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Say hello to the world"),
 
-                BapHelp.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Displays this help message"),
+            BapHelp.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Displays this help message"),
 
-                BapJoinDungeon.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Joins a dungeon on the leader's behalf"),
+            BapJoinDungeon.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Joins a dungeon on the leader's behalf"),
 
-                BapOptions.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Opens the options GUI"),
+            BapOptions.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Opens the options GUI"),
 
-                BapSettings.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Opens the settings GUI"),
+            BapSettings.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Opens the settings GUI"),
 
-                BapTakeover.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Takeover a player's party"),
+            BapTakeover.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Takeover a player's party"),
 
-                BapTrust.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Add a player to the trusted list"),
+            BapTrust.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Add a player to the trusted list"),
 
-                BapUuid.commandUsage
-                        + "\n " + ccolorize(CCodes.GRAY, "- Displays a player's UUID"))) {
+            BapUuid.commandUsage
+                + "\n " + ccolorize(CCodes.GRAY, "- Displays a player's UUID"))) {
             BapUtils.queueClientMessage(s);
         }
     }

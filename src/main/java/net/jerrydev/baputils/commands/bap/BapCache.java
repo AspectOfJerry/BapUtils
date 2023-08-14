@@ -13,15 +13,15 @@ public class BapCache {
     public static final String commandName = "cache";
     public static final List<String> commandAliases = Arrays.asList("runtime", "data");
     public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-            + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
+        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
     public static byte requiredParams = 0;
 
     public static void execute() {
         for (String s : Arrays.asList(
-                "RuntimeData/cache:",
-                "- boolean clientDebugVerbose: " + RuntimeData.clientDebugVerbose,
-                "- boolean isInParty: " + RuntimeData.isInParty,
-                "- String latestPartyLeader: " + RuntimeData.latestPartyLeader
+            "RuntimeData/cache:",
+            "- boolean clientDebugVerbose: " + RuntimeData.clientDebugVerbose,
+            "- boolean isInParty: " + RuntimeData.isInParty,
+            "- String latestPartyLeader: " + RuntimeData.latestPartyLeader
         )) {
             BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, s, false));
         }

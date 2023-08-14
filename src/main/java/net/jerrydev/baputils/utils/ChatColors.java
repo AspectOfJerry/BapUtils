@@ -29,7 +29,7 @@ public class ChatColors {
      */
     public static String RGBfy(String message) {
         final CCodes[] rgbCCodes = {CCodes.DARK_RED, CCodes.RED, CCodes.GOLD, CCodes.YELLOW, CCodes.GREEN, CCodes.DARK_GREEN,
-                CCodes.AQUA, CCodes.DARK_AQUA, CCodes.BLUE, CCodes.DARK_BLUE, CCodes.LIGHT_PURPLE, CCodes.DARK_PURPLE};
+            CCodes.AQUA, CCodes.DARK_AQUA, CCodes.BLUE, CCodes.DARK_BLUE, CCodes.LIGHT_PURPLE, CCodes.DARK_PURPLE};
         return "";
     }
 
