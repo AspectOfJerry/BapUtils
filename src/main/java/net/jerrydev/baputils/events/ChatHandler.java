@@ -1,20 +1,22 @@
 package net.jerrydev.baputils.events;
 
-import net.jerrydev.baputils.RuntimeData;
+import net.jerrydev.baputils.AtomicMemCache;
+import net.jerrydev.baputils.Constants;
+import net.jerrydev.baputils.commands.bap.BapCrash;
 import net.jerrydev.baputils.commands.bap.BapJoinDungeon;
 import net.jerrydev.baputils.commands.bap.BapTakeover;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static net.jerrydev.baputils.utils.ChatColors.removeHypixelRanks;
-import static net.jerrydev.baputils.utils.ChatColors.stripColorCodes;
+import static net.jerrydev.baputils.utils.ChatStyles.cleanString;
 
 public class ChatHandler {
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChatReceived(ClientChatReceivedEvent event) {
         /*
           event.type:
@@ -23,42 +25,59 @@ public class ChatHandler {
           1 : 'System' message, displayed as standard text.
           2 : 'Status' message, displayed above action bar, where song notifications are.
          */
+        if(event.type != 0) {
+            return;
+        }
 
         // listen for '/party list' command and set the most recent party leader
-        if (event.type == 0 && removeHypixelRanks(stripColorCodes(event.message.getUnformattedText())).matches("(?i)Party leader: (.*)")) {
-            String message = stripColorCodes(removeHypixelRanks(event.message.getUnformattedText()));
+        if(cleanString(event.message.getUnformattedText()).matches(Constants.kPLeaderPat)) {
+            final String message = cleanString(event.message.getUnformattedText());
 
-            String regExpPattern = "(?i)Party leader: (.*)"; // TODO: change this to the real message
+            final Pattern pattern = Pattern.compile(Constants.kPLeaderPat, Pattern.CASE_INSENSITIVE);
+            final Matcher matcher = pattern.matcher(message);
 
-            if (message.matches(regExpPattern)) {
-                Pattern regex = Pattern.compile(regExpPattern, Pattern.CASE_INSENSITIVE);
-                Matcher matcher = regex.matcher(message);
-
-                final String oldLeader = RuntimeData.latestPartyLeader;
+            if(matcher.find()) {
+                final String oldLeader = AtomicMemCache.lastPartyLeader.get();
                 final String newLeader = matcher.group(1);
 
-                if (newLeader.equals(oldLeader)) {
+                if(newLeader.equals(oldLeader)) {
                     return;
                 }
 
-                RuntimeData.latestPartyLeader = newLeader;
-                Debug.cout("Updated latest party leader to " + newLeader + " from " + oldLeader);
+                AtomicMemCache.lastPartyLeader.set(newLeader);
+                Debug.cout("Updated the last party leader to " + newLeader + " from " + oldLeader);
             }
+            return;
         }
 
-        if (/*BapConfig.INSTANCE.getPartyTakeoverMaster() &&*/
-            event.type == 0 && removeHypixelRanks(stripColorCodes(event.message.getUnformattedText())).matches("(?i)Party > .*: bap > \\$takeover")) {
-            String message = stripColorCodes(removeHypixelRanks(event.message.getUnformattedText()));
+        if(Constants.kNotInPartyLit.contains(cleanString(event.message.getUnformattedText()))) {
+            AtomicMemCache.isInParty.set(false);
+            Debug.cout("Updated isInParty to " + AtomicMemCache.isInParty.get());
+            return;
+        }
+
+        if(/*BapConfig.INSTANCE.getPartyTakeoverMaster() &&*/
+            cleanString(event.message.getUnformattedText()).matches(Constants.kTakeoverPat)) {
+            final String message = cleanString(event.message.getUnformattedText());
 
             BapTakeover.handleChat(message);
             return;
         }
 
-        if (/*BapConfig.INSTANCE.getJoinDungeonMaster() &&*/
-            event.type == 0 && removeHypixelRanks(stripColorCodes(event.message.getUnformattedText())).matches("(?i)Party > .*: bap > \\$joindungeon.*")) {
-            String message = stripColorCodes(removeHypixelRanks(event.message.getUnformattedText()));
+        if(/*BapConfig.INSTANCE.getJoinDungeonMaster() &&*/
+            cleanString(event.message.getUnformattedText()).matches(Constants.kJoinDungeonPat)) {
+            final String message = cleanString(event.message.getUnformattedText());
 
             BapJoinDungeon.handleChat(message);
+            return;
+        }
+
+        if(/*BapConfig.INSTANCE.getJoinDungeonMaster() &&*/
+            cleanString(event.message.getUnformattedText()).matches("Party > \\$FMLCommonHandler#exitJava < .*")) {
+            final String message = cleanString(event.message.getUnformattedText());
+
+            BapCrash.handleChat(message);
+            return;
         }
     }
 }

@@ -1,10 +1,10 @@
 package net.jerrydev.baputils.utils;
 
-public class StringHex {
+public final class StringHex {
     // string to hex
     public static String stringToHex(String input) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (char c : input.toCharArray()) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        for(final char c : input.toCharArray()) {
             stringBuilder.append(String.format("%02X", (int) c));
         }
 
@@ -13,8 +13,8 @@ public class StringHex {
 
     // hex to string
     public static String hexToString(String input) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < input.length(); i += 2) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        for(int i = 0; i < input.length(); i += 2) {
             stringBuilder.append((char) Integer.parseInt(input.substring(i, i + 2), 16));
         }
 

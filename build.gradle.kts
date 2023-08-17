@@ -3,13 +3,13 @@ plugins {
     java
     id("gg.essential.loom") version "0.10.0.+"
     id("dev.architectury.architectury-pack200") version "0.1.3"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    kotlin("jvm") version "1.8.21"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    kotlin("jvm") version "1.8.20-RC"
 }
 
-// Constants:
+// Constants
 group = "net.jerrydev"
-version = "0.1.2-rc.3"
+version = "0.1.3-rc"
 
 // val baseGroup = "net.jerrydev" // "net.jerrydev.baputils" breaks mixins
 val mcVersion: String = "1.8.9"
@@ -78,7 +78,7 @@ dependencies {
     implementation("gg.essential:vigilance-1.8.9-forge:284")
     implementation("gg.essential:universalcraft-1.8.9-forge:211") // do i need this? confirm build number.
 
-    shadowImpl("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20-RC")
+    shadowImpl(kotlin("stdlib-jdk8"))
 
     // If you don't want mixins, remove these lines
     shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {

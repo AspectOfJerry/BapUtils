@@ -11,17 +11,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class ClientPeriodic {
     @Nullable
-    public static GuiScreen activeGui = null;
+    public static volatile GuiScreen activeGui = null;
 
     @NonBlocking
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.START) {
+        if(event.phase != TickEvent.Phase.START) {
             return;
         }
 
-        if (activeGui != null) {
-            if (Minecraft.getMinecraft().thePlayer.openContainer == Minecraft.getMinecraft().thePlayer.inventoryContainer) {
+        if(activeGui != null) {
+            if(Minecraft.getMinecraft().thePlayer.openContainer == Minecraft.getMinecraft().thePlayer.inventoryContainer) {
                 Debug.cout("Displaying gui");
                 Minecraft.getMinecraft().displayGuiScreen(activeGui);
                 activeGui = null;

@@ -11,16 +11,32 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
     @Property(
         type = PropertyType.SWITCH,
         name = "Global toggle",
-        description = "Enable/disable all features of this mod",
+        description = "Enable all features of this mod",
         category = "General",
         subcategory = "Master"
     )
     var modMaster = true
 
     @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Client chat verbose",
+        description = "Let BapUtils show you more messages (client chat).",
+        category = "General"
+    )
+    var clientChatVerbose = true
+
+    @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Client chat debug",
+        description = "Let BapUtils show you debug messages (client chat).",
+        category = "General"
+    )
+    var clientChatDebug = false
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Allow Party Takeover",
-        description = "Allows other players to take your party.",
+        description = "Allow other players to take your party.",
         category = "Party",
     )
     var partyTakeoverMaster = true
@@ -36,7 +52,7 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
     @Property(
         type = PropertyType.SWITCH,
         name = "Allow JoinDungeon",
-        description = "Allows other players to join a dungeon run on your behalf.",
+        description = "Allow other players to join a dungeon run on your behalf.",
         category = "Party",
         subcategory = "Dungeons"
     )

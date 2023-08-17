@@ -6,8 +6,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 // Party Takeover command
+@SuppressWarnings(value = "all")
 @Deprecated
-public class PtoEncrypt {
+public final class PtoEncrypt {
     @Deprecated
     public static String encryptString(String plainText, int SECRET_KEY) throws Exception {
         SecretKeySpec secretKeySpec = new SecretKeySpec(getKeyBytes(SECRET_KEY), "AES");
@@ -32,7 +33,7 @@ public class PtoEncrypt {
         long paddedTimestamp = (long) timestamp << 32; // Left shift the timestamp by 32 bits
         byte[] keyBytes = new byte[16]; // AES-128 key length
 
-        for (int i = 0; i < 16; i++) {
+        for(int i = 0; i < 16; i++) {
             keyBytes[i] = (byte) ((paddedTimestamp >> (i * 8)) & 0xFF);
         }
 

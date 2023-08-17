@@ -1,30 +1,29 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.render.WaypointRenderer;
-import net.jerrydev.baputils.utils.ChatColors.CCodes;
-import net.jerrydev.baputils.utils.IBapCommand;
+import net.jerrydev.baputils.utils.ChatStyles.CCodes;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static net.jerrydev.baputils.utils.ChatColors.ccolorize;
+import static net.jerrydev.baputils.BapUtils.queueClientMessage;
+import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
 
-public class BapDev implements IBapCommand {
+public final class BapDev {
     public static final String commandName = "dev";
-    @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
+    @SuppressWarnings(value = "ArraysAsListWithZeroOrOneArgument")
     public static final List<String> commandAliases = Arrays.asList("test");
     public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
         + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases))
         + ccolorize(CCodes.YELLOW, " <...>");
-    public static byte requiredParams = -1;
+    public static final byte requiredParams = -1;
 
     public static void execute() {
-        //BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
+        queueClientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
 
         // what are partial ticks?
-        WaypointRenderer.renderBeaconBeam(0, 100, 0, 0xFF00FF, 1.0f, 10);
+        //WaypointRenderer.renderBeaconBeam(0, 100, 0, 0xFF00FF, 1.0f, 10);
 
-        //BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, "BapGui (kt) options gui test"));
+        //queueClientMessage(ccolorize(CCodes.GRAY, "BapGui (kt) options gui test"));
         //BapUtils.setActiveGui(new BapGui());
 
 

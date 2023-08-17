@@ -1,16 +1,16 @@
 package net.jerrydev.baputils.utils;
 
-import net.jerrydev.baputils.RuntimeData;
+import net.jerrydev.baputils.AtomicMemCache;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static net.jerrydev.baputils.Constants.kChatClientPrefix;
-import static net.jerrydev.baputils.utils.ChatColors.ccolorize;
+import static net.jerrydev.baputils.Constants.kClientPrefix;
+import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
 
-public class Debug {
+public final class Debug {
     /**
      * Returns a list of strings containing information about the current thread.
      *
@@ -42,9 +42,9 @@ public class Debug {
      * @param message Message to be printed to the client chat.
      */
     public static void cout(String message) {
-        if (RuntimeData.clientDebugVerbose) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(ChatColors.CCodes.DARK_GREEN, kChatClientPrefix) + " " + ccolorize(ChatColors.CCodes.GRAY, message)));
-            System.out.println(kChatClientPrefix + " " + message);
+        if(AtomicMemCache.clientDebug.get()) {
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(ChatStyles.CCodes.DARK_GREEN, kClientPrefix) + " " + ccolorize(ChatStyles.CCodes.GRAY, message)));
+            System.out.println(kClientPrefix + " " + message);
         }
     }
 }

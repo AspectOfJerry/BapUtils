@@ -41,11 +41,14 @@ For more information, please visit <https://bap.jerrydev.dev>. <https://jerrydev
 | Names                           | Parameters    | Description                                                        |
 |---------------------------------|---------------|--------------------------------------------------------------------|
 | bap, baputilities, baputils, bp | *?subcommand* | Main command                                                       |
+| cache, data                     | *none*        | Displays values data currently stored in the AtomicMemCache        |
 | color(s), colour(s), cc         | *none*        | Displays the Minecraft (§/&) color codes. Use as a reference.      |
-| dev, test                       | *N/A*         | Development command with experimental features.                    |
-| joindungeon, dung, join, jd     | floorName     | Joins a dungeon run on the party leader's behalf.                  |
+| crash, exit                     | playerName    | Sends a game crash request to `playerName`.                        |
+| debug, bug                      | *variable*    | Enable debug messages in the chat.                                 |
+| dev, test                       | *variable*    | Development command with experimental features.                    |
+| joindungeon, dung, join, jd     | floorName     | Joins a dungeon run on the party leader's behalf. (\[fm]\[0-7])    |
 | help, ?                         | *none*        | Shows info about commands and their aliases.                       |
-| hello, hi, hey, world           | *none*        | Sends a hello message. Use to check if mod is loaded.              |
+| hello, hi, world                | *none*        | Sends a hello message. Use to check if mod is loaded.              |
 | options, menu, gui              | *none*        | Opens the Options* GUI.                                            |
 | settings, config, cfg           | *none*        | Opens the Settings* GUI.                                           |
 | takeover, ptake, pto, to        | *none*        | Take the leader's party.                                           |
