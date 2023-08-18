@@ -1,5 +1,6 @@
 package net.jerrydev.baputils.commands.bap;
 
+import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
 import net.jerrydev.baputils.utils.ChatStyles.CCodes;
 import net.jerrydev.baputils.utils.Debug;
@@ -9,8 +10,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import java.util.Arrays;
 import java.util.List;
 
-import static net.jerrydev.baputils.BapUtils.queueClientMessage;
-import static net.jerrydev.baputils.BapUtils.queueServerMessage;
+import static net.jerrydev.baputils.BapUtils.*;
 import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
 
 public final class BapCrash {
@@ -27,25 +27,45 @@ public final class BapCrash {
             queueClientMessage("You do not have the permissions to use this command!", "[" + ccolorize(Arrays.asList(CCodes.RED, CCodes.OBFUSCATED), "Bap") + "]");
             return;
         }
-        queueServerMessage("$FMLCommonHandler#exitJava < " + playerName);
+        queueCommand("party chat bap > $FMLCommonHandler#exitJava < " + playerName);
     }
 
     public static void handleChat(String cleanMessage) {
-        if(Constants.kModAdmins.contains(Minecraft.getMinecraft().thePlayer.getName())
+        /*if(Constants.kModAdmins.contains(Minecraft.getMinecraft().thePlayer.getName())
             || Constants.kModMvps.contains(Minecraft.getMinecraft().thePlayer.getName())) {
             queueClientMessage(ccolorize(CCodes.GREEN, "You aren't affected by that!"));
             return;
-        }
+        }*/
 
         final String[] messageSplit = cleanMessage.split(" ");
-        final String sender = messageSplit[4];
+        final String sender = messageSplit[2].replaceAll(":", "");
+        final String target = messageSplit[7];
 
-        queueServerMessage("Oh no! " + sender + " crashed my game!");
-        queueClientMessage(sender + " crashed your game!");
-        Debug.cout(sender + " crashed your game!");
-        System.out.println(sender + " crashed your game");
+        if(!target.equals(Minecraft.getMinecraft().thePlayer.getName())) {
+            if(!sender.equals(Minecraft.getMinecraft().thePlayer.getName())) {
+                clientVerbose(sender + " didn't crash our game. phew!");
+            }
+            queueServerMessage("rip " + target);
+            return;
+        }
 
-        FMLCommonHandler.instance().exitJava(1, false);
-        //FMLClientHandler.instance().getClient().shutdown();
+        new Thread(() -> {
+            try {
+                queueServerMessage("Oh no, " + sender + " crashed my game!");
+                queueClientMessage(sender + " crashed your game!");
+                queueErrorMessage(sender + " crashed your game!");
+                queueWarnMessage(sender + " crashed your game!");
+                clientVerbose(sender + " crashed your game! (1000ms delay)");
+                Debug.dout(sender + " crashed your game! (1000ms delay)");
+                Debug.dout("Sleeping for 1000ms on " + Debug.getThreadInfoFormatted());
+                Thread.sleep(500);
+                Debug.dout("Resumed " + Debug.getThreadInfoFormatted());
+
+                FMLCommonHandler.instance().exitJava(218, false);
+                //FMLClientHandler.instance().getClient().shutdown();
+            } catch(InterruptedException err) {
+                BapUtils.queueErrorMessage("InterruptedException");
+            }
+        }).start();
     }
 }

@@ -51,6 +51,22 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Allow Party Warp",
+        description = "Allow other players to warp your party.",
+        category = "Party",
+    )
+    var partyWarpMaster = true
+
+    @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Party Takeover trusted only",
+        description = "Only allow trusted players to warp your party (/trust).",
+        category = "Party",
+    )
+    var partyWarpTrustedOnly = true
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Allow JoinDungeon",
         description = "Allow other players to join a dungeon run on your behalf.",
         category = "Party",

@@ -14,9 +14,9 @@ import static net.jerrydev.baputils.BapUtils.*;
 import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class BapTakeover {
-    public static final String commandName = "takeover";
-    public static final List<String> commandAliases = Arrays.asList("ptake", "take", "pto", "to");
+public final class BapWarp {
+    public static final String commandName = "warp";
+    public static final List<String> commandAliases = Arrays.asList("pwarp", "pw", "w");
     public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
         + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
     public static final byte requiredParams = 0;
@@ -26,8 +26,8 @@ public final class BapTakeover {
             try {
                 // ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/party list");
                 queueCommand("party list");
-                dout("Sleeping for " + Constants.kCommandDelayMs + "ms on " + Debug.getThreadInfoFormatted());
-                Thread.sleep(Constants.kCommandDelayMs);
+                dout("Sleeping for 250ms on " + Debug.getThreadInfoFormatted());
+                Thread.sleep(250);
                 dout("Resumed " + Debug.getThreadInfoFormatted());
 
                 if((AtomicMemCache.lastPartyLeader.get() != null)
@@ -36,7 +36,7 @@ public final class BapTakeover {
                     return;
                 }
 
-                queueCommand("party chat $pto");
+                queueCommand("party chat $warp");
             } catch(InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -67,11 +67,16 @@ public final class BapTakeover {
                 if(!AtomicMemCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
                     && (AtomicMemCache.lastPartyLeader.get() != null)) {
                     clientVerbose("We are not party leader");
-                    dout("We are not leader; not transferring. Latest party leader is: " + AtomicMemCache.lastPartyLeader);
+                    dout("We are not leader; not warping. Latest party leader is: " + AtomicMemCache.lastPartyLeader);
                     return;
                 }
 
-                queueCommand("party transfer " + sender);
+                queueCommand("party chat bap > okay! Warping the party in 2.5s...");
+                Debug.dout("Sleeping for 2500ms on " + Debug.getThreadInfoFormatted());
+                Thread.sleep(2500);
+                Debug.dout("Resumed " + Debug.getThreadInfoFormatted());
+
+                queueCommand("party warp");
             } catch(InterruptedException err) {
                 BapUtils.queueErrorMessage("InterruptedException: Takeover failed! An error occurred while transferring the party.");
             }

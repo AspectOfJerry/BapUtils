@@ -37,11 +37,11 @@ public final class Debug {
     }
 
     /**
-     * "cout" for "client output", not "console output" from C++.
+     * Client debug messages
      *
      * @param message Message to be printed to the client chat.
      */
-    public static void cout(String message) {
+    public static void dout(String message) {
         if(AtomicMemCache.clientDebug.get()) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(ChatStyles.CCodes.DARK_GREEN, kClientPrefix) + " " + ccolorize(ChatStyles.CCodes.GRAY, message)));
             System.out.println(kClientPrefix + " " + message);

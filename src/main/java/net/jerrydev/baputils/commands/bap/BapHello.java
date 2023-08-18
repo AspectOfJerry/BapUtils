@@ -22,7 +22,7 @@ public final class BapHello {
         BapUtils.queueWarnMessage("Hello from the warning message chat!");
         BapUtils.queueErrorMessage("Hello from the error message chat!");
         BapUtils.clientVerbose("Hello from the client verbose chat!");
-        Debug.cout("Hello from the client debug chat!");
-        BapUtils.queueCommand("party chat Hello, World!");
+        Debug.dout("Hello from the client debug chat!");
+        BapUtils.queueCommand("party chat bap > Hello, World!");
     }
 }

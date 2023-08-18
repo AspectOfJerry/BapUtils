@@ -14,6 +14,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import org.jetbrains.annotations.NonBlocking;
 
 import java.util.Arrays;
 
@@ -55,16 +56,19 @@ public class BapUtils {
         }
     }
 
+    @NonBlocking
     public static void queueServerMessage(String message) {
         Minecraft.getMinecraft().thePlayer.sendChatMessage(kServerPrefix + " > " + message);
     }
 
+    @NonBlocking
     public static void queueServerMessage(String message, boolean addPrefix) {
         Minecraft.getMinecraft().thePlayer.sendChatMessage(addPrefix ? (kServerPrefix + " > " + message) : message);
     }
 
+    @NonBlocking
     public static void queueCommand(String command) {
-        Debug.cout("Executing: /" + command);
+        Debug.dout("Executing: /" + command);
         Minecraft.getMinecraft().thePlayer.sendChatMessage((isLocalDev ? "." : "") + "/" + command);
     }
 
@@ -94,13 +98,13 @@ public class BapUtils {
 
     public static void queueErrorMessage(String message) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            ccolorize(CCodes.DARK_RED, kClientPrefix) + ccolorize(CCodes.RED, " Error: " + message)
+            ccolorize(CCodes.RED, kClientPrefix + " Error: " + message)
         ));
     }
 
     public static void queueWarnMessage(String message) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            ccolorize(CCodes.RED, kClientPrefix) + ccolorize(CCodes.GOLD, " Warning: " + message)
+            ccolorize(CCodes.GOLD, kClientPrefix + " Warning: " + message)
         ));
     }
 

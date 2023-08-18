@@ -9,7 +9,7 @@ plugins {
 
 // Constants
 group = "net.jerrydev"
-version = "0.1.3-rc"
+version = "0.1.3"
 
 // val baseGroup = "net.jerrydev" // "net.jerrydev.baputils" breaks mixins
 val mcVersion: String = "1.8.9"

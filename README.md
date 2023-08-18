@@ -54,6 +54,7 @@ For more information, please visit <https://bap.jerrydev.dev>. <https://jerrydev
 | takeover, ptake, pto, to        | *none*        | Take the leader's party.                                           |
 | trust, friend, allow, add       | playerName    | Trust `playerName` (saved by uuid). This unlocks certain commands. |
 | uuid, player, id                | playerName    | Get `playerName`'s Minecraft UUID.                                 |
+| warp, pwarp, pw, w              | *none*        | Warps the party on the party leader's behalf.                      |
 
 *In the context of BapUtils, the terms *Options* and *Settings* are employed in the same fashion as in Minecraft: the
 *settings* are within the *options* menu.

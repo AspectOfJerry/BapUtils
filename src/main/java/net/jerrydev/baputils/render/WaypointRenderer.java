@@ -103,6 +103,6 @@ public class WaypointRenderer {
         GlStateManager.disableLighting();
         GlStateManager.enableTexture2D();
 
-        Debug.cout("Rendered beacon beam");
+        Debug.dout("Rendered beacon beam");
     }
 }

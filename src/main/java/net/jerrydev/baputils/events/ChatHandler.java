@@ -5,6 +5,7 @@ import net.jerrydev.baputils.Constants;
 import net.jerrydev.baputils.commands.bap.BapCrash;
 import net.jerrydev.baputils.commands.bap.BapJoinDungeon;
 import net.jerrydev.baputils.commands.bap.BapTakeover;
+import net.jerrydev.baputils.commands.bap.BapWarp;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -41,18 +42,24 @@ public class ChatHandler {
                 final String newLeader = matcher.group(1);
 
                 if(newLeader.equals(oldLeader)) {
+                    Debug.dout("Checked for the latest party leader, still " + newLeader);
                     return;
                 }
 
                 AtomicMemCache.lastPartyLeader.set(newLeader);
-                Debug.cout("Updated the last party leader to " + newLeader + " from " + oldLeader);
+                Debug.dout("Updated the last party leader to " + newLeader + " from " + oldLeader);
             }
             return;
         }
 
         if(Constants.kNotInPartyLit.contains(cleanString(event.message.getUnformattedText()))) {
+            if(!AtomicMemCache.isInParty.get()) {
+                Debug.dout("Checked for party status, still not in party.");
+                return;
+            }
+
             AtomicMemCache.isInParty.set(false);
-            Debug.cout("Updated isInParty to " + AtomicMemCache.isInParty.get());
+            Debug.dout("Updated isInParty to " + AtomicMemCache.isInParty.get());
             return;
         }
 
@@ -72,8 +79,15 @@ public class ChatHandler {
             return;
         }
 
-        if(/*BapConfig.INSTANCE.getJoinDungeonMaster() &&*/
-            cleanString(event.message.getUnformattedText()).matches("Party > \\$FMLCommonHandler#exitJava < .*")) {
+        if(/*BapConfig.INSTANCE.getPartyWarpMaster() &&*/
+            cleanString(event.message.getUnformattedText()).matches(Constants.kPartyWarpPat)) {
+            final String message = cleanString(event.message.getUnformattedText());
+
+            BapWarp.handleChat(message);
+            return;
+        }
+
+        if(cleanString(event.message.getUnformattedText()).matches(Constants.kBapCrashPat)) {
             final String message = cleanString(event.message.getUnformattedText());
 
             BapCrash.handleChat(message);

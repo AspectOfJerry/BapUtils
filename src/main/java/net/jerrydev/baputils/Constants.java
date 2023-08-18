@@ -8,16 +8,17 @@ import java.util.List;
 public final class Constants {
     public static final String kModId = "baputils";
     public static final String kModName = "BapUtils";
-    public static final String kModVersion = "0.1.3-rc";
+    public static final String kModVersion = "0.1.3";
     public static final String kUserAgent = kModId + "/" + kModVersion;
     public static final String kBugReportUrl = "https://github.com/AspectOfJerry/BapUtils/issues";
 
     public static final List<String> kModAdmins = Arrays.asList("AspectOfJerry", "Tomassy");
-    public static final List<String> kModMvps = Arrays.asList(kModAdmins + "FailingPig", "Uwa_lovely", "FishingIsMagic");
+    public static final List<String> kModMvps = Arrays.asList(kModAdmins + "FailingPig", "Uwa_lovely", "FishingIsMagic", "INFERNAL_CRIMSON");
 
     public static final String kClientPrefix = "[Bap]";
     public static final String kServerPrefix = "bap";
     public static final byte kChatDelayMs = 50;
+    public static final int kCommandDelayMs = 250;
 
     @RegExp
     public static final String kColorCodePat = "§[0-9a-fk-or]";
@@ -29,6 +30,10 @@ public final class Constants {
     public static final String kTakeoverPat = "^Party > .*: \\$pto$";
     @RegExp
     public static final String kJoinDungeonPat = "^Party > .*: \\$jd\\.([fm][0-7])$";
+    @RegExp
+    public static final String kBapCrashPat = "Party > .*: bap > \\$FMLCommonHandler#exitJava < .*";
+    @RegExp
+    public static final String kPartyWarpPat = "^Party > .*: \\$warp$";
     @RegExp
     public static final String kSelfPLeavePat = "";
     @RegExp

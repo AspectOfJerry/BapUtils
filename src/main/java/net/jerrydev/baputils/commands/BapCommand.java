@@ -43,7 +43,7 @@ public class BapCommand extends CommandBase {
 
             for(final String s : Arrays.asList(
                 ccolorize(CCodes.GRAY, "The GUI is currently disabled due to game crashes."),
-                rainbowify("BapUtils") + "' configuration is set to:",
+                rainbowify("BapUtils") + "' defualt configuration is set to:",
                 ccolorize(CCodes.GRAY, "- Global toggle: ") + autoTrueFalse("true"),
                 ccolorize(CCodes.GRAY, "- Allow Party Takeover: ") + autoTrueFalse("true"),
                 ccolorize(CCodes.GRAY, "- Party Takeover trusted only: ") + autoTrueFalse("false"),
@@ -157,6 +157,11 @@ public class BapCommand extends CommandBase {
             }
 
             BapUuid.execute(args[1]);
+        } else if(BapWarp.commandName.equals(subcommand) || BapWarp.commandAliases.contains(subcommand)) {
+            // bap warp
+            verifyArgsLen(args.length - 1, BapWarp.requiredParams, BapWarp.commandUsage);
+
+            BapWarp.execute();
         } else {
             BapUtils.throwCommandException("Unknown subcommand: " + subcommand);
             queueClientMessage(ccolorize(CCodes.DARK_GRAY, "Use /bap help for a list of commands."));
