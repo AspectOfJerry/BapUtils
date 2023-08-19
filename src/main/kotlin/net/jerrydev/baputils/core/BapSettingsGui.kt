@@ -10,8 +10,8 @@ import java.io.File
 object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml")) {
     @Property(
         type = PropertyType.SWITCH,
-        name = "Global toggle",
-        description = "Enable all features of this mod",
+        name = "Global toggle (unavailable)",
+        description = "[WIP] Enable all features of this mod",
         category = "General",
         subcategory = "Master"
     )
@@ -43,11 +43,11 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
 
     @Property(
         type = PropertyType.CHECKBOX,
-        name = "Party Takeover trusted only",
-        description = "Only allow trusted players to take your party (/trust).",
+        name = "Party Takeover trusted only (unavailable)",
+        description = "[WIP] Only allow trusted players to take your party.",
         category = "Party",
     )
-    var partyTakeoverTrustedOnly = true
+    var partyTakeoverTrustedOnly = false
 
     @Property(
         type = PropertyType.SWITCH,
@@ -59,11 +59,11 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
 
     @Property(
         type = PropertyType.CHECKBOX,
-        name = "Party Takeover trusted only",
-        description = "Only allow trusted players to warp your party (/trust).",
+        name = "Party Takeover trusted only (unavailable)",
+        description = "[WIP] Only allow trusted players to warp your party.",
         category = "Party",
     )
-    var partyWarpTrustedOnly = true
+    var partyWarpTrustedOnly = false
 
     @Property(
         type = PropertyType.SWITCH,
@@ -76,12 +76,12 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
 
     @Property(
         type = PropertyType.CHECKBOX,
-        name = "JoinDungeon trusted only",
-        description = "Only allow trusted players to join a dungeon run on your behalf (/trust).",
+        name = "JoinDungeon trusted only (unavailable)",
+        description = "[WIP] Only allow trusted players to join a dungeon run on your behalf.",
         category = "Party",
         subcategory = "Dungeons"
     )
-    var joinDungeonTrustedOnly = true
+    var joinDungeonTrustedOnly = false
 
 
     init {

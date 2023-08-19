@@ -1,6 +1,7 @@
 package net.jerrydev.baputils;
 
 import net.jerrydev.baputils.commands.BapCommand;
+import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.events.ChatHandler;
 import net.jerrydev.baputils.events.ClientPeriodic;
 import net.jerrydev.baputils.utils.ChatStyles.CCodes;
@@ -14,7 +15,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import org.jetbrains.annotations.NonBlocking;
 
 import java.util.Arrays;
 
@@ -49,24 +49,22 @@ public class BapUtils {
     }
 
     public static void clientVerbose(String message) {
-        if(AtomicMemCache.clientVerbose.get()) {
+        if(BapSettingsGui.INSTANCE.getClientChatVerbose()) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
                 ccolorize(CCodes.GRAY, kClientPrefix) + " " + ccolorize(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC), message)
             ));
         }
     }
 
-    @NonBlocking
+
     public static void queueServerMessage(String message) {
         Minecraft.getMinecraft().thePlayer.sendChatMessage(kServerPrefix + " > " + message);
     }
 
-    @NonBlocking
     public static void queueServerMessage(String message, boolean addPrefix) {
         Minecraft.getMinecraft().thePlayer.sendChatMessage(addPrefix ? (kServerPrefix + " > " + message) : message);
     }
 
-    @NonBlocking
     public static void queueCommand(String command) {
         Debug.dout("Executing: /" + command);
         Minecraft.getMinecraft().thePlayer.sendChatMessage((isLocalDev ? "." : "") + "/" + command);

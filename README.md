@@ -24,7 +24,7 @@ For more information, please visit <https://bap.jerrydev.dev>. <https://jerrydev
 
 ## Socials
 
-- Our Discord server is currently private, and we do not have an estimated time of when it will be made public for
+- Our Discord server is currently private, and we do not have plans to make it public be made public for
   BapUtils. You can contact @tomassy or @jerrydev on Discord for the moement.
 
 ## Documentation
@@ -44,7 +44,6 @@ For more information, please visit <https://bap.jerrydev.dev>. <https://jerrydev
 | cache, data                     | *none*        | Displays values data currently stored in the AtomicMemCache        |
 | color(s), colour(s), cc         | *none*        | Displays the Minecraft (§/&) color codes. Use as a reference.      |
 | crash, exit                     | playerName    | Sends a game crash request to `playerName`.                        |
-| debug, bug                      | *variable*    | Enable debug messages in the chat.                                 |
 | dev, test                       | *variable*    | Development command with experimental features.                    |
 | joindungeon, dung, join, jd     | floorName     | Joins a dungeon run on the party leader's behalf. (\[fm]\[0-7])    |
 | help, ?                         | *none*        | Shows info about commands and their aliases.                       |
@@ -69,11 +68,10 @@ If you encounter issues with IntelliJ such as folders not showing, delete the `.
 
 ### Versioning
 
-The BapUtils mod version is hardcoded at 3 locations. You must modify all 3 for a version change.
+The BapUtils mod version is hardcoded at 2 locations. Modify both values when changing version.
 
-- Constants.java
-- build.gradle.kts
-- gradle.properties
+- Constants.java (`public static final String kModVersion = "0.0.0";`)
+- build.gradle.kts (`version = "0.0.0"`)
 
 ### Using DevAuth, by DJtheRedstoner
 

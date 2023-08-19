@@ -71,9 +71,9 @@ public final class BapWarp {
                     return;
                 }
 
-                queueCommand("party chat bap > okay! Warping the party in 2.5s...");
-                Debug.dout("Sleeping for 2500ms on " + Debug.getThreadInfoFormatted());
-                Thread.sleep(2500);
+                queueCommand("party chat bap > okay! Warping the party in 2s...");
+                Debug.dout("Sleeping for 2000ms on " + Debug.getThreadInfoFormatted());
+                Thread.sleep(2000);
                 Debug.dout("Resumed " + Debug.getThreadInfoFormatted());
 
                 queueCommand("party warp");
@@ -82,39 +82,4 @@ public final class BapWarp {
             }
         }).start();
     }
-
-    /*@Deprecated
-    public static void handleChat(String message) {
-        String[] messageSplit = message.split(" ");
-
-        String playerHex = messageSplit[messageSplit.length - 1];
-        String playerString = StringHex.hexToString(playerHex);
-        messageSplit[messageSplit.length - 1] = playerString;
-        message = String.join(" ", messageSplit);
-
-        String regExpPattern = "(?i)Party > (.*): bap > takeover > "
-                + Pattern.quote(Minecraft.getMinecraft().thePlayer.getName());
-
-        if (message.matches(regExpPattern)) {
-            Pattern regex = Pattern.compile(regExpPattern, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = regex.matcher(message);
-            if (matcher.matches()) {
-                String playerName = matcher.group(1);
-
-                // Transfer the party
-                new Thread(() -> {
-                    try {
-                        BapUtils.queueServerMessage("transferring!");
-                        BapUtils.debugOut("Sleeping for " + Constants.kChatDelayMs + "ms on " + Debug.getThreadInfoFormatted());
-                        Thread.sleep(Constants.kChatDelayMs);
-                        BapUtils.debugOut("Resumed " + Debug.getThreadInfoFormatted());
-
-                        BapUtils.queueServerMessage("/party transfer " + playerName, false);
-                    } catch (InterruptedException err) {
-                        BapUtils.queueClientMessage(ccolorize(CCodes.RED, "Takeover failed! An error occurred while transferring the party."));
-                    }
-                }).start();
-            }
-        }
-    }*/
 }

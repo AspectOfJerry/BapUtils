@@ -1,6 +1,6 @@
 package net.jerrydev.baputils.utils;
 
-import net.jerrydev.baputils.AtomicMemCache;
+import net.jerrydev.baputils.core.BapSettingsGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 
@@ -42,7 +42,7 @@ public final class Debug {
      * @param message Message to be printed to the client chat.
      */
     public static void dout(String message) {
-        if(AtomicMemCache.clientDebug.get()) {
+        if(BapSettingsGui.INSTANCE.getClientChatDebug()) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(ChatStyles.CCodes.DARK_GREEN, kClientPrefix) + " " + ccolorize(ChatStyles.CCodes.GRAY, message)));
             System.out.println(kClientPrefix + " " + message);
         }

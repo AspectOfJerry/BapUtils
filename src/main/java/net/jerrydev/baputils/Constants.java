@@ -8,7 +8,7 @@ import java.util.List;
 public final class Constants {
     public static final String kModId = "baputils";
     public static final String kModName = "BapUtils";
-    public static final String kModVersion = "0.1.3";
+    public static final String kModVersion = "0.5.0";
     public static final String kUserAgent = kModId + "/" + kModVersion;
     public static final String kBugReportUrl = "https://github.com/AspectOfJerry/BapUtils/issues";
 
@@ -25,11 +25,12 @@ public final class Constants {
     @RegExp
     public static final String kHypixelRankPat = "\\[[A-Z+]+?] ";
     @RegExp
-    public static final String kPLeaderPat = "^Party Leader: (.*) ●$";
+    public static final String kJoinDungeonPat = "^Party > .*: \\$jd\\.([fm][0-7])$";
+    @RegExp
+    public static final String kCatacombsJoinPat = "-+?\\n(.*) entered (.*), (.*)!\\n-+?";
+    public static final List<String> kPLeaderPats = Arrays.asList("^Party Leader: (.*) ●$", kCatacombsJoinPat, "^The party was transferred to (.*) by (.*)$");
     @RegExp
     public static final String kTakeoverPat = "^Party > .*: \\$pto$";
-    @RegExp
-    public static final String kJoinDungeonPat = "^Party > .*: \\$jd\\.([fm][0-7])$";
     @RegExp
     public static final String kBapCrashPat = "Party > .*: bap > \\$FMLCommonHandler#exitJava < .*";
     @RegExp

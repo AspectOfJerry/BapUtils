@@ -21,8 +21,6 @@ public final class BapCache {
     public static void execute() {
         for(final String s : Arrays.asList(
             "Here's are the values currently stored in our fancy AtomicMemCache",
-            "- boolean clientDebug: " + autoTrueFalse(String.valueOf(AtomicMemCache.clientDebug.get())),
-            "- boolean clientVerbose: " + autoTrueFalse(String.valueOf(AtomicMemCache.clientVerbose.get())),
             "- boolean isInParty: " + autoTrueFalse(String.valueOf(AtomicMemCache.isInParty.get())),
             "- String lastPartyLeader: " + AtomicMemCache.lastPartyLeader.get()
         )) {

@@ -1,6 +1,7 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
+import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.utils.ChatStyles.CCodes;
 
 import java.util.Arrays;
@@ -16,7 +17,6 @@ public final class BapSettings {
     public static final byte requiredParams = 0;
 
     public static void execute() {
-        BapUtils.queueClientMessage(ccolorize(CCodes.YELLOW, "The settings GUI is currently disabled due to game crashes."));
-        //BapUtils.setActiveGui(BapSettingsGui.INSTANCE.gui());
+        BapUtils.setActiveGui(BapSettingsGui.INSTANCE.gui());
     }
 }

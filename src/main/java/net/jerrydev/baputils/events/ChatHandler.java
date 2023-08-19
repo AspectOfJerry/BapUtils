@@ -6,7 +6,7 @@ import net.jerrydev.baputils.commands.bap.BapCrash;
 import net.jerrydev.baputils.commands.bap.BapJoinDungeon;
 import net.jerrydev.baputils.commands.bap.BapTakeover;
 import net.jerrydev.baputils.commands.bap.BapWarp;
-import net.jerrydev.baputils.utils.Debug;
+import net.jerrydev.baputils.core.BapSettingsGui;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static net.jerrydev.baputils.utils.ChatStyles.cleanString;
+import static net.jerrydev.baputils.utils.Debug.dout;
 
 public class ChatHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -30,67 +31,74 @@ public class ChatHandler {
             return;
         }
 
+        final String cleanMessage = cleanString(event.message.getUnformattedText());
+
         // listen for '/party list' command and set the most recent party leader
-        if(cleanString(event.message.getUnformattedText()).matches(Constants.kPLeaderPat)) {
-            final String message = cleanString(event.message.getUnformattedText());
+        for(String pat : Constants.kPLeaderPats) {
+            if(cleanMessage.matches(pat)) {
+                final Pattern pattern = Pattern.compile(pat, Pattern.CASE_INSENSITIVE);
+                final Matcher matcher = pattern.matcher(cleanMessage);
 
-            final Pattern pattern = Pattern.compile(Constants.kPLeaderPat, Pattern.CASE_INSENSITIVE);
-            final Matcher matcher = pattern.matcher(message);
+                if(matcher.find()) {
+                    final String oldLeader = AtomicMemCache.lastPartyLeader.get();
+                    final String newLeader = matcher.group(1);
 
-            if(matcher.find()) {
-                final String oldLeader = AtomicMemCache.lastPartyLeader.get();
-                final String newLeader = matcher.group(1);
+                    if(newLeader.equals(oldLeader)) {
+                        dout("Checked for the latest party leader, still " + newLeader);
+                        return;
+                    }
 
-                if(newLeader.equals(oldLeader)) {
-                    Debug.dout("Checked for the latest party leader, still " + newLeader);
-                    return;
+                    AtomicMemCache.lastPartyLeader.set(newLeader);
+                    dout("Updated the last party leader to " + newLeader + " from " + oldLeader);
                 }
-
-                AtomicMemCache.lastPartyLeader.set(newLeader);
-                Debug.dout("Updated the last party leader to " + newLeader + " from " + oldLeader);
+                return;
             }
-            return;
         }
 
-        if(Constants.kNotInPartyLit.contains(cleanString(event.message.getUnformattedText()))) {
+        if(Constants.kNotInPartyLit.contains(cleanMessage)) {
             if(!AtomicMemCache.isInParty.get()) {
-                Debug.dout("Checked for party status, still not in party.");
+                dout("Checked for party status, still not in party.");
                 return;
             }
 
             AtomicMemCache.isInParty.set(false);
-            Debug.dout("Updated isInParty to " + AtomicMemCache.isInParty.get());
+            dout("Updated isInParty to " + AtomicMemCache.isInParty.get());
             return;
         }
 
-        if(/*BapConfig.INSTANCE.getPartyTakeoverMaster() &&*/
-            cleanString(event.message.getUnformattedText()).matches(Constants.kTakeoverPat)) {
-            final String message = cleanString(event.message.getUnformattedText());
+        if(cleanMessage.matches(Constants.kTakeoverPat)) {
+            if(!BapSettingsGui.INSTANCE.getPartyTakeoverMaster()) {
+                dout("PartyTakeover is disabled.");
+                return;
+            }
 
-            BapTakeover.handleChat(message);
+            BapTakeover.handleChat(cleanMessage);
             return;
         }
 
-        if(/*BapConfig.INSTANCE.getJoinDungeonMaster() &&*/
-            cleanString(event.message.getUnformattedText()).matches(Constants.kJoinDungeonPat)) {
-            final String message = cleanString(event.message.getUnformattedText());
+        if(cleanMessage.matches(Constants.kJoinDungeonPat)) {
+            if(!BapSettingsGui.INSTANCE.getJoinDungeonMaster()) {
+                dout("JoinDungeon is disabled.");
+                return;
+            }
 
-            BapJoinDungeon.handleChat(message);
+            BapJoinDungeon.handleChat(cleanMessage);
             return;
         }
 
-        if(/*BapConfig.INSTANCE.getPartyWarpMaster() &&*/
-            cleanString(event.message.getUnformattedText()).matches(Constants.kPartyWarpPat)) {
-            final String message = cleanString(event.message.getUnformattedText());
+        if(cleanMessage.matches(Constants.kPartyWarpPat)) {
+            if(!BapSettingsGui.INSTANCE.getPartyWarpMaster()) {
+                dout("PartyWarp is disabled.");
+                return;
+            }
 
-            BapWarp.handleChat(message);
+            BapWarp.handleChat(cleanMessage);
             return;
         }
 
-        if(cleanString(event.message.getUnformattedText()).matches(Constants.kBapCrashPat)) {
-            final String message = cleanString(event.message.getUnformattedText());
+        if(cleanMessage.matches(Constants.kBapCrashPat)) {
 
-            BapCrash.handleChat(message);
+            BapCrash.handleChat(cleanMessage);
             return;
         }
     }

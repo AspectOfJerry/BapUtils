@@ -4,14 +4,14 @@ plugins {
     id("gg.essential.loom") version "0.10.0.+"
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    kotlin("jvm") version "1.8.20-RC"
+    kotlin("jvm") version "1.8.22"
 }
 
 // Constants
 group = "net.jerrydev"
-version = "0.1.3"
+version = "0.5.0"
 
-// val baseGroup = "net.jerrydev" // "net.jerrydev.baputils" breaks mixins
+// val baseGroup = "net.jerrydev"
 val mcVersion: String = "1.8.9"
 // val version: String = "0.1.2-beta.2"
 val mixinGroup = "$group.mixin"
@@ -30,7 +30,8 @@ loom {
             // If you don't want mixins, remove these lines
             property("mixin.debug", "true")
             property("asmhelper.verbose", "true")
-            arg("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
+            //arg("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
+            arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
             arg("--mixin", "mixins.$modid.json")
         }
     }
@@ -74,11 +75,16 @@ dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
-    implementation("gg.essential:elementa-1.8.9-forge:590")
     implementation("gg.essential:vigilance-1.8.9-forge:284")
-    implementation("gg.essential:universalcraft-1.8.9-forge:211") // do i need this? confirm build number.
+    // vigilance dependencies
+    implementation("gg.essential:elementa-1.8.9-forge:590")
+    // vigilance elementa
+    implementation("gg.essential:universalcraft-1.8.9-forge:211")
 
-    shadowImpl(kotlin("stdlib-jdk8"))
+    compileOnly("gg.essential:essential-1.8.9-forge:12132+g6e2bf4dc5")
+    shadowImpl("gg.essential:loader-launchwrapper:1.2.1")
+
+    //shadowImpl("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22")
 
     // If you don't want mixins, remove these lines
     shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
@@ -104,7 +110,8 @@ tasks.withType(Jar::class) {
         this["ForceLoadAsMod"] = "true"
 
         // If you don't want mixins, remove these lines
-        this["TweakClass"] = "org.spongepowered.asm.launch.MixinTweaker"
+        //this["TweakClass"] = "org.spongepowered.asm.launch.MixinTweaker"
+        this["TweakClass"] = "gg.essential.loader.stage0.EssentialSetupTweaker"
         this["MixinConfigs"] = "mixins.$modid.json"
     }
 }

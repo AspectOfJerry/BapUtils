@@ -22,10 +22,9 @@ public class ClientPeriodic {
 
         if(activeGui != null) {
             if(Minecraft.getMinecraft().thePlayer.openContainer == Minecraft.getMinecraft().thePlayer.inventoryContainer) {
-                Debug.dout("Displaying gui");
                 Minecraft.getMinecraft().displayGuiScreen(activeGui);
                 activeGui = null;
-                Debug.dout("Cleared active gui");
+                Debug.dout("Queued gui is now active, clearing queue");
             }
         }
     }

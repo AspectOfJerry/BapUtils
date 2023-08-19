@@ -35,9 +35,6 @@ public final class BapHelp {
             BapCache.commandUsage
                 + "\n " + ccolorize(CCodes.GRAY, "- Displays currently cached info"),
 
-            BapDebug.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Toggles debug mode with more verbose output"),
-
             BapColors.commandUsage
                 + "\n " + ccolorize(CCodes.GRAY, "- Displays (&) color codes"),
 

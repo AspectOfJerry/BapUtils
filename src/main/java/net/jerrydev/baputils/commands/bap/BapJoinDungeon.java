@@ -71,8 +71,10 @@ public final class BapJoinDungeon {
             if(floor == null) {
                 queueErrorMessage("Unknown floor name of " + floorName + ".");
                 // if the user did not use a command, this might happen
-                /*Debug.dout("Something's really wrong! How is this possible? We've already checked for the validity of the floor name!");
-                queueClientMessage(ccolorize(CCodes.YELLOW, "Please open bug report at https://github.com/AspectOfJerry/BapUtils/issues."));*/
+                /*
+                    Debug.dout("Something's really wrong! How is this possible? We've already checked for the validity of the floor name!");
+                    queueClientMessage(ccolorize(CCodes.YELLOW, "Please open bug report at https://github.com/AspectOfJerry/BapUtils/issues."));
+                */
                 return;
             }
 

@@ -2,6 +2,7 @@ package net.jerrydev.baputils.commands;
 
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.commands.bap.*;
+import net.jerrydev.baputils.guis.BapGui;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -10,7 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.queueClientMessage;
-import static net.jerrydev.baputils.utils.ChatStyles.*;
+import static net.jerrydev.baputils.utils.ChatStyles.CCodes;
+import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
 
 public class BapCommand extends CommandBase {
     public static final List<String> commandAliases = Arrays.asList("bp", "baputils", "baputilities", "uwa", "pig", "tom", "fishing");
@@ -38,35 +40,18 @@ public class BapCommand extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if(args.length == 0) {
-            // Display main GUI
-            //BapUtils.setActiveGui(new BapGui()); // crashes the game outside of development
+            // Display main/options GUI
+            BapUtils.setActiveGui(new BapGui());
 
-            for(final String s : Arrays.asList(
-                ccolorize(CCodes.GRAY, "The GUI is currently disabled due to game crashes."),
-                rainbowify("BapUtils") + "' defualt configuration is set to:",
-                ccolorize(CCodes.GRAY, "- Global toggle: ") + autoTrueFalse("true"),
-                ccolorize(CCodes.GRAY, "- Allow Party Takeover: ") + autoTrueFalse("true"),
-                ccolorize(CCodes.GRAY, "- Party Takeover trusted only: ") + autoTrueFalse("false"),
-                ccolorize(CCodes.GRAY, "- Allow JoinDungeon: ") + autoTrueFalse("true"),
-                ccolorize(CCodes.GRAY, "- JoinDungeon trusted only: ") + autoTrueFalse("false"),
-                ccolorize(CCodes.GRAY, "- Client debug (/debug): ") + autoTrueFalse("false"),
-                ccolorize(CCodes.GRAY, "- Client verbose: ") + autoTrueFalse("true"))) {
-                queueClientMessage(s);
-            }
-
-            queueClientMessage(
+            /*queueClientMessage(
                 ccolorize(CCodes.DARK_RED, "Th")
                     + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "e")
                     + ccolorize(CCodes.DARK_RED, " GUI ")
                     + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "i")
-                    + ccolorize(CCodes.DARK_RED, "s co")
-                    + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "m")
-                    + ccolorize(CCodes.DARK_RED, "in")
-                    + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "g")
-                    + ccolorize(CCodes.DARK_RED, " so")
-                    + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "o")
-                    + ccolorize(CCodes.DARK_RED, "n...")
-            );
+                    + ccolorize(CCodes.DARK_RED, "s h")
+                    + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "e")
+                    + ccolorize(CCodes.DARK_RED, "re.")
+            );*/
             return;
         }
 
@@ -92,11 +77,6 @@ public class BapCommand extends CommandBase {
             }
 
             BapCrash.execute(args[1]);
-        } else if(BapDebug.commandName.equals(subcommand) || BapDebug.commandAliases.contains(subcommand)) {
-            // bap debug
-            verifyArgsLen(args.length - 1, BapDebug.requiredParams, BapDebug.commandUsage);
-
-            BapDebug.execute();
         } else if(BapDev.commandName.equals(subcommand) || BapDev.commandAliases.contains(subcommand)) {
             // bap dev
             verifyArgsLen(args.length - 1, BapDev.requiredParams, BapDev.commandUsage);
