@@ -1,14 +1,12 @@
 # BapUtils
 
-Welcome to BapUtils, a Hypixel Skyblock mod with random utility features.
+Welcome to BapUtils, a Hypixel Skyblock mod featuring a variety of random utility features.
 
-To find the latest release, please visit
+To download the latest release, visit: <https://github.com/AspectOfJerry/BapUtils/releases/>
 
-This is our first Minecraft mod for Hypixel Skyblock, so if there are any bugs or issues with the mod, please open an
-issue on
-GitHub or contact us on Discord (@tomassy or @jerrydev).
+# Documentation
 
-For more information, please visit <https://bap.jerrydev.dev>. <https://jerrydev.net/bap> will be available later.
+Please visit <https://bap.jerrydev.net> for an up-to-date documentation (mostly updated every commit if needed).
 
 ## Features (TBD)
 
@@ -24,58 +22,5 @@ For more information, please visit <https://bap.jerrydev.dev>. <https://jerrydev
 
 ## Socials
 
-- Our Discord server is currently private, and we do not have plans to make it public be made public for
-  BapUtils. You can contact @tomassy or @jerrydev on Discord for the moement.
-
-## Documentation
-
-### Core features
-
-- Party takeover to allow trusted players to take your party (like a remote `/party transfer`).
-- Utility features (not only for Hypixel Skyblock).
-    - Minecraft color codes
-- Trust feature to unlock certain functionalities such as party takeover.
-
-### Commands (/)
-
-| Names                           | Parameters    | Description                                                        |
-|---------------------------------|---------------|--------------------------------------------------------------------|
-| bap, baputilities, baputils, bp | *?subcommand* | Main command                                                       |
-| cache, data                     | *none*        | Displays values data currently stored in the AtomicMemCache        |
-| color(s), colour(s), cc         | *none*        | Displays the Minecraft (§/&) color codes. Use as a reference.      |
-| crash, exit                     | playerName    | Sends a game crash request to `playerName`.                        |
-| dev, test                       | *variable*    | Development command with experimental features.                    |
-| joindungeon, dung, join, jd     | floorName     | Joins a dungeon run on the party leader's behalf. (\[fm]\[0-7])    |
-| help, ?                         | *none*        | Shows info about commands and their aliases.                       |
-| hello, hi, world                | *none*        | Sends a hello message. Use to check if mod is loaded.              |
-| options, menu, gui              | *none*        | Opens the Options* GUI.                                            |
-| settings, config, cfg           | *none*        | Opens the Settings* GUI.                                           |
-| takeover, ptake, pto, to        | *none*        | Take the leader's party.                                           |
-| trust, friend, allow, add       | playerName    | Trust `playerName` (saved by uuid). This unlocks certain commands. |
-| uuid, player, id                | playerName    | Get `playerName`'s Minecraft UUID.                                 |
-| warp, pwarp, pw, w              | *none*        | Warps the party on the party leader's behalf.                      |
-
-*In the context of BapUtils, the terms *Options* and *Settings* are employed in the same fashion as in Minecraft: the
-*settings* are within the *options* menu.
-
-## Developer reference
-
-If you encounter issues with IntelliJ such as folders not showing, delete the `.idea` folder and reimport the project.
-
-- Forge 1.8.9 11.15.1.2318
-- Gradle JVM: Java 17
-- Project SDK: Java 1.8
-
-### Versioning
-
-The BapUtils mod version is hardcoded at 2 locations. Modify both values when changing version.
-
-- Constants.java (`public static final String kModVersion = "0.0.0";`)
-- build.gradle.kts (`version = "0.0.0"`)
-
-### Using DevAuth, by DJtheRedstoner
-
-Documentation: <https://github.com/DJtheRedstoner/DevAuth>
-
-Add JVM Property: `"-Ddevauth.enabled=true"`
-See the DevAuth repo README for more information
+- Our Discord server is currently private, and we do not have plans to make it public. You can contact @tomassy or
+  @jerrydev on Discord for the moment.

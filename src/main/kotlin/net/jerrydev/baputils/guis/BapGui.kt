@@ -13,6 +13,7 @@ import gg.essential.elementa.dsl.animate
 import gg.essential.elementa.dsl.childOf
 import gg.essential.elementa.dsl.constrain
 import net.jerrydev.baputils.BapUtils
+import net.jerrydev.baputils.Constants
 import net.jerrydev.baputils.core.BapSettingsGui
 import java.awt.Desktop
 import java.net.URI
@@ -59,7 +60,7 @@ class BapGui : WindowScreen(ElementaVersion.V2) {
             y = SiblingConstraint(20f)
             textScale = PixelConstraint(2.2f)
         }.onMouseClick { (event) ->
-            BapUtils.setActiveGui(null)
+            BapUtils.queueCommand("bap help")
         }.onMouseEnter {
             animate {
                 setTextScaleAnimation(
@@ -82,7 +83,7 @@ class BapGui : WindowScreen(ElementaVersion.V2) {
             y = SiblingConstraint(20f)
             textScale = PixelConstraint(2.2f)
         }.onMouseClick { (event) ->
-            Desktop.getDesktop().browse(URI("https://bap.jerrydev.net/"))
+            Desktop.getDesktop().browse(URI(Constants.kModDocs))
         }.onMouseEnter {
             animate {
                 setTextScaleAnimation(
@@ -105,7 +106,7 @@ class BapGui : WindowScreen(ElementaVersion.V2) {
             y = SiblingConstraint(20f)
             textScale = PixelConstraint(2.2f)
         }.onMouseClick { (event) ->
-            Desktop.getDesktop().browse(URI("https://github.com/AspectOfJerry/BapUtils/"))
+            Desktop.getDesktop().browse(URI(Constants.kGitHubRepo))
         }.onMouseEnter {
             animate {
                 setTextScaleAnimation(

@@ -26,7 +26,7 @@ public final class ChatStyles {
 
     public static String autoTrueFalse(String tf) {
         if(tf == null) {
-            return null;
+            return "null";
         }
 
         if(tf.equalsIgnoreCase("true")) {
@@ -35,7 +35,8 @@ public final class ChatStyles {
         if(tf.equalsIgnoreCase("false")) {
             return ccolorize(CCodes.RED, tf);
         }
-        throw new IllegalArgumentException("Value must be \"true\" or \"false\" (String).");
+
+        return ccolorize(CCodes.GRAY, tf);
     }
 
     /**

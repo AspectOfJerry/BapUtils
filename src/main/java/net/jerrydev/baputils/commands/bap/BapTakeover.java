@@ -36,7 +36,7 @@ public final class BapTakeover {
                     return;
                 }
 
-                queueCommand("party chat $pto");
+                queuePartyChat("$pto", false);
             } catch(InterruptedException e) {
                 throw new RuntimeException(e);
             }

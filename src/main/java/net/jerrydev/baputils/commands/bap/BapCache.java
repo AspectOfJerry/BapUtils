@@ -22,7 +22,8 @@ public final class BapCache {
         for(final String s : Arrays.asList(
             "Here's are the values currently stored in our fancy AtomicMemCache",
             "- boolean isInParty: " + autoTrueFalse(String.valueOf(AtomicMemCache.isInParty.get())),
-            "- String lastPartyLeader: " + AtomicMemCache.lastPartyLeader.get()
+            "- String lastPartyLeader: " + autoTrueFalse(AtomicMemCache.lastPartyLeader.get()),
+            "- CatacombsFloors lastCatacombsFloor: " + autoTrueFalse(String.valueOf(AtomicMemCache.lastCatacombsFloor.get()))
         )) {
             BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, s, false));
         }

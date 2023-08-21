@@ -36,7 +36,7 @@ public final class BapWarp {
                     return;
                 }
 
-                queueCommand("party chat $warp");
+                queuePartyChat("$warp", false);
             } catch(InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -71,7 +71,7 @@ public final class BapWarp {
                     return;
                 }
 
-                queueCommand("party chat bap > okay! Warping the party in 2s...");
+                queuePartyChat("Warping the party in 2s.");
                 Debug.dout("Sleeping for 2000ms on " + Debug.getThreadInfoFormatted());
                 Thread.sleep(2000);
                 Debug.dout("Resumed " + Debug.getThreadInfoFormatted());

@@ -18,7 +18,7 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
     var modMaster = true
 
     @Property(
-        type = PropertyType.CHECKBOX,
+        type = PropertyType.SWITCH,
         name = "Client chat verbose",
         description = "Let BapUtils show you more messages (client chat).",
         category = "General"
@@ -26,7 +26,7 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
     var clientChatVerbose = true
 
     @Property(
-        type = PropertyType.CHECKBOX,
+        type = PropertyType.SWITCH,
         name = "Client chat debug",
         description = "Let BapUtils show you debug messages (client chat).",
         category = "General"
@@ -42,7 +42,7 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
     var partyTakeoverMaster = true
 
     @Property(
-        type = PropertyType.CHECKBOX,
+        type = PropertyType.SWITCH,
         name = "Party Takeover trusted only (unavailable)",
         description = "[WIP] Only allow trusted players to take your party.",
         category = "Party",
@@ -58,7 +58,7 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
     var partyWarpMaster = true
 
     @Property(
-        type = PropertyType.CHECKBOX,
+        type = PropertyType.SWITCH,
         name = "Party Takeover trusted only (unavailable)",
         description = "[WIP] Only allow trusted players to warp your party.",
         category = "Party",
@@ -75,13 +75,22 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
     var joinDungeonMaster = true
 
     @Property(
-        type = PropertyType.CHECKBOX,
+        type = PropertyType.SWITCH,
         name = "JoinDungeon trusted only (unavailable)",
         description = "[WIP] Only allow trusted players to join a dungeon run on your behalf.",
         category = "Party",
         subcategory = "Dungeons"
     )
     var joinDungeonTrustedOnly = false
+
+    @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Enable AutoJoinIn",
+        description = "Listen for 'going/go in 5s' messages and enter a run after the delay (0 to 127s). Optionally specify the floor: 'going in 5s f7'.",
+        category = "Party",
+        subcategory = "Dungeons"
+    )
+    var joinDungeonAutoJoinIn = true
 
 
     init {

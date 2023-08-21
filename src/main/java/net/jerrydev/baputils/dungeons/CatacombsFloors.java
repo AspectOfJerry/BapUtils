@@ -3,37 +3,49 @@ package net.jerrydev.baputils.dungeons;
 import javax.annotation.Nullable;
 
 public enum CatacombsFloors {
-    FLOOR0("f0", false, "CATACOMBS_ENTRANCE"),
-    FLOOR1("f1", false, "CATACOMBS_FLOOR_ONE"),
-    FLOOR2("f2", false, "CATACOMBS_FLOOR_TWO"),
-    FLOOR3("f3", false, "CATACOMBS_FLOOR_THREE"),
-    FLOOR4("f4", false, "CATACOMBS_FLOOR_FOUR"),
-    FLOOR5("f5", false, "CATACOMBS_FLOOR_FIVE"),
-    FLOOR6("f6", false, "CATACOMBS_FLOOR_SIX"),
-    FLOOR7("f7", false, "CATACOMBS_FLOOR_SEVEN"),
-    MASTER0("m0", true, "MASTER_CATACOMBS_ENTRANCE"),
-    MASTER1("m1", true, "MASTER_CATACOMBS_FLOOR_ONE"),
-    MASTER2("m2", true, "MASTER_CATACOMBS_FLOOR_TWO"),
-    MASTER3("m3", true, "MASTER_CATACOMBS_FLOOR_THREE"),
-    MASTER4("m4", true, "MASTER_CATACOMBS_FLOOR_FOUR"),
-    MASTER5("m5", true, "MASTER_CATACOMBS_FLOOR_FIVE"),
-    MASTER6("m6", true, "MASTER_CATACOMBS_FLOOR_SIX"),
-    MASTER7("m7", true, "MASTER_CATACOMBS_FLOOR_SEVEN");
+    FLOOR0("f0", false, "CATACOMBS_ENTRANCE", "The Catacombs, Entrance"),
+    FLOOR1("f1", false, "CATACOMBS_FLOOR_ONE", "The Catacombs, Floor I"),
+    FLOOR2("f2", false, "CATACOMBS_FLOOR_TWO", "The Catacombs, Floor II"),
+    FLOOR3("f3", false, "CATACOMBS_FLOOR_THREE", "The Catacombs, Floor III"),
+    FLOOR4("f4", false, "CATACOMBS_FLOOR_FOUR", "The Catacombs, Floor IV"),
+    FLOOR5("f5", false, "CATACOMBS_FLOOR_FIVE", "The Catacombs, Floor V"),
+    FLOOR6("f6", false, "CATACOMBS_FLOOR_SIX", "The Catacombs, Floor VI"),
+    FLOOR7("f7", false, "CATACOMBS_FLOOR_SEVEN", "The Catacombs, Floor VII"),
+    MASTER0("m0", true, "MASTER_CATACOMBS_ENTRANCE", "MM Catacombs, Entrance"),
+    MASTER1("m1", true, "MASTER_CATACOMBS_FLOOR_ONE", "MM Catacombs, Floor I"),
+    MASTER2("m2", true, "MASTER_CATACOMBS_FLOOR_TWO", "MM Catacombs, Floor II"),
+    MASTER3("m3", true, "MASTER_CATACOMBS_FLOOR_THREE", "MM Catacombs, Floor III"),
+    MASTER4("m4", true, "MASTER_CATACOMBS_FLOOR_FOUR", "MM Catacombs, Floor IV"),
+    MASTER5("m5", true, "MASTER_CATACOMBS_FLOOR_FIVE", "MM Catacombs, Floor V"),
+    MASTER6("m6", true, "MASTER_CATACOMBS_FLOOR_SIX", "MM Catacombs, Floor VI"),
+    MASTER7("m7", true, "MASTER_CATACOMBS_FLOOR_SEVEN", "MM Catacombs, Floor VII");
 
     public final String floorCode;
     public final boolean isMaster;
     public final String commandCode;
+    public final String chatName;
 
-    CatacombsFloors(String _floorCode, boolean _isMaster, String _commandCode) {
+    CatacombsFloors(String _floorCode, boolean _isMaster, String _commandCode, String _chatName) {
         this.floorCode = _floorCode;
         this.isMaster = _isMaster;
         this.commandCode = _commandCode;
+        this.chatName = _chatName;
     }
 
     @Nullable
-    public static CatacombsFloors getFloorByName(String name) {
+    public static CatacombsFloors getFloorByCode(String code) {
         for(final CatacombsFloors floor : CatacombsFloors.values()) {
-            if(floor.floorCode.equals(name.toLowerCase())) {
+            if(floor.floorCode.equals(code.toLowerCase())) {
+                return floor;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public static CatacombsFloors getFloorByChatName(String name) {
+        for(final CatacombsFloors floor : CatacombsFloors.values()) {
+            if(floor.chatName.equals(name)) {
                 return floor;
             }
         }

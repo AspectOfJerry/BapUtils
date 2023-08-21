@@ -65,6 +65,14 @@ public class BapUtils {
         Minecraft.getMinecraft().thePlayer.sendChatMessage(addPrefix ? (kServerPrefix + " > " + message) : message);
     }
 
+    public static void queuePartyChat(String message) {
+        queueCommand("party chat bap > " + message);
+    }
+
+    public static void queuePartyChat(String message, boolean addPrefix) {
+        queueCommand("party chat " + (addPrefix ? "bap > " : "") + message);
+    }
+
     public static void queueCommand(String command) {
         Debug.dout("Executing: /" + command);
         Minecraft.getMinecraft().thePlayer.sendChatMessage((isLocalDev ? "." : "") + "/" + command);
