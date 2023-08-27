@@ -33,7 +33,7 @@ public final class Constants {
     public static final String kCatacombsJoinPat = "-+?\\n(" + kMcUserPat + ") entered (.*, .*)!\\n-+?";
     public static final List<String> kPLeaderPats = Arrays.asList("^Party Leader: (" + kMcUserPat + ") ●$", kCatacombsJoinPat, "^The party was transferred to (" + kMcUserPat + ") by (.*)$");
     @RegExp
-    public static final String kAutoJoinInPat = "^Party > (" + kMcUserPat + "): (?:go|enter)(?:ing)? in ([0-9]+?)s?.([fm][0-7])?$";
+    public static final String kAutoJoinInPat = "^Party > (" + kMcUserPat + "): (?:go|enter)(?:ing)? in ([0-9]+)s.([fm][0-7])?$";
     @RegExp
     public static final String kInPartyPat = "^You have joined (" + kMcUserPat + ")'s party!$";
     public static final List<String> kNotInPartyPats = Arrays.asList(
