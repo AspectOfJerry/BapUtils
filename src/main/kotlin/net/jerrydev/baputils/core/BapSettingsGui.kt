@@ -85,13 +85,28 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
 
     @Property(
         type = PropertyType.CHECKBOX,
-        name = "Enable AutoJoinIn",
+        name = "Allow AutoJoinIn",
         description = "Listen for 'going/go in 5s' messages and enter a run after the delay (0 to 127s). Optionally specify the floor: 'going in 5s f7'.",
         category = "Party",
         subcategory = "Dungeons"
     )
     var joinDungeonAutoJoinIn = true
 
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Dungeon death message",
+        description = "Custom message to send when a player dies in a dungeon. Clear the field to disable.",
+        category = "Dungeons"
+    )
+    var dungeonDeathMsg = ""
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Puzzle fail message",
+        description = "Custom message to send when a player fails a puzzle. Clear the field to disable.",
+        category = "Dungeons"
+    )
+    var puzzleFailMsg = ""
 
     init {
         super.initialize()
@@ -131,7 +146,7 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
             "Utility features"
         )
 
-        super.addDependency("partyTakeoverTrustedOnly", "partyTakeoverMaster")
-        super.addDependency("joinDungeonTrustedOnly", "joinDungeonMaster")
+        addDependency("partyTakeoverTrustedOnly", "partyTakeoverMaster")
+        addDependency("joinDungeonTrustedOnly", "joinDungeonMaster")
     }
 }

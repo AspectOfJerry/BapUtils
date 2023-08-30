@@ -1,6 +1,6 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.AtomicMemCache;
+import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
 import net.jerrydev.baputils.utils.ChatStyles.CCodes;
@@ -30,8 +30,8 @@ public final class BapWarp {
                 Thread.sleep(250);
                 dout("Resumed " + Debug.getThreadInfoFormatted());
 
-                if((AtomicMemCache.lastPartyLeader.get() != null)
-                    && AtomicMemCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
+                if((AtomicCache.lastPartyLeader.get() != null)
+                    && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
                     queueErrorMessage("You are already the party leader!");
                     return;
                 }
@@ -59,15 +59,15 @@ public final class BapWarp {
                 Thread.sleep(Constants.kCommandDelayMs);
                 dout("Resumed " + Debug.getThreadInfoFormatted());
 
-                if(AtomicMemCache.lastPartyLeader.get() == null) {
+                if(AtomicCache.lastPartyLeader.get() == null) {
                     queueWarnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
                     dout("Check the cached party leader using /bap cache");
                 }
 
-                if(!AtomicMemCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
-                    && (AtomicMemCache.lastPartyLeader.get() != null)) {
+                if(!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
+                    && (AtomicCache.lastPartyLeader.get() != null)) {
                     clientVerbose("We are not party leader");
-                    dout("We are not leader; not warping. Latest party leader is: " + AtomicMemCache.lastPartyLeader);
+                    dout("We are not leader; not warping. Latest party leader is: " + AtomicCache.lastPartyLeader);
                     return;
                 }
 

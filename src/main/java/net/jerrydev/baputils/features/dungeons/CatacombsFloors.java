@@ -1,4 +1,4 @@
-package net.jerrydev.baputils.dungeons;
+package net.jerrydev.baputils.features.dungeons;
 
 import javax.annotation.Nullable;
 
@@ -19,6 +19,7 @@ public enum CatacombsFloors {
     MASTER5("m5", true, "MASTER_CATACOMBS_FLOOR_FIVE", "MM Catacombs, Floor V"),
     MASTER6("m6", true, "MASTER_CATACOMBS_FLOOR_SIX", "MM Catacombs, Floor VI"),
     MASTER7("m7", true, "MASTER_CATACOMBS_FLOOR_SEVEN", "MM Catacombs, Floor VII");
+
 
     public final String floorCode;
     public final boolean isMaster;

@@ -100,7 +100,7 @@ public final class ChatStyles {
      * @return Cleaned string
      */
     public static String stripColorCodes(String message) {
-        return message.replaceAll(Constants.kColorCodePat, "");
+        return message.replaceAll(Constants.kColorCodeP, "");
     }
 
     /**
@@ -110,7 +110,7 @@ public final class ChatStyles {
      * @return Cleaned string
      */
     public static String removeHypixelRanks(String message) {
-        return message.replaceFirst(Constants.kHypixelRankPat, "");
+        return message.replaceFirst(Constants.kHypixelRankP, "");
     }
 
     public enum CCodes {

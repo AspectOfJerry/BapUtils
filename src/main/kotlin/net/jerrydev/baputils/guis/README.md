@@ -3,7 +3,6 @@
 - Docs directory: <https://github.com/EssentialGG/Elementa/tree/master/docs> 
 - List of components: <https://github.com/EssentialGG/Elementa/blob/master/docs/components.md>
 - Kotlin: <https://github.com/EssentialGG/Elementa/blob/master/README.md>
-- ~~Java~~ *(recommend Kotlin)*: <https://github.com/EssentialGG/Elementa/blob/master/README-java.md>
 
 ## Components
 

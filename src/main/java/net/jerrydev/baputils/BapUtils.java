@@ -2,7 +2,7 @@ package net.jerrydev.baputils;
 
 import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.core.BapSettingsGui;
-import net.jerrydev.baputils.events.ChatHandler;
+import net.jerrydev.baputils.events.ChatListener;
 import net.jerrydev.baputils.events.ClientPeriodic;
 import net.jerrydev.baputils.utils.ChatStyles.CCodes;
 import net.jerrydev.baputils.utils.Debug;
@@ -34,7 +34,7 @@ public class BapUtils {
         ClientCommandHandler.instance.registerCommand(new BapCommand());
 
         // Register events
-        MinecraftForge.EVENT_BUS.register(new ChatHandler());
+        MinecraftForge.EVENT_BUS.register(new ChatListener());
         MinecraftForge.EVENT_BUS.register(new ClientPeriodic());
     }
 

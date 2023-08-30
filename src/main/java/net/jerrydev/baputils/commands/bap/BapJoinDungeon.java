@@ -1,8 +1,8 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.AtomicMemCache;
+import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.dungeons.CatacombsFloors;
+import net.jerrydev.baputils.features.dungeons.CatacombsFloors;
 import net.jerrydev.baputils.utils.ChatStyles.CCodes;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
@@ -39,8 +39,8 @@ public final class BapJoinDungeon {
                 Thread.sleep(Constants.kCommandDelayMs);
                 dout("Resumed " + Debug.getThreadInfoFormatted());
 
-                if((AtomicMemCache.lastPartyLeader.get() != null)
-                    && AtomicMemCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
+                if((AtomicCache.lastPartyLeader.get() != null)
+                    && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
                     queueErrorMessage("You are already the party leader!");
                     return;
                 }
@@ -61,7 +61,7 @@ public final class BapJoinDungeon {
             return;
         }
 
-        final Pattern pattern = Pattern.compile(Constants.kJoinDungeonPat);
+        final Pattern pattern = Pattern.compile(Constants.kJoinDungeonP);
         final Matcher matcher = pattern.matcher(cleanMessage);
 
         if(!matcher.find()) {
@@ -84,15 +84,15 @@ public final class BapJoinDungeon {
                 Thread.sleep(Constants.kChatDelayMs);
                 dout("Resumed " + Debug.getThreadInfoFormatted());
 
-                if(AtomicMemCache.lastPartyLeader.get() == null) {
+                if(AtomicCache.lastPartyLeader.get() == null) {
                     queueWarnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
                     dout("Check the cached party leader using /bap cache");
                 }
 
-                if(!AtomicMemCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
-                    && (AtomicMemCache.lastPartyLeader.get() != null)) {
+                if(!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
+                    && (AtomicCache.lastPartyLeader.get() != null)) {
                     clientVerbose("We are not party leader");
-                    dout("We are not leader; not entering a run. Latest party leader is: " + AtomicMemCache.lastPartyLeader);
+                    dout("We are not leader; not entering a run. Latest party leader is: " + AtomicCache.lastPartyLeader);
                     return;
                 }
 
@@ -112,7 +112,7 @@ public final class BapJoinDungeon {
     }
 
     public static void autoJoinIn(String cleanMessage) {
-        final Pattern pattern = Pattern.compile(Constants.kAutoJoinInPat);
+        final Pattern pattern = Pattern.compile(Constants.kAutoJoinInP);
         final Matcher matcher = pattern.matcher(cleanMessage);
 
         if(!matcher.find()) {
@@ -122,24 +122,24 @@ public final class BapJoinDungeon {
 
         new Thread(() -> {
             try {
-                if(AtomicMemCache.lastPartyLeader.get() == null) {
+                if(AtomicCache.lastPartyLeader.get() == null) {
                     queueCommand("party list");
                     dout("Sleeping for " + Constants.kCommandDelayMs + "ms on" + Debug.getThreadInfoFormatted());
                     Thread.sleep(Constants.kCommandDelayMs);
                     dout("Resumed " + Debug.getThreadInfoFormatted());
                 }
-                if(!AtomicMemCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
+                if(!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
                     dout("We are not the party leader, ignoring");
                     return;
                 }
 
-                if(Integer.parseInt(matcher.group(2)) > 127) {
+                if(Math.abs(Integer.parseInt(matcher.group(2))) > 127) {
                     queueWarnMessage("AutoJoinIn delay exceeds 127 seconds, ignoring");
                     return;
                 }
 
-                final byte delaySeconds = Byte.parseByte(matcher.group(2));
-                CatacombsFloors floor = AtomicMemCache.lastCatacombsFloor.get();
+                final byte delaySeconds = (byte) Math.abs(Byte.parseByte(matcher.group(2)));
+                CatacombsFloors floor = AtomicCache.lastCatacombsFloor.get();
                 // Group 3 may or may not be provided
                 if(matcher.group(3) != null) {
                     final String floorName = matcher.group(3);

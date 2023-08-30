@@ -1,6 +1,6 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.AtomicMemCache;
+import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.utils.ChatStyles.CCodes;
 
@@ -20,10 +20,10 @@ public final class BapCache {
 
     public static void execute() {
         for(final String s : Arrays.asList(
-            "Here's are the values currently stored in our fancy AtomicMemCache",
-            "- boolean isInParty: " + autoTrueFalse(String.valueOf(AtomicMemCache.isInParty.get())),
-            "- String lastPartyLeader: " + autoTrueFalse(AtomicMemCache.lastPartyLeader.get()),
-            "- CatacombsFloors lastCatacombsFloor: " + autoTrueFalse(String.valueOf(AtomicMemCache.lastCatacombsFloor.get()))
+            "Here's are the values currently stored in our fancy AtomicCache",
+            "- boolean isInParty: " + autoTrueFalse(String.valueOf(AtomicCache.isInParty.get())),
+            "- String lastPartyLeader: " + autoTrueFalse(AtomicCache.lastPartyLeader.get()),
+            "- CatacombsFloors lastCatacombsFloor: " + autoTrueFalse(String.valueOf(AtomicCache.lastCatacombsFloor.get()))
         )) {
             BapUtils.queueClientMessage(ccolorize(CCodes.GRAY, s, false));
         }

@@ -1,13 +1,15 @@
 package net.jerrydev.baputils.events;
 
-import net.jerrydev.baputils.AtomicMemCache;
+import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.Constants;
 import net.jerrydev.baputils.commands.bap.BapCrash;
 import net.jerrydev.baputils.commands.bap.BapJoinDungeon;
 import net.jerrydev.baputils.commands.bap.BapTakeover;
 import net.jerrydev.baputils.commands.bap.BapWarp;
 import net.jerrydev.baputils.core.BapSettingsGui;
-import net.jerrydev.baputils.dungeons.CatacombsFloors;
+import net.jerrydev.baputils.features.dungeons.CatacombsFloors;
+import net.jerrydev.baputils.features.dungeons.DungeonDeath;
+import net.jerrydev.baputils.features.dungeons.PuzzleFail;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,7 +22,7 @@ import static net.jerrydev.baputils.Constants.*;
 import static net.jerrydev.baputils.utils.ChatStyles.cleanString;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public class ChatHandler {
+public class ChatListener {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChatReceived(ClientChatReceivedEvent event) {
         /*
@@ -38,33 +40,33 @@ public class ChatHandler {
 
 
         // listen for '/party list' command and set the most recent party leader
-        for(final String pat : kPLeaderPats) {
+        for(final String pat : kPLeaderPs) {
             if(cleanMessage.matches(pat)) {
                 final Pattern pattern = Pattern.compile(pat, Pattern.CASE_INSENSITIVE);
                 final Matcher matcher = pattern.matcher(cleanMessage);
 
                 if(matcher.find()) {
-                    final String oldLeader = AtomicMemCache.lastPartyLeader.get();
+                    final String oldLeader = AtomicCache.lastPartyLeader.get();
                     final String newLeader = matcher.group(1);
 
                     if(newLeader.equals(oldLeader)) {
                         dout("Received an update for lastPartyLeader, still " + newLeader);
                     } else {
-                        AtomicMemCache.lastPartyLeader.set(newLeader);
+                        AtomicCache.lastPartyLeader.set(newLeader);
                         dout("Updated lastPartyLeader to " + newLeader + " from " + oldLeader);
                     }
 
                     // if there is the party leader message, we are in a party
-                    if(!AtomicMemCache.isInParty.get()) {
-                        AtomicMemCache.isInParty.set(true);
+                    if(!AtomicCache.isInParty.get()) {
+                        AtomicCache.isInParty.set(true);
                         dout("Updated isInParty to true");
                     }
                 }
             }
         }
 
-        if(cleanMessage.matches(kCatacombsJoinPat)) {
-            final Pattern pattern = Pattern.compile(kCatacombsJoinPat, Pattern.CASE_INSENSITIVE);
+        if(cleanMessage.matches(kCatacombsJoinP)) {
+            final Pattern pattern = Pattern.compile(kCatacombsJoinP, Pattern.CASE_INSENSITIVE);
             final Matcher matcher = pattern.matcher(cleanMessage);
 
             if(!matcher.find()) {
@@ -72,7 +74,7 @@ public class ChatHandler {
                 return;
             }
 
-            final CatacombsFloors oldFloor = AtomicMemCache.lastCatacombsFloor.get();
+            final CatacombsFloors oldFloor = AtomicCache.lastCatacombsFloor.get();
             final CatacombsFloors newFloor = CatacombsFloors.getFloorByChatName(matcher.group(2));
 
             if(newFloor == null) {
@@ -83,38 +85,60 @@ public class ChatHandler {
             if((oldFloor != null) && newFloor.floorCode.equals(oldFloor.floorCode)) {
                 dout("Received an update for lastCatacombsFloor, still " + newFloor);
             } else {
-                AtomicMemCache.lastCatacombsFloor.set(newFloor);
+                AtomicCache.lastCatacombsFloor.set(newFloor);
                 dout("Updated lastCatacombsFloor to " + newFloor + " from " + oldFloor);
             }
             return;
         }
 
-        if(cleanMessage.matches(kInPartyPat)) {
-            AtomicMemCache.isInParty.set(true);
-            dout("Updated isInParty to " + AtomicMemCache.isInParty.get());
+        if(cleanMessage.matches(kInPartyP)) {
+            AtomicCache.isInParty.set(true);
+            dout("Updated isInParty to " + AtomicCache.isInParty.get());
 
-            final Pattern pattern = Pattern.compile(kInPartyPat, Pattern.CASE_INSENSITIVE);
-            final String partyLeader = pattern.matcher(cleanMessage).group(1); // not separating matcher declaration bc y not
+            System.out.println(cleanMessage);
 
-            AtomicMemCache.lastPartyLeader.set(partyLeader);
-            dout("Updated lastPartyLeader to " + partyLeader);
-            return;
-        }
+            final Pattern pattern = Pattern.compile(kInPartyP);
+            final Matcher matcher = pattern.matcher(cleanMessage);
+            if(matcher.find()) {
+                final String partyLeader = matcher.group(1);
+                //final String partyLeader = pattern.matcher(cleanMessage).group(1); // not separating matcher declaration bc y not
 
-        for(final String pattern : kNotInPartyPats) {
-            if(cleanMessage.matches(pattern)) {
-                if(!AtomicMemCache.isInParty.get()) {
-                    dout("Received an update for isInParty, still not in party.");
-                    return;
-                }
-
-                AtomicMemCache.isInParty.set(false);
-                dout("Updated isInParty to " + AtomicMemCache.isInParty.get());
+                AtomicCache.lastPartyLeader.set(partyLeader);
+                dout("Updated lastPartyLeader to " + partyLeader);
                 return;
             }
         }
 
-        if(cleanMessage.matches(kTakeoverPat)) {
+        for(final String pattern : kNotInPartyPs) {
+            if(cleanMessage.matches(pattern)) {
+                if(!AtomicCache.isInParty.get()) {
+                    dout("Received an update for isInParty, still not in party.");
+                    return;
+                }
+
+                AtomicCache.isInParty.set(false);
+                dout("Updated isInParty to " + AtomicCache.isInParty.get());
+                return;
+            }
+        }
+
+        for(final String pattern : kDungeonDeathPs) {
+            if(cleanMessage.matches(pattern)) {
+                DungeonDeath.handleChat(cleanMessage);
+                return;
+            }
+        }
+
+        if(cleanMessage.matches(kPuzzleFailP)) {
+            if(BapSettingsGui.INSTANCE.getPuzzleFailMsg().isEmpty()) {
+                dout("PuzzleFailMsg is disabled.");
+                return;
+            }
+
+            PuzzleFail.handleChat();
+        }
+
+        if(cleanMessage.matches(kTakeoverP)) {
             if(!BapSettingsGui.INSTANCE.getPartyTakeoverMaster()) {
                 dout("PartyTakeover is disabled.");
                 return;
@@ -124,7 +148,7 @@ public class ChatHandler {
             return;
         }
 
-        if(cleanMessage.matches(kJoinDungeonPat)) {
+        if(cleanMessage.matches(kJoinDungeonP)) {
             if(!BapSettingsGui.INSTANCE.getJoinDungeonMaster()) {
                 dout("JoinDungeon is disabled.");
                 return;
@@ -134,7 +158,7 @@ public class ChatHandler {
             return;
         }
 
-        if(cleanMessage.matches(kAutoJoinInPat)) {
+        if(cleanMessage.matches(kAutoJoinInP)) {
             if(!BapSettingsGui.INSTANCE.getJoinDungeonAutoJoinIn()) {
                 dout("AutoJoinIn is disabled.");
                 return;
@@ -144,7 +168,7 @@ public class ChatHandler {
             return;
         }
 
-        if(cleanMessage.matches(kPartyWarpPat)) {
+        if(cleanMessage.matches(kPartyWarpP)) {
             if(!BapSettingsGui.INSTANCE.getPartyWarpMaster()) {
                 dout("PartyWarp is disabled.");
                 return;
@@ -154,7 +178,7 @@ public class ChatHandler {
             return;
         }
 
-        if(cleanMessage.matches(kBapCrashPat)) {
+        if(cleanMessage.matches(kBapCrashP)) {
 
             BapCrash.handleChat(cleanMessage);
             return;
