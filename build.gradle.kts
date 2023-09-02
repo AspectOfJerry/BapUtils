@@ -9,7 +9,7 @@ plugins {
 
 // Constants
 group = "net.jerrydev"
-version = "0.6.0-beta"
+version = "0.8.0-rc"
 
 // val baseGroup = "net.jerrydev"
 val mcVersion: String = "1.8.9"

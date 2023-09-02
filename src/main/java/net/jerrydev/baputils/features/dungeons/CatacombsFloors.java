@@ -25,12 +25,14 @@ public enum CatacombsFloors {
     public final boolean isMaster;
     public final String commandCode;
     public final String chatName;
+    public final String shortName;
 
     CatacombsFloors(String _floorCode, boolean _isMaster, String _commandCode, String _chatName) {
         this.floorCode = _floorCode;
         this.isMaster = _isMaster;
         this.commandCode = _commandCode;
         this.chatName = _chatName;
+        this.shortName = _chatName.replace("The Catacombs, ", "").replace("MM Catacombs, ", "MM ");
     }
 
     @Nullable

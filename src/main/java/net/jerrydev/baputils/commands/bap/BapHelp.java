@@ -1,70 +1,88 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.BapUtils;
-import net.jerrydev.baputils.commands.BapCommand;
-import net.jerrydev.baputils.utils.ChatStyles.CCodes;
+import net.jerrydev.baputils.Constants;
+import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.commands.BapHandler;
+import net.jerrydev.baputils.utils.ChatUtils.CCodes;
+import net.jerrydev.baputils.utils.Debug;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
+import static net.jerrydev.baputils.BapUtils.queueClientMessage;
+import static net.jerrydev.baputils.BapUtils.queueErrorMessage;
+import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class BapHelp {
-    public static final String commandName = "help";
-    @SuppressWarnings(value = "ArraysAsListWithZeroOrOneArgument")
-    public static final List<String> commandAliases = Arrays.asList("?");
-    public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
-    public static final byte requiredParams = 0;
+public final class BapHelp implements BapExecutable {
+    @Override
+    public String getName() {
+        return "help";
+    }
 
-    public static void execute() {
-        final List<String> bapAliases = new ArrayList<>(BapCommand.commandAliases);
+    @Override
+    public List<String> getAliases() {
+        return Collections.singletonList("?");
+    }
 
-        bapAliases.set(bapAliases.indexOf("uwa"), ccolorize(CCodes.LIGHT_PURPLE, "uwa"));
-        bapAliases.set(bapAliases.indexOf("pig"), ccolorize(CCodes.AQUA, "pig"));
-        bapAliases.set(bapAliases.indexOf("tom"), ccolorize(CCodes.RED, "tom"));
-        bapAliases.set(bapAliases.indexOf("fishing"), ccolorize(CCodes.GREEN, "fishing"));
+    @Override
+    public String getUsage() {
+        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
+            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+    }
 
-        BapUtils.queueClientMessage("BapUtils commands with their aliases:");
-        for(final String s : Arrays.asList(
-            ccolorize(CCodes.YELLOW, "/bap")
-                + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", bapAliases))
-                + "\n " + ccolorize(CCodes.GRAY, "- Displays the main GUI"),
+    @Override
+    public byte getRequiredParams() {
+        return 0;
+    }
 
-            BapCache.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Displays currently cached info"),
+    @Override
+    public String getDesc() {
+        return "Displays this help message";
+    }
 
-            BapColors.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Displays (&) color codes"),
+    @Override
+    public void execute(List<String> args) {
+        new Thread(() -> {
+            try {
+                queueClientMessage(ccolorize(CCodes.YELLOW, "lmao just look at the code"));
 
-            BapDev.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Experimental command"),
+                dout("Sleep 2000ms " + Debug.getThreadInfoFormatted());
+                Thread.sleep(2000);
+                dout("Resume " + Debug.getThreadInfoFormatted());
 
-            BapHello.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Say hello to the world"),
+                queueClientMessage("...");
 
-            BapHelp.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Displays this help message"),
+                dout("Sleep 1500ms " + Debug.getThreadInfoFormatted());
+                Thread.sleep(1500);
+                dout("Resume " + Debug.getThreadInfoFormatted());
 
-            BapJoinDungeon.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Joins a dungeon on the leader's behalf"),
+                queueClientMessage(ccolorize(CCodes.YELLOW, "ok fine maybe i'll help you out a bit"));
 
-            BapOptions.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Opens the options GUI"),
+                dout("Sleep 1500ms " + Debug.getThreadInfoFormatted());
+                Thread.sleep(1500);
+                dout("Resume " + Debug.getThreadInfoFormatted());
 
-            BapSettings.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Opens the settings GUI"),
+                final List<String> bapAliases = new ArrayList<>(BapHandler.commandAliases);
 
-            BapTakeover.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Takeover a player's party"),
+                bapAliases.set(bapAliases.indexOf("uwa"), ccolorize(CCodes.LIGHT_PURPLE, "uwa"));
+                bapAliases.set(bapAliases.indexOf("pig"), ccolorize(CCodes.AQUA, "pig"));
+                bapAliases.set(bapAliases.indexOf("tom"), ccolorize(CCodes.RED, "tom"));
+                bapAliases.set(bapAliases.indexOf("fishing"), ccolorize(CCodes.GREEN, "fishing"));
 
-            BapTrust.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Add a player to the trusted list"),
+                queueClientMessage(ccolorize(CCodes.GREEN, "Commands with their aliases (v" + Constants.kModVersion + "):"));
 
-            BapUuid.commandUsage
-                + "\n " + ccolorize(CCodes.GRAY, "- Displays a player's UUID"))) {
-            BapUtils.queueClientMessage(s);
-        }
+                queueClientMessage(ccolorize(CCodes.YELLOW, "/bap")
+                    + ccolorize(CCodes.GOLD, "|" + String.join("|", bapAliases))
+                    + "\n" + ccolorize(CCodes.GRAY, "  - Displays the main GUI"));
+
+                for(final BapExecutable subCmd : BapHandler.subcommands) {
+                    queueClientMessage(subCmd.getUsage() + "\n" + ccolorize(CCodes.GRAY, "  - " + subCmd.getDesc()));
+                }
+            } catch(final InterruptedException err) {
+                queueErrorMessage("InterruptedException: JoinDungeon failed! An error occurred while transferring the party.");
+            }
+        }).start();
     }
 }

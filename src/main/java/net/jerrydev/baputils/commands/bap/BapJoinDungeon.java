@@ -1,30 +1,64 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.AtomicCache;
+import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
+import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.commands.BapHandleable;
+import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.features.dungeons.CatacombsFloors;
-import net.jerrydev.baputils.utils.ChatStyles.CCodes;
+import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
+import net.minecraft.command.CommandException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static net.jerrydev.baputils.BapUtils.*;
-import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class BapJoinDungeon {
-    public static final String commandName = "joindungeon";
-    public static final List<String> commandAliases = Arrays.asList("dung", "join", "run", "jd");
-    public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases))
-        + ccolorize(CCodes.YELLOW, " <floor>");
-    public static final byte requiredParams = 1;
+public final class BapJoinDungeon implements BapExecutable, BapHandleable {
+    @Override
+    public String getName() {
+        return "joindungeon";
+    }
 
-    public static void execute(String floorName) {
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("dung", "join", "run", "jd");
+    }
+
+    @Override
+    public String getUsage() {
+        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
+            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
+            + ccolorize(CCodes.YELLOW, " <floor>");
+    }
+
+    @Override
+    public byte getRequiredParams() {
+        return 1;
+    }
+
+    @Override
+    public String getDesc() {
+        return "Joins a dungeon run on the leader's behalf";
+    }
+
+    @Override
+    public void execute(List<String> args) throws CommandException {
+        if(args.size() == 1) {
+            BapUtils.throwCommandException("You must specify a dungeon floor ([fm][0-7])");
+            return;
+        }
+
+        final String floorName = args.get(0);
+
         final CatacombsFloors floor = CatacombsFloors.getFloorByCode(floorName);
 
         if(floor == null) {
@@ -35,9 +69,9 @@ public final class BapJoinDungeon {
         new Thread(() -> {
             try {
                 queueCommand("party list");
-                dout("Sleeping for " + Constants.kCommandDelayMs + "ms on " + Debug.getThreadInfoFormatted());
+                dout("Sleep " + Constants.kCommandDelayMs + "ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(Constants.kCommandDelayMs);
-                dout("Resumed " + Debug.getThreadInfoFormatted());
+                dout("Resume " + Debug.getThreadInfoFormatted());
 
                 if((AtomicCache.lastPartyLeader.get() != null)
                     && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
@@ -45,14 +79,27 @@ public final class BapJoinDungeon {
                     return;
                 }
 
-                queuePartyChat("$jd." + floorName, false);
+                queuePartyChat("$jd." + floorName);
             } catch(final InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }).start();
     }
 
-    public static void handleChat(String cleanMessage) {
+    @Override
+    public List<String> getPatterns() {
+        return Collections.singletonList(Constants.kJoinDungeonP);
+    }
+
+    @Override
+    public void handle(List<String> args) {
+        if(!BapSettingsGui.INSTANCE.getJoinDungeonMaster()) {
+            dout("JoinDungeon is disabled.");
+            return;
+        }
+
+        final String cleanMessage = args.get(0);
+
         final String[] messageSplit = cleanMessage.split(" ");
         final String sender = messageSplit[2].replaceAll(":", "");
 
@@ -80,9 +127,9 @@ public final class BapJoinDungeon {
         new Thread(() -> {
             try {
                 queueCommand("party list");
-                dout("Sleeping for " + Constants.kChatDelayMs + "ms on " + Debug.getThreadInfoFormatted());
+                dout("Sleep " + Constants.kChatDelayMs + "ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(Constants.kChatDelayMs);
-                dout("Resumed " + Debug.getThreadInfoFormatted());
+                dout("Resume " + Debug.getThreadInfoFormatted());
 
                 if(AtomicCache.lastPartyLeader.get() == null) {
                     queueWarnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
@@ -98,11 +145,11 @@ public final class BapJoinDungeon {
 
                 final String shortFloorName = floor.chatName.replace("The Catacombs, ", "").replace(" Catacombs, ", "");
 
-                //queueServerMessage("okay! Joining " + (floor.isMaster ? "master " : "") + "catacombs floor " + floor.floorCode.charAt(1) + " in 3s...");
-                queuePartyChat("Joining " + shortFloorName + " in 3s...");
-                dout("Sleeping for 3000ms on " + Debug.getThreadInfoFormatted());
+                queuePartyChat("Joining " + shortFloorName + " in 3s...", false);
+
+                dout("Sleep 3000ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(3000);
-                dout("Resumed " + Debug.getThreadInfoFormatted());
+                dout("Resume " + Debug.getThreadInfoFormatted());
 
                 queueCommand("joindungeon " + floor.commandCode);
             } catch(final InterruptedException err) {
@@ -116,7 +163,7 @@ public final class BapJoinDungeon {
         final Matcher matcher = pattern.matcher(cleanMessage);
 
         if(!matcher.find()) {
-            queueErrorMessage("AutoJoinIn no groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
+            queueErrorMessage("AutoJoinIn, no groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
             return;
         }
 
@@ -124,9 +171,9 @@ public final class BapJoinDungeon {
             try {
                 if(AtomicCache.lastPartyLeader.get() == null) {
                     queueCommand("party list");
-                    dout("Sleeping for " + Constants.kCommandDelayMs + "ms on" + Debug.getThreadInfoFormatted());
+                    dout("Sleep " + Constants.kCommandDelayMs + "ms " + Debug.getThreadInfoFormatted());
                     Thread.sleep(Constants.kCommandDelayMs);
-                    dout("Resumed " + Debug.getThreadInfoFormatted());
+                    dout("Resume " + Debug.getThreadInfoFormatted());
                 }
                 if(!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
                     dout("We are not the party leader, ignoring");
@@ -147,16 +194,16 @@ public final class BapJoinDungeon {
                 }
 
                 if(floor == null) {
-                    queueErrorMessage("Couldn't find the latest catacombs floor and no floor was provided.");
+                    queueErrorMessage("Couldn't find the last catacombs floor and no floor was provided.");
                     return;
                 }
 
-                final String shortFloorName = floor.chatName.replace("The Catacombs, ", "").replace(" Catacombs, ", "");
+                queuePartyChat("Joining " + floor.shortName + " in " + delaySeconds + "s!", false);
 
-                queuePartyChat("Joining " + shortFloorName + " in " + delaySeconds + "s!");
-                dout("Sleeping for 3000ms on " + Debug.getThreadInfoFormatted());
+                dout("Sleep 3000ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(delaySeconds * 1000);
-                dout("Resumed " + Debug.getThreadInfoFormatted());
+                dout("Resume " + Debug.getThreadInfoFormatted());
+
                 queueCommand("joindungeon " + floor.commandCode);
             } catch(InterruptedException e) {
                 throw new RuntimeException(e);

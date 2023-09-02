@@ -1,34 +1,45 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.events.impl.DungeonStatus;
-import net.jerrydev.baputils.features.dungeons.DungeonDeath;
-import net.jerrydev.baputils.utils.ChatEmojis;
-import net.jerrydev.baputils.utils.ChatStyles.CCodes;
+import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
+import static net.jerrydev.baputils.BapUtils.queueClientMessage;
+import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
-public final class BapDev {
-    public static final String commandName = "dev";
-    @SuppressWarnings(value = "ArraysAsListWithZeroOrOneArgument")
-    public static final List<String> commandAliases = Arrays.asList("test");
-    public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases))
-        + ccolorize(CCodes.YELLOW, " <...>");
-    public static final byte requiredParams = -1;
+public final class BapDev implements BapExecutable {
+    @Override
+    public String getName() {
+        return "dev";
+    }
 
-    public static void execute() {
-        //queueClientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
+    @Override
+    public List<String> getAliases() {
+        return Collections.singletonList("test");
+    }
 
-        DungeonDeath.handleChat(ChatEmojis.DEATH_SKULL.emoji + "AspectOfJerry was killed by Shadow Assassin and became a ghost.");
-        DungeonDeath.handleChat(ChatEmojis.DEATH_SKULL.emoji + "Tomassy was killed by Lost Adventurer and became a ghost.");
-        DungeonDeath.handleChat(ChatEmojis.DEATH_SKULL.emoji + "FailingPig was killed by Angry Archeologist and became a ghost.");
-        DungeonDeath.handleChat(ChatEmojis.DEATH_SKULL.emoji + "FishingIsMagic was killed by Omega-mega 2.0 and became a ghost.");
-        DungeonDeath.handleChat(ChatEmojis.DEATH_SKULL.emoji + "Scarf was killed by Bonzo and became a ghost.");
+    @Override
+    public String getUsage() {
+        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
+            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
+            + ccolorize(CCodes.YELLOW, " <...>");
+    }
 
-        DungeonStatus.onRunEnd("263");
+    @Override
+    public byte getRequiredParams() {
+        return -1;
+    }
+
+    @Override
+    public String getDesc() {
+        return "Experimental command";
+    }
+
+    @Override
+    public void execute(List<String> args) {
+        queueClientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
 
         // what are partial ticks?
         //WaypointRenderer.renderBeaconBeam(0, 100, 0, 0xFF00FF, 1.0f, 10);

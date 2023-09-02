@@ -1,10 +1,11 @@
 package net.jerrydev.baputils;
 
-import net.jerrydev.baputils.commands.BapCommand;
+import net.jerrydev.baputils.commands.BapHandler;
 import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.events.ChatListener;
 import net.jerrydev.baputils.events.ClientPeriodic;
-import net.jerrydev.baputils.utils.ChatStyles.CCodes;
+import net.jerrydev.baputils.utils.ChatUtils;
+import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -19,7 +20,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import java.util.Arrays;
 
 import static net.jerrydev.baputils.Constants.*;
-import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
 
 @Mod(modid = Constants.kModId, version = Constants.kModVersion, clientSideOnly = true)
 public class BapUtils {
@@ -31,7 +31,7 @@ public class BapUtils {
         System.out.println(kClientPrefix + " HELLO from " + kModName + "! You are on Minecraft Forge version 1.8.9.");
 
         // Register slash (/) commands
-        ClientCommandHandler.instance.registerCommand(new BapCommand());
+        ClientCommandHandler.instance.registerCommand(new BapHandler());
 
         // Register events
         MinecraftForge.EVENT_BUS.register(new ChatListener());
@@ -51,14 +51,14 @@ public class BapUtils {
     public static void clientVerbose(String message) {
         if(BapSettingsGui.INSTANCE.getClientChatVerbose()) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                ccolorize(CCodes.GRAY, kClientPrefix) + " " + ccolorize(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC), message)
+                ChatUtils.ccolorize(CCodes.GRAY, kClientPrefix) + " " + ChatUtils.ccolorize(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC), message)
             ));
         }
     }
 
 
     public static void queueServerMessage(String message) {
-        Minecraft.getMinecraft().thePlayer.sendChatMessage(kServerPrefix + " > " + message);
+        Minecraft.getMinecraft().thePlayer.sendChatMessage(message);
     }
 
     public static void queueServerMessage(String message, boolean addPrefix) {
@@ -66,11 +66,11 @@ public class BapUtils {
     }
 
     public static void queuePartyChat(String message) {
-        queueCommand("party chat bap > " + message);
+        Minecraft.getMinecraft().thePlayer.sendChatMessage((isLocalDev ? "." : "") + "/party chat " + message);
     }
 
     public static void queuePartyChat(String message, boolean addPrefix) {
-        queueCommand("party chat " + (addPrefix ? "bap > " : "") + message);
+        Minecraft.getMinecraft().thePlayer.sendChatMessage((isLocalDev ? "." : "") + "/party chat " + (addPrefix ? "bap> " : "") + message);
     }
 
     public static void queueCommand(String command) {
@@ -80,19 +80,19 @@ public class BapUtils {
 
     public static void queueClientMessage(String message) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            ccolorize(CCodes.AQUA, kClientPrefix) + " " + message
+            ChatUtils.ccolorize(CCodes.AQUA, kClientPrefix) + " " + message
         ));
     }
 
     public static void queueClientMessage(String message, boolean addPrefix) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            addPrefix ? (ccolorize(CCodes.AQUA, kClientPrefix) + " " + message) : message
+            addPrefix ? (ChatUtils.ccolorize(CCodes.AQUA, kClientPrefix) + " " + message) : message
         ));
     }
 
     public static void queueClientMessage(String message, CCodes prefixColor) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            ccolorize(prefixColor, kClientPrefix) + " " + message
+            ChatUtils.ccolorize(prefixColor, kClientPrefix) + " " + message
         ));
     }
 
@@ -104,17 +104,17 @@ public class BapUtils {
 
     public static void queueErrorMessage(String message) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            ccolorize(CCodes.RED, kClientPrefix + " Error: " + message)
+            ChatUtils.ccolorize(CCodes.RED, kClientPrefix + " Error: " + message)
         ));
     }
 
     public static void queueWarnMessage(String message) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            ccolorize(CCodes.GOLD, kClientPrefix + " Warning: " + message)
+            ChatUtils.ccolorize(CCodes.GOLD, kClientPrefix + " Warning: " + message)
         ));
     }
 
     public static void throwCommandException(String message) throws CommandException {
-        throw new CommandException(ccolorize(CCodes.RED, kClientPrefix) + ccolorize(CCodes.RED, " Error: " + message));
+        throw new CommandException(ChatUtils.ccolorize(CCodes.RED, kClientPrefix) + ChatUtils.ccolorize(CCodes.RED, " Error: " + message));
     }
 }

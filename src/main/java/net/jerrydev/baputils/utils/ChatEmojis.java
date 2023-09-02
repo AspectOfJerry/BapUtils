@@ -4,9 +4,9 @@ public enum ChatEmojis {
     DEATH_SKULL("☠"),
     LEFT_ARROW("➡");
 
-    public final String emoji;
+    public final String c;
 
-    ChatEmojis(String _emoji) {
-        this.emoji = _emoji;
+    ChatEmojis(String _c) {
+        this.c = _c;
     }
 }

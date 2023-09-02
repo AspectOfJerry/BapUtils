@@ -2,11 +2,13 @@ package net.jerrydev.baputils.events;
 
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.Constants;
+import net.jerrydev.baputils.commands.BapHandleable;
 import net.jerrydev.baputils.commands.bap.BapCrash;
 import net.jerrydev.baputils.commands.bap.BapJoinDungeon;
 import net.jerrydev.baputils.commands.bap.BapTakeover;
 import net.jerrydev.baputils.commands.bap.BapWarp;
 import net.jerrydev.baputils.core.BapSettingsGui;
+import net.jerrydev.baputils.events.features.DungeonStatus;
 import net.jerrydev.baputils.features.dungeons.CatacombsFloors;
 import net.jerrydev.baputils.features.dungeons.DungeonDeath;
 import net.jerrydev.baputils.features.dungeons.PuzzleFail;
@@ -14,12 +16,15 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static net.jerrydev.baputils.BapUtils.queueErrorMessage;
 import static net.jerrydev.baputils.Constants.*;
-import static net.jerrydev.baputils.utils.ChatStyles.cleanString;
+import static net.jerrydev.baputils.utils.ChatUtils.cleanString;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
 public class ChatListener {
@@ -50,7 +55,7 @@ public class ChatListener {
                     final String newLeader = matcher.group(1);
 
                     if(newLeader.equals(oldLeader)) {
-                        dout("Received an update for lastPartyLeader, still " + newLeader);
+                        dout("No changes for lastPartyLeader");
                     } else {
                         AtomicCache.lastPartyLeader.set(newLeader);
                         dout("Updated lastPartyLeader to " + newLeader + " from " + oldLeader);
@@ -70,7 +75,8 @@ public class ChatListener {
             final Matcher matcher = pattern.matcher(cleanMessage);
 
             if(!matcher.find()) {
-                queueErrorMessage("kCatacombsJoinPat no groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
+                queueErrorMessage("kCatacombsJoinPat no groups found. This is impossible!" +
+                    " Please open a bug report at " + Constants.kGitHubIssues);
                 return;
             }
 
@@ -83,7 +89,7 @@ public class ChatListener {
             }
 
             if((oldFloor != null) && newFloor.floorCode.equals(oldFloor.floorCode)) {
-                dout("Received an update for lastCatacombsFloor, still " + newFloor);
+                dout("No changes for lastCatacombsFloor");
             } else {
                 AtomicCache.lastCatacombsFloor.set(newFloor);
                 dout("Updated lastCatacombsFloor to " + newFloor + " from " + oldFloor);
@@ -112,7 +118,7 @@ public class ChatListener {
         for(final String pattern : kNotInPartyPs) {
             if(cleanMessage.matches(pattern)) {
                 if(!AtomicCache.isInParty.get()) {
-                    dout("Received an update for isInParty, still not in party.");
+                    dout("No changes for isInPart");
                     return;
                 }
 
@@ -122,45 +128,9 @@ public class ChatListener {
             }
         }
 
-        for(final String pattern : kDungeonDeathPs) {
-            if(cleanMessage.matches(pattern)) {
-                DungeonDeath.handleChat(cleanMessage);
-                return;
-            }
-        }
-
-        if(cleanMessage.matches(kPuzzleFailP)) {
-            if(BapSettingsGui.INSTANCE.getPuzzleFailMsg().isEmpty()) {
-                dout("PuzzleFailMsg is disabled.");
-                return;
-            }
-
-            PuzzleFail.handleChat();
-        }
-
-        if(cleanMessage.matches(kTakeoverP)) {
-            if(!BapSettingsGui.INSTANCE.getPartyTakeoverMaster()) {
-                dout("PartyTakeover is disabled.");
-                return;
-            }
-
-            BapTakeover.handleChat(cleanMessage);
-            return;
-        }
-
-        if(cleanMessage.matches(kJoinDungeonP)) {
-            if(!BapSettingsGui.INSTANCE.getJoinDungeonMaster()) {
-                dout("JoinDungeon is disabled.");
-                return;
-            }
-
-            BapJoinDungeon.handleChat(cleanMessage);
-            return;
-        }
-
         if(cleanMessage.matches(kAutoJoinInP)) {
             if(!BapSettingsGui.INSTANCE.getJoinDungeonAutoJoinIn()) {
-                dout("AutoJoinIn is disabled.");
+                dout("AutoJoinIn is disabled");
                 return;
             }
 
@@ -168,20 +138,34 @@ public class ChatListener {
             return;
         }
 
-        if(cleanMessage.matches(kPartyWarpP)) {
-            if(!BapSettingsGui.INSTANCE.getPartyWarpMaster()) {
-                dout("PartyWarp is disabled.");
+        if(cleanMessage.matches(kDungeonEndP)) {
+            if(!BapSettingsGui.INSTANCE.getDungeonDeathBreakdown()) {
                 return;
             }
 
-            BapWarp.handleChat(cleanMessage);
+            DungeonStatus.onRunEnd(cleanMessage);
             return;
         }
 
-        if(cleanMessage.matches(kBapCrashP)) {
+        /*
+            BapHandleable
+         */
+        final List<BapHandleable> handleables = Arrays.asList(
+            new BapWarp(),
+            new BapTakeover(),
+            new DungeonDeath(),
+            new PuzzleFail(),
+            new BapJoinDungeon(),
+            new BapCrash()
+        );
 
-            BapCrash.handleChat(cleanMessage);
-            return;
+        for(final BapHandleable handler : handleables) {
+            for(final String pattern : handler.getPatterns()) {
+                if(cleanMessage.matches(pattern)) {
+                    handler.handle(Collections.singletonList(cleanMessage));
+                    return;
+                }
+            }
         }
     }
 }

@@ -1,22 +1,44 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
+import net.jerrydev.baputils.commands.BapExecutable;
 import net.jerrydev.baputils.core.BapSettingsGui;
-import net.jerrydev.baputils.utils.ChatStyles.CCodes;
+import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
-public final class BapSettings {
-    public static final String commandName = "settings";
-    public static final List<String> commandAliases = Arrays.asList("config", "cfg");
-    public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
-    public static final byte requiredParams = 0;
+public final class BapSettings implements BapExecutable {
+    @Override
+    public String getName() {
+        return "settings";
+    }
 
-    public static void execute() {
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("config", "cfg");
+    }
+
+    @Override
+    public String getUsage() {
+        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
+            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+    }
+
+    @Override
+    public byte getRequiredParams() {
+        return 0;
+    }
+
+    @Override
+    public String getDesc() {
+        return "Opens the settings GUI";
+    }
+
+    @Override
+    public void execute(List<String> args) {
         BapUtils.setActiveGui(BapSettingsGui.INSTANCE.gui());
     }
 }

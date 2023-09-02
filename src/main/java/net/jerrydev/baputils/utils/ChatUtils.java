@@ -5,7 +5,10 @@ import net.jerrydev.baputils.Constants;
 import java.text.Normalizer;
 import java.util.List;
 
-public final class ChatStyles {
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.repeat;
+
+public final class ChatUtils {
     public static String ccolorize(CCodes color, String message) {
         return color.colorCode + message + CCodes.RESET.colorCode;
     }
@@ -111,6 +114,74 @@ public final class ChatStyles {
      */
     public static String removeHypixelRanks(String message) {
         return message.replaceFirst(Constants.kHypixelRankP, "");
+    }
+
+    public static String center(String str, int totalWidth) {
+        final String cleanStr = stripColorCodes(str);
+
+        // Calculate the pad length
+        final int padLength = (totalWidth - cleanStr.length()) / 2;
+
+        // Use leftPad to center the string
+        return leftPad(str, cleanStr.length() + padLength);
+    }
+
+    /**
+     * @author org.apache.commons.lang3.StringUtils
+     */
+    public static String leftPad(String str, int size) {
+        return leftPad(str, size, " ");
+    }
+
+    /**
+     * @author org.apache.commons.lang3.StringUtils
+     */
+    public static String leftPad(String str, int size, char padChar) {
+        if(str == null) {
+            return null;
+        } else {
+            final int pads = size - stripColorCodes(str).length();
+            if(pads <= 0) {
+                return str;
+            } else {
+                return (pads > 8192) ? leftPad(str, size, String.valueOf(padChar)) : repeat(padChar, pads).concat(str);
+            }
+        }
+    }
+
+    /**
+     * @author org.apache.commons.lang3.StringUtils
+     */
+    public static String leftPad(String str, int size, String padStr) {
+        if(str == null) {
+            return null;
+        } else {
+            if(isEmpty(padStr)) {
+                padStr = " ";
+            }
+
+            final int padLen = padStr.length();
+            final int strLen = stripColorCodes(str).length();
+            final int pads = size - strLen;
+            if(pads <= 0) {
+                return str;
+            } else if((padLen == 1) && (pads <= 8192)) {
+                return leftPad(str, size, padStr.charAt(0));
+            } else if(pads == padLen) {
+                return padStr.concat(str);
+            } else if(pads < padLen) {
+                return padStr.substring(0, pads).concat(str);
+            } else {
+                final char[] padding = new char[pads];
+                final char[] padChars = padStr.toCharArray();
+
+                for(int i = 0; i < pads; ++i) {
+                    padding[i] = padChars[i % padLen];
+                }
+
+                return new String(padding).concat(str);
+            }
+        }
     }
 
     public enum CCodes {

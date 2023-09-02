@@ -17,6 +17,5 @@ public class ActionBarHandler {
         if(event.type != 1) {
             return;
         }
-
     }
 }

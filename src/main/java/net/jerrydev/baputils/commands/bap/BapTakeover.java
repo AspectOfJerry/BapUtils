@@ -3,32 +3,56 @@ package net.jerrydev.baputils.commands.bap;
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.utils.ChatStyles.CCodes;
+import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.commands.BapHandleable;
+import net.jerrydev.baputils.core.BapSettingsGui;
+import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.*;
-import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class BapTakeover {
-    public static final String commandName = "takeover";
-    public static final List<String> commandAliases = Arrays.asList("ptake", "take", "pto", "to");
-    public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
-    public static final byte requiredParams = 0;
+public final class BapTakeover implements BapExecutable, BapHandleable {
+    @Override
+    public String getName() {
+        return "takeover";
+    }
 
-    public static void execute() {
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("ptake", "take", "pto", "to");
+    }
+
+    @Override
+    public String getUsage() {
+        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
+            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+    }
+
+    @Override
+    public byte getRequiredParams() {
+        return 0;
+    }
+
+    @Override
+    public String getDesc() {
+        return "Takeover the leader's party";
+    }
+
+    @Override
+    public void execute(List<String> args) {
         new Thread(() -> {
             try {
-                // ClientCommandHandler.instance.executeCommand(Minecraft.getMinecraft().thePlayer, "/party list");
                 queueCommand("party list");
-                dout("Sleeping for " + Constants.kCommandDelayMs + "ms on " + Debug.getThreadInfoFormatted());
+                dout("Sleep " + Constants.kCommandDelayMs + "ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(Constants.kCommandDelayMs);
-                dout("Resumed " + Debug.getThreadInfoFormatted());
+                dout("Resume " + Debug.getThreadInfoFormatted());
 
                 if((AtomicCache.lastPartyLeader.get() != null)
                     && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
@@ -36,14 +60,27 @@ public final class BapTakeover {
                     return;
                 }
 
-                queuePartyChat("$pto", false);
+                queuePartyChat("$pto");
             } catch(InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }).start();
     }
 
-    public static void handleChat(String cleanMessage) {
+    @Override
+    public List<String> getPatterns() {
+        return Collections.singletonList(Constants.kTakeoverP);
+    }
+
+    @Override
+    public void handle(List<String> args) {
+        if(!BapSettingsGui.INSTANCE.getPartyTakeoverMaster()) {
+            dout("PartyTakeover is disabled.");
+            return;
+        }
+
+        final String cleanMessage = args.get(0);
+
         final String[] messageSplit = cleanMessage.split(" ");
         final String sender = messageSplit[2].replaceAll(":", "");
 
@@ -55,9 +92,9 @@ public final class BapTakeover {
         new Thread(() -> {
             try {
                 queueCommand("party list");
-                dout("Sleeping for " + Constants.kCommandDelayMs + "ms on " + Debug.getThreadInfoFormatted());
+                dout("Sleep " + Constants.kCommandDelayMs + "ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(Constants.kCommandDelayMs);
-                dout("Resumed " + Debug.getThreadInfoFormatted());
+                dout("Resume " + Debug.getThreadInfoFormatted());
 
                 if(AtomicCache.lastPartyLeader.get() == null) {
                     queueWarnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");

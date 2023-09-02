@@ -3,7 +3,9 @@ package net.jerrydev.baputils.features.dungeons;
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
+import net.jerrydev.baputils.commands.BapHandleable;
 import net.jerrydev.baputils.core.BapSettingsGui;
+import net.jerrydev.baputils.utils.ChatEmojis;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -11,18 +13,17 @@ import java.util.regex.Pattern;
 
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public class DungeonDeath {
-    public String playerName;
-    public String suspect;
-
-    public DungeonDeath(String _playerName, String _suspect) {
-        this.playerName = _playerName;
-        this.suspect = _suspect;
+public class DungeonDeath implements BapHandleable {
+    @Override
+    public List<String> getPatterns() {
+        return Constants.kDungeonDeathPs;
     }
 
+    @Override
+    public void handle(List<String> args) {
+        final String cleanMessage = args.get(0);
 
-    public static void handleChat(String cleanMessage) {
-        if(!BapSettingsGui.INSTANCE.getDungeonDeathMsg().isEmpty()) {
+        if(!BapSettingsGui.INSTANCE.getDungeonDeathMsg().isEmpty() && !cleanMessage.startsWith(" " + ChatEmojis.DEATH_SKULL.c + " You")) {
             BapUtils.queueServerMessage(BapSettingsGui.INSTANCE.getDungeonDeathMsg(), false);
         }
 
@@ -34,17 +35,17 @@ public class DungeonDeath {
                 if(matcher.find()) {
                     final String suspect = getSuspect(patternStr, matcher);
 
-                    AtomicCache.dungeonRunDeaths.updateAndGet((List<DungeonDeath> list) -> {
-                        list.add(new DungeonDeath(matcher.group(1), suspect));
+                    AtomicCache.dungeonRunDeaths.updateAndGet((List<EntityDeath> list) -> {
+                        list.add(new EntityDeath(matcher.group(1), suspect));
                         return list;
                     });
-                    dout("Death registered.");
+                    dout("Death registered");
                 }
             }
         }
     }
 
-    private static String getSuspect(String patternStr, Matcher matcher) {
+    protected static String getSuspect(String patternStr, Matcher matcher) {
         if(patternStr.equals(Constants.kDungeonDeathBP)) {
             return "Fire";
         } else if(patternStr.equals(Constants.kDungeonDeathCP)) {

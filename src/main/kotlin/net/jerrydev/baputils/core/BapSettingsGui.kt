@@ -93,6 +93,32 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
     var joinDungeonAutoJoinIn = true
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Auto-requeue",
+        description = "Automatically requeue after a dungeon run.",
+        category = "Dungeons"
+    )
+    var autoRequeueMaster = false;
+
+    @Property(
+        type = PropertyType.SLIDER,
+        min = 0,
+        max = 30,
+        name = "Auto-requeue delay",
+        description = "Delay in seconds before requeueing after a dungeon run. There is a 3s-ish delay before auto requeue kicks in.",
+        category = "Dungeons"
+    )
+    var autoRequeueDelay = 0;
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Dungeon death breakdown",
+        description = "Show a breakdown of total deaths at the end of a dungeon run.",
+        category = "Dungeons"
+    )
+    var dungeonDeathBreakdown = true
+
+    @Property(
         type = PropertyType.TEXT,
         name = "Dungeon death message",
         description = "Custom message to send when a player dies in a dungeon. Clear the field to disable.",
@@ -148,5 +174,7 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
 
         addDependency("partyTakeoverTrustedOnly", "partyTakeoverMaster")
         addDependency("joinDungeonTrustedOnly", "joinDungeonMaster")
+        addDependency("partyWarpTrustedOnly", "partyWarpMaster")
+        addDependency("autoRequeueDelay", "autoRequeueMaster")
     }
 }

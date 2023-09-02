@@ -1,22 +1,51 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
-import net.jerrydev.baputils.utils.ChatStyles.CCodes;
+import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.utils.ChatUtils.CCodes;
+import net.minecraft.command.CommandException;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
+import static net.jerrydev.baputils.BapUtils.queueClientMessage;
+import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
-public final class BapUuid {
-    public static final String commandName = "uuid";
-    public static final List<String> commandAliases = Arrays.asList("player", "id");
-    public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases))
-        + ccolorize(CCodes.YELLOW, " <player>");
-    public static final byte requiredParams = 1;
+public final class BapUuid implements BapExecutable {
+    @Override
+    public String getName() {
+        return "uuid";
+    }
 
-    public static void execute(String playerName) {
-        BapUtils.queueClientMessage(ccolorize(Arrays.asList(CCodes.GRAY, CCodes.ITALIC), "This command is currently under development... zzz..."));
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("player", "id");
+    }
+
+    @Override
+    public String getUsage() {
+        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
+            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
+            + ccolorize(CCodes.YELLOW, " <player>");
+    }
+
+    @Override
+    public byte getRequiredParams() {
+        return 1;
+    }
+
+    @Override
+    public String getDesc() {
+        return "Displays a player's UUID";
+    }
+
+    @Override
+    public void execute(List<String> args) throws CommandException {
+        if(args.size() == 1) {
+            BapUtils.throwCommandException("You must specify a player.");
+            return;
+        }
+
+        queueClientMessage(ccolorize(Arrays.asList(CCodes.GRAY, CCodes.ITALIC), "This command is currently under development... zzz..."));
     }
 }

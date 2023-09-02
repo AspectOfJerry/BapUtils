@@ -1,28 +1,49 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
-import net.jerrydev.baputils.utils.ChatStyles;
-import net.jerrydev.baputils.utils.ChatStyles.CCodes;
+import net.jerrydev.baputils.Constants;
+import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.utils.ChatUtils;
+import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
+public final class BapHello implements BapExecutable {
+    @Override
+    public String getName() {
+        return "hello";
+    }
 
-public final class BapHello {
-    public static final String commandName = "hello";
-    public static final List<String> commandAliases = Arrays.asList("hi", "world");
-    public static final String commandUsage = ccolorize(CCodes.YELLOW, "/bap " + commandName)
-        + ccolorize(CCodes.DARK_GRAY, "|" + String.join("|", commandAliases));
-    public static final byte requiredParams = 0;
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("hi", "world");
+    }
 
-    public static void execute() {
-        BapUtils.queueClientMessage(ChatStyles.ccolorize(CCodes.GREEN, "Hello, World from the client!"), true);
+    @Override
+    public String getUsage() {
+        return ChatUtils.ccolorize(CCodes.YELLOW, "/bap " + this.getName())
+            + ChatUtils.ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+    }
+
+    @Override
+    public byte getRequiredParams() {
+        return 0;
+    }
+
+    @Override
+    public String getDesc() {
+        return "Say hello to the world";
+    }
+
+    @Override
+    public void execute(List<String> args) {
+        BapUtils.queueClientMessage(ChatUtils.ccolorize(CCodes.GREEN, "Hello, World from the client! You are on version " + Constants.kModVersion), true);
         BapUtils.queueWarnMessage("Hello from the warning message chat!");
         BapUtils.queueErrorMessage("Hello from the error message chat!");
         BapUtils.clientVerbose("Hello from the client verbose chat!");
         Debug.dout("Hello from the client debug chat!");
-        BapUtils.queueCommand("party chat bap > Hello, World!");
+        BapUtils.queuePartyChat("Hello, World!", true);
     }
 }

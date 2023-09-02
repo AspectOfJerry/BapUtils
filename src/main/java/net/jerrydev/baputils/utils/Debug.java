@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static net.jerrydev.baputils.Constants.kClientPrefix;
-import static net.jerrydev.baputils.utils.ChatStyles.ccolorize;
 
 public final class Debug {
     /**
@@ -33,7 +32,7 @@ public final class Debug {
         // final String threadGroupMaxPriority = String.valueOf(Thread.currentThread().getThreadGroup().getMaxPriority());
         final String totalActiveThreads = String.valueOf(Thread.activeCount());
 
-        return threadName + " (id: " + threadId + ") [total:" + totalActiveThreads + "]";
+        return threadName + " (id:" + threadId + ") [total:" + totalActiveThreads + "]";
     }
 
     /**
@@ -43,7 +42,7 @@ public final class Debug {
      */
     public static void dout(String message) {
         if(BapSettingsGui.INSTANCE.getClientChatDebug()) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ccolorize(ChatStyles.CCodes.DARK_GREEN, kClientPrefix) + " " + ccolorize(ChatStyles.CCodes.GRAY, message)));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ChatUtils.ccolorize(ChatUtils.CCodes.DARK_GREEN, kClientPrefix) + " " + ChatUtils.ccolorize(ChatUtils.CCodes.GRAY, message)));
             System.out.println(kClientPrefix + " " + message);
         }
     }
