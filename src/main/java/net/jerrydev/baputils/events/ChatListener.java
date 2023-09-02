@@ -8,10 +8,8 @@ import net.jerrydev.baputils.commands.bap.BapJoinDungeon;
 import net.jerrydev.baputils.commands.bap.BapTakeover;
 import net.jerrydev.baputils.commands.bap.BapWarp;
 import net.jerrydev.baputils.core.BapSettingsGui;
-import net.jerrydev.baputils.events.features.DungeonStatus;
-import net.jerrydev.baputils.features.dungeons.CatacombsFloors;
-import net.jerrydev.baputils.features.dungeons.DungeonDeath;
-import net.jerrydev.baputils.features.dungeons.PuzzleFail;
+import net.jerrydev.baputils.features.dungeons.*;
+import net.jerrydev.baputils.utils.CausalRelation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -71,7 +69,12 @@ public class ChatListener {
         }
 
         if(cleanMessage.matches(kCatacombsJoinP)) {
-            final Pattern pattern = Pattern.compile(kCatacombsJoinP, Pattern.CASE_INSENSITIVE);
+            AtomicCache.dungeonFails.updateAndGet((List<CausalRelation> list) -> {
+                list.clear(); // clear list of deaths before entering (just making sure)
+                return list;
+            });
+
+            final Pattern pattern = Pattern.compile(kCatacombsJoinP);
             final Matcher matcher = pattern.matcher(cleanMessage);
 
             if(!matcher.find()) {
@@ -156,7 +159,8 @@ public class ChatListener {
             new DungeonDeath(),
             new PuzzleFail(),
             new BapJoinDungeon(),
-            new BapCrash()
+            new BapCrash(),
+            new PuzzleSolved()
         );
 
         for(final BapHandleable handler : handleables) {

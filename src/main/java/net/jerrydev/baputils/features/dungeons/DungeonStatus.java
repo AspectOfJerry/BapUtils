@@ -1,8 +1,8 @@
-package net.jerrydev.baputils.events.features;
+package net.jerrydev.baputils.features.dungeons;
 
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.core.BapSettingsGui;
-import net.jerrydev.baputils.features.dungeons.EntityDeath;
+import net.jerrydev.baputils.utils.CausalRelation;
 import net.jerrydev.baputils.utils.ChatEmojis;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
@@ -17,7 +17,7 @@ import static net.jerrydev.baputils.utils.Debug.dout;
 public final class DungeonStatus {
     public static void onRunEnd(String scoreMessage) {
         dout("Dungeon run ended. Running post-dungeon tasks.");
-        if(AtomicCache.dungeonRunDeaths.get().isEmpty()) {
+        if(AtomicCache.dungeonFails.get().isEmpty()) {
             dout("No skill issues this run!");
             return;
         }
@@ -29,11 +29,19 @@ public final class DungeonStatus {
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
                 queueClientMessage(ccolorize(CCodes.YELLOW, "Dungeon run deaths breakdown:"));
-                AtomicCache.dungeonRunDeaths.get().forEach((EntityDeath death) -> {
-                    queueClientMessage(ccolorize(CCodes.RED, death.killer) + " " + ccolorize(CCodes.DARK_RED, ChatEmojis.LEFT_ARROW.c) + " " + ccolorize(CCodes.GREEN, death.name));
+                AtomicCache.dungeonFails.get().forEach((CausalRelation event) -> {
+                    if(!event.leftGreen) {
+                        queueClientMessage(ccolorize(CCodes.RED, event.actor)
+                            + " " + ccolorize(CCodes.DARK_RED, ChatEmojis.LEFT_ARROW.c)
+                            + " " + ccolorize(CCodes.GREEN, event.target));
+                        return;
+                    }
+                    queueClientMessage(ccolorize(CCodes.GREEN, event.actor)
+                        + " " + ccolorize(CCodes.DARK_GREEN, ChatEmojis.LEFT_ARROW.c)
+                        + " " + ccolorize(CCodes.RED, event.target));
                 });
 
-                AtomicCache.dungeonRunDeaths.updateAndGet((List<EntityDeath> list) -> {
+                AtomicCache.dungeonFails.updateAndGet((List<CausalRelation> list) -> {
                     list.clear(); // clear the list of deaths after end of run
                     return list;
                 });

@@ -1,7 +1,7 @@
 package net.jerrydev.baputils;
 
 import net.jerrydev.baputils.features.dungeons.CatacombsFloors;
-import net.jerrydev.baputils.features.dungeons.EntityDeath;
+import net.jerrydev.baputils.utils.CausalRelation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -20,5 +20,5 @@ public final class AtomicCache {
     @Nullable
     public static final AtomicReference<CatacombsFloors> lastCatacombsFloor = new AtomicReference<>(null);
     @Nullable
-    public static final AtomicReference<List<EntityDeath>> dungeonRunDeaths = new AtomicReference<>(new CopyOnWriteArrayList<>());
+    public static final AtomicReference<List<CausalRelation>> dungeonFails = new AtomicReference<>(new CopyOnWriteArrayList<>());
 }

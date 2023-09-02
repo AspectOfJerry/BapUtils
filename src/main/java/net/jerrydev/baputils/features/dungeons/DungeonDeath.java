@@ -5,6 +5,7 @@ import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
 import net.jerrydev.baputils.commands.BapHandleable;
 import net.jerrydev.baputils.core.BapSettingsGui;
+import net.jerrydev.baputils.utils.CausalRelation;
 import net.jerrydev.baputils.utils.ChatEmojis;
 
 import java.util.List;
@@ -35,8 +36,8 @@ public class DungeonDeath implements BapHandleable {
                 if(matcher.find()) {
                     final String suspect = getSuspect(patternStr, matcher);
 
-                    AtomicCache.dungeonRunDeaths.updateAndGet((List<EntityDeath> list) -> {
-                        list.add(new EntityDeath(matcher.group(1), suspect));
+                    AtomicCache.dungeonFails.updateAndGet((List<CausalRelation> list) -> {
+                        list.add(new CausalRelation(suspect, matcher.group(1), false));
                         return list;
                     });
                     dout("Death registered");
@@ -52,6 +53,8 @@ public class DungeonDeath implements BapHandleable {
             return "Crusher";
         } else if(patternStr.equals(Constants.kDungeonDeathDP)) {
             return "Disconnect";
+        } else if(patternStr.equals(Constants.kDungeonDeathGP)) {
+            return "Death";
         } else if(patternStr.equals(Constants.kDungeonDeathMP)) {
             return "Mob";
         } else if(patternStr.equals(Constants.kDungeonDeathTP)) {

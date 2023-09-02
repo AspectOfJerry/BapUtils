@@ -9,7 +9,7 @@ import java.util.List;
 public final class Constants {
     public static final String kModId = "baputils";
     public static final String kModName = "BapUtils";
-    public static final String kModVersion = "0.8.0-rc";
+    public static final String kModVersion = "0.8.0";
     public static final String kUserAgent = kModId + "/" + kModVersion;
     public static final String kGitHubRepo = "https://github.com/AspectOfJerry/BapUtils/";
     public static final String kGitHubIssues = kGitHubRepo + "issues";
@@ -53,9 +53,13 @@ public final class Constants {
     @RegExp
     public static final String kDungeonEndP = "^ {26,29}Team Score: (\\d+) \\(([A-D]|S\\+?)\\)$";
 
+    @RegExp
+    public static final String kPuzzleSolvedP = "^PUZZLE SOLVED! (" + kMcUserP + ") .*$";
+
     // skill issues (dungeon deaths)
     @RegExp
-    public static final String kPuzzleFailP = "^PUZZLE FAIL! (" + kMcUserP + ") .*! (?:Yikes|That's a whoopsie)!$";
+    public static final String kPuzzleFailP = "^PUZZLE FAIL! (" + kMcUserP + ") .*$" +
+        "|^(" + kMcUserP + ") chose the wrong answer!.*$";
     @RegExp
     public static final String kDungeonDeathBP = "^ " + ChatEmojis.DEATH_SKULL.c + " (" + kMcUserP + ") burned to death and became a ghost\\.$";
     @RegExp
@@ -66,6 +70,8 @@ public final class Constants {
     public static final String kDungeonDeathKP = "^ " + ChatEmojis.DEATH_SKULL.c + " (" + kMcUserP + ") (?:was|were) killed by (.*) and became a ghost\\.$";
     @RegExp
     public static final String kDungeonDeathMP = "^ " + ChatEmojis.DEATH_SKULL.c + " (" + kMcUserP + ") died to a mob and became a ghost\\.$";
+    @RegExp
+    public static final String kDungeonDeathGP = "^ " + ChatEmojis.DEATH_SKULL.c + " (" + kMcUserP + ") died and became a ghost\\.$";
     @RegExp
     public static final String kDungeonDeathTP = "^ " + ChatEmojis.DEATH_SKULL.c + " (" + kMcUserP + ") died to a trap and became a ghost\\.$";
     public static final List<String> kDungeonDeathPs = Arrays.asList(

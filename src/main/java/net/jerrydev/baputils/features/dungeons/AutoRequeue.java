@@ -1,10 +1,9 @@
-package net.jerrydev.baputils.events.features;
+package net.jerrydev.baputils.features.dungeons;
 
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.Constants;
 import net.jerrydev.baputils.commands.BapHandleable;
 import net.jerrydev.baputils.core.BapSettingsGui;
-import net.jerrydev.baputils.features.dungeons.CatacombsFloors;
 import net.jerrydev.baputils.utils.Debug;
 
 import java.util.List;
