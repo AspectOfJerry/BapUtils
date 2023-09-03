@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static net.jerrydev.baputils.BapUtils.queueClientMessage;
-import static net.jerrydev.baputils.BapUtils.queueErrorMessage;
+import static net.jerrydev.baputils.BapUtils.clientMessage;
+import static net.jerrydev.baputils.BapUtils.errorMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
@@ -46,19 +46,19 @@ public final class BapHelp implements BapExecutable {
     public void execute(List<String> args) {
         new Thread(() -> {
             try {
-                queueClientMessage(ccolorize(CCodes.YELLOW, "lmao just look at the code"));
+                clientMessage(ccolorize(CCodes.YELLOW, "lmao just look at the code"));
 
                 dout("Sleep 2000ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(2000);
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
-                queueClientMessage("...");
+                clientMessage("...");
 
                 dout("Sleep 1500ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(1500);
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
-                queueClientMessage(ccolorize(CCodes.YELLOW, "ok fine maybe i'll help you out a bit"));
+                clientMessage(ccolorize(CCodes.YELLOW, "ok fine maybe i'll help you out a bit"));
 
                 dout("Sleep 1500ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(1500);
@@ -71,17 +71,17 @@ public final class BapHelp implements BapExecutable {
                 bapAliases.set(bapAliases.indexOf("tom"), ccolorize(CCodes.RED, "tom"));
                 bapAliases.set(bapAliases.indexOf("fishing"), ccolorize(CCodes.GREEN, "fishing"));
 
-                queueClientMessage(ccolorize(CCodes.GREEN, "Commands with their aliases (v" + Constants.kModVersion + "):"));
+                clientMessage(ccolorize(CCodes.GREEN, "Commands with their aliases (v" + Constants.kModVersion + "):"));
 
-                queueClientMessage(ccolorize(CCodes.YELLOW, "/bap")
+                clientMessage(ccolorize(CCodes.YELLOW, "/bap")
                     + ccolorize(CCodes.GOLD, "|" + String.join("|", bapAliases))
                     + "\n" + ccolorize(CCodes.GRAY, "  - Displays the main GUI"));
 
                 for(final BapExecutable subCmd : BapHandler.subcommands) {
-                    queueClientMessage(subCmd.getUsage() + "\n" + ccolorize(CCodes.GRAY, "  - " + subCmd.getDesc()));
+                    clientMessage(subCmd.getUsage() + "\n" + ccolorize(CCodes.GRAY, "  - " + subCmd.getDesc()));
                 }
             } catch(final InterruptedException err) {
-                queueErrorMessage("InterruptedException: JoinDungeon failed! An error occurred while transferring the party.");
+                errorMessage("InterruptedException in BapHelp. How did you even manage to do that?");
             }
         }).start();
     }

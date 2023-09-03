@@ -54,7 +54,7 @@ public final class Constants {
     public static final String kDungeonEndP = "^ {26,29}Team Score: (\\d+) \\(([A-D]|S\\+?)\\)$";
 
     @RegExp
-    public static final String kPuzzleSolvedP = "^PUZZLE SOLVED! (" + kMcUserP + ") .*$";
+    public static final String kPuzzleSolvedP = "^PUZZLE SOLVED! (" + kMcUserP + ") .*$|\\[STATUE] Oruo the Omniscient: (" + kMcUserP + ") answered the final question correctly!";
 
     // skill issues (dungeon deaths)
     @RegExp

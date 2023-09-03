@@ -33,7 +33,7 @@ public final class PuzzleFail implements BapHandleable {
 
         if(matcher.find()) {
             AtomicCache.dungeonFails.updateAndGet((List<CausalRelation> list) -> {
-                list.add(new CausalRelation(matcher.group(1), "Puzzle", false));
+                list.add(new CausalRelation(matcher.group(1), "Puzzle", true, false));
                 return list;
             });
             dout("Fail registered");

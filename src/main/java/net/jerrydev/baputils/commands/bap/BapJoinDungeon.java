@@ -52,7 +52,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
 
     @Override
     public void execute(List<String> args) throws CommandException {
-        if(args.size() == 1) {
+        if(args.isEmpty()) {
             BapUtils.throwCommandException("You must specify a dungeon floor ([fm][0-7])");
             return;
         }
@@ -62,7 +62,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
         final CatacombsFloors floor = CatacombsFloors.getFloorByCode(floorName);
 
         if(floor == null) {
-            queueErrorMessage("Unknown floor name of " + floorName + ". Valid floor names are [fm][0-7].");
+            commandError("Unknown floor name of " + floorName + ". Valid floor names are [fm][0-7].");
             return;
         }
 
@@ -75,7 +75,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
 
                 if((AtomicCache.lastPartyLeader.get() != null)
                     && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
-                    queueErrorMessage("You are already the party leader!");
+                    commandError("You are already the party leader!");
                     return;
                 }
 
@@ -112,7 +112,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
         final Matcher matcher = pattern.matcher(cleanMessage);
 
         if(!matcher.find()) {
-            queueErrorMessage("JoinDungeon no groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
+            errorMessage("JoinDungeon no groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
             return;
         }
 
@@ -120,7 +120,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
         final CatacombsFloors floor = CatacombsFloors.getFloorByCode(floorName);
 
         if(floor == null) {
-            queueErrorMessage("Unknown floor name of " + floorName + ".");
+            commandError("Unknown floor name of " + floorName + ".");
             return;
         }
 
@@ -132,7 +132,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
                 if(AtomicCache.lastPartyLeader.get() == null) {
-                    queueWarnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
+                    warnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
                     dout("Check the cached party leader using /bap cache");
                 }
 
@@ -153,7 +153,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
 
                 queueCommand("joindungeon " + floor.commandCode);
             } catch(final InterruptedException err) {
-                queueErrorMessage("InterruptedException: JoinDungeon failed! An error occurred while transferring the party.");
+                errorMessage("InterruptedException: JoinDungeon failed! An error occurred while transferring the party.");
             }
         }).start();
     }
@@ -163,7 +163,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
         final Matcher matcher = pattern.matcher(cleanMessage);
 
         if(!matcher.find()) {
-            queueErrorMessage("AutoJoinIn, no groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
+            errorMessage("AutoJoinIn, no groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
             return;
         }
 
@@ -181,7 +181,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
                 }
 
                 if(Math.abs(Integer.parseInt(matcher.group(2))) > 127) {
-                    queueWarnMessage("AutoJoinIn delay exceeds 127 seconds, ignoring");
+                    warnMessage("AutoJoinIn delay exceeds 127 seconds, ignoring");
                     return;
                 }
 
@@ -194,7 +194,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
                 }
 
                 if(floor == null) {
-                    queueErrorMessage("Couldn't find the last catacombs floor and no floor was provided.");
+                    commandError("Couldn't find the last catacombs floor and no floor was provided.");
                     return;
                 }
 

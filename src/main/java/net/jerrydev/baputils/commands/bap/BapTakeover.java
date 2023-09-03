@@ -56,7 +56,7 @@ public final class BapTakeover implements BapExecutable, BapHandleable {
 
                 if((AtomicCache.lastPartyLeader.get() != null)
                     && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
-                    queueErrorMessage("You are already the party leader!");
+                    BapUtils.commandError("You are already the party leader!");
                     return;
                 }
 
@@ -97,7 +97,7 @@ public final class BapTakeover implements BapExecutable, BapHandleable {
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
                 if(AtomicCache.lastPartyLeader.get() == null) {
-                    queueWarnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
+                    warnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
                     dout("Check the cached party leader using /bap cache");
                 }
 
@@ -110,7 +110,7 @@ public final class BapTakeover implements BapExecutable, BapHandleable {
 
                 queueCommand("party transfer " + sender);
             } catch(InterruptedException err) {
-                BapUtils.queueErrorMessage("InterruptedException: Takeover failed! An error occurred while transferring the party.");
+                BapUtils.errorMessage("InterruptedException: Takeover failed! An error occurred while transferring the party.");
             }
         }).start();
     }

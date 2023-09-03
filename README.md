@@ -6,7 +6,7 @@ To download the latest release, visit: <https://github.com/AspectOfJerry/BapUtil
 
 # Documentation
 
-Please visit <https://bap.jerrydev.net> for an up-to-date documentation (mostly updated every commit if needed).
+Please visit <https://bap.jerrydev.net/> for an up-to-date documentation (updated every release/pre-release).
 
 ## Features (TBD)
 

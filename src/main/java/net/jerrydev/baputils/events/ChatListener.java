@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static net.jerrydev.baputils.BapUtils.queueErrorMessage;
+import static net.jerrydev.baputils.BapUtils.errorMessage;
 import static net.jerrydev.baputils.Constants.*;
 import static net.jerrydev.baputils.utils.ChatUtils.cleanString;
 import static net.jerrydev.baputils.utils.Debug.dout;
@@ -74,11 +74,14 @@ public class ChatListener {
                 return list;
             });
 
+            AtomicCache.inDungeon.set(true);
+            dout("Updated isDungeon to true");
+
             final Pattern pattern = Pattern.compile(kCatacombsJoinP);
             final Matcher matcher = pattern.matcher(cleanMessage);
 
             if(!matcher.find()) {
-                queueErrorMessage("kCatacombsJoinPat no groups found. This is impossible!" +
+                errorMessage("kCatacombsJoinPat no groups found. This is impossible!" +
                     " Please open a bug report at " + Constants.kGitHubIssues);
                 return;
             }
@@ -104,8 +107,6 @@ public class ChatListener {
             AtomicCache.isInParty.set(true);
             dout("Updated isInParty to " + AtomicCache.isInParty.get());
 
-            System.out.println(cleanMessage);
-
             final Pattern pattern = Pattern.compile(kInPartyP);
             final Matcher matcher = pattern.matcher(cleanMessage);
             if(matcher.find()) {
@@ -121,7 +122,7 @@ public class ChatListener {
         for(final String pattern : kNotInPartyPs) {
             if(cleanMessage.matches(pattern)) {
                 if(!AtomicCache.isInParty.get()) {
-                    dout("No changes for isInPart");
+                    dout("No changes for isInParty");
                     return;
                 }
 
@@ -142,11 +143,12 @@ public class ChatListener {
         }
 
         if(cleanMessage.matches(kDungeonEndP)) {
-            if(!BapSettingsGui.INSTANCE.getDungeonDeathBreakdown()) {
-                return;
+            if(AtomicCache.inDungeon.get() && AtomicCache.inDungeon.compareAndSet(true, false)) {
+                dout("Updated isDungeon to false");
+                DungeonStatus.onRunEnd(cleanMessage);
+            } else {
+                dout("Dungeon run ended, but inDungeon is false. This is a weird issue possibly caused by the presence of other mods.");
             }
-
-            DungeonStatus.onRunEnd(cleanMessage);
             return;
         }
 

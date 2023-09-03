@@ -39,9 +39,9 @@ public final class BapHello implements BapExecutable {
 
     @Override
     public void execute(List<String> args) {
-        BapUtils.queueClientMessage(ChatUtils.ccolorize(CCodes.GREEN, "Hello, World from the client! You are on version " + Constants.kModVersion), true);
-        BapUtils.queueWarnMessage("Hello from the warning message chat!");
-        BapUtils.queueErrorMessage("Hello from the error message chat!");
+        BapUtils.clientMessage(ChatUtils.ccolorize(CCodes.GREEN, "Hello, World from the client! You are on version " + Constants.kModVersion), true);
+        BapUtils.warnMessage("Hello from the warning message chat!");
+        BapUtils.commandError("Hello from the error message chat!");
         BapUtils.clientVerbose("Hello from the client verbose chat!");
         Debug.dout("Hello from the client debug chat!");
         BapUtils.queuePartyChat("Hello, World!", true);

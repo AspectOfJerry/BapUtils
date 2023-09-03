@@ -8,7 +8,7 @@ import net.minecraft.command.CommandException;
 import java.util.Arrays;
 import java.util.List;
 
-import static net.jerrydev.baputils.BapUtils.queueClientMessage;
+import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
 public final class BapTrust implements BapExecutable {
@@ -41,13 +41,11 @@ public final class BapTrust implements BapExecutable {
 
     @Override
     public void execute(List<String> args) throws CommandException {
-        if(args.size() == 1) {
+        if(args.isEmpty()) {
             BapUtils.throwCommandException("Your must specify a player.");
             return;
         }
 
-        final String playerUuid = "";
-
-        queueClientMessage(ccolorize(Arrays.asList(CCodes.GRAY, CCodes.ITALIC), "This command is currently under development... zzz..."));
+        clientMessage(ccolorize(Arrays.asList(CCodes.GRAY, CCodes.ITALIC), "This command is currently under development... zzz..."));
     }
 }

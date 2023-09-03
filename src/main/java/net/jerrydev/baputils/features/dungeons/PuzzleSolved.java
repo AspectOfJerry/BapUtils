@@ -26,7 +26,7 @@ public class PuzzleSolved implements BapHandleable {
 
         if(matcher.find()) {
             AtomicCache.dungeonFails.updateAndGet((List<CausalRelation> list) -> {
-                list.add(new CausalRelation(matcher.group(1), "Puzzle", true));
+                list.add(new CausalRelation(matcher.group(1), "Puzzle", true, true));
                 return list;
             });
             dout("Completion registered");

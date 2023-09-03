@@ -6,7 +6,7 @@ import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import java.util.Collections;
 import java.util.List;
 
-import static net.jerrydev.baputils.BapUtils.queueClientMessage;
+import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
 public final class BapDev implements BapExecutable {
@@ -39,7 +39,7 @@ public final class BapDev implements BapExecutable {
 
     @Override
     public void execute(List<String> args) {
-        queueClientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
+        clientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
 
         // what are partial ticks?
         //WaypointRenderer.renderBeaconBeam(0, 100, 0, 0xFF00FF, 1.0f, 10);

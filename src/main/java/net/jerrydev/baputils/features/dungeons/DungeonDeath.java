@@ -37,7 +37,7 @@ public class DungeonDeath implements BapHandleable {
                     final String suspect = getSuspect(patternStr, matcher);
 
                     AtomicCache.dungeonFails.updateAndGet((List<CausalRelation> list) -> {
-                        list.add(new CausalRelation(suspect, matcher.group(1), false));
+                        list.add(new CausalRelation(suspect, matcher.group(1), false, false));
                         return list;
                     });
                     dout("Death registered");

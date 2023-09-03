@@ -74,7 +74,7 @@ public class BapHandler extends CommandBase {
 
         for(final BapExecutable subCmd : subcommands) {
             if(subCmd.getName().equals(subcommand) || subCmd.getAliases().contains(subcommand)) {
-                subCmd.execute(Arrays.asList(args));
+                subCmd.execute(Arrays.asList(args).subList(1, args.length)); // remove subcommand name from args
                 return;
             }
         }

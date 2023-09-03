@@ -98,7 +98,7 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
         description = "Automatically requeue after a dungeon run.",
         category = "Dungeons"
     )
-    var autoRequeueMaster = false;
+    var autoRequeueMaster = false
 
     @Property(
         type = PropertyType.SLIDER,
@@ -108,15 +108,15 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
         description = "Delay in seconds before requeueing after a dungeon run. There is a 3s-ish delay before auto requeue kicks in.",
         category = "Dungeons"
     )
-    var autoRequeueDelay = 0;
+    var autoRequeueDelay = 0
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Dungeon death breakdown",
-        description = "Show a breakdown of total deaths at the end of a dungeon run.",
+        name = "Dungeon breakdown",
+        description = "Show a summary of major events after a dungeon run.",
         category = "Dungeons"
     )
-    var dungeonDeathBreakdown = true
+    var dungeonBreakdown = true
 
     @Property(
         type = PropertyType.TEXT,
