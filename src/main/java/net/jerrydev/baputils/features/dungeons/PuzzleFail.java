@@ -24,14 +24,14 @@ public final class PuzzleFail implements BapHandleable {
     public void handle(List<String> args) {
         final String cleanMessage = args.get(0);
 
-        if(!BapSettingsGui.INSTANCE.getPuzzleFailMsg().isEmpty()) {
+        if (!BapSettingsGui.INSTANCE.getPuzzleFailMsg().isEmpty()) {
             queueServerMessage(BapSettingsGui.INSTANCE.getPuzzleFailMsg(), false);
         }
 
         Pattern pattern = Pattern.compile(Constants.kPuzzleFailP);
         Matcher matcher = pattern.matcher(cleanMessage);
 
-        if(matcher.find()) {
+        if (matcher.find()) {
             AtomicCache.dungeonFails.updateAndGet((List<CausalRelation> list) -> {
                 list.add(new CausalRelation(matcher.group(1), "Puzzle", true, false));
                 return list;

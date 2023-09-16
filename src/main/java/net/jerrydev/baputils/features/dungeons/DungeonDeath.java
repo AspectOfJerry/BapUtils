@@ -24,16 +24,16 @@ public class DungeonDeath implements BapHandleable {
     public void handle(List<String> args) {
         final String cleanMessage = args.get(0);
 
-        if(!BapSettingsGui.INSTANCE.getDungeonDeathMsg().isEmpty() && !cleanMessage.startsWith(" " + ChatEmojis.DEATH_SKULL.c + " You")) {
+        if (!BapSettingsGui.INSTANCE.getDungeonDeathMsg().isEmpty() && !cleanMessage.startsWith(" " + ChatEmojis.DEATH_SKULL.c + " You")) {
             BapUtils.queueServerMessage(BapSettingsGui.INSTANCE.getDungeonDeathMsg(), false);
         }
 
-        for(final String patternStr : Constants.kDungeonDeathPs) {
-            if(cleanMessage.matches(patternStr)) {
+        for (final String patternStr : Constants.kDungeonDeathPs) {
+            if (cleanMessage.matches(patternStr)) {
                 final Pattern pattern = Pattern.compile(patternStr);
                 final Matcher matcher = pattern.matcher(cleanMessage);
 
-                if(matcher.find()) {
+                if (matcher.find()) {
                     final String suspect = getSuspect(patternStr, matcher);
 
                     AtomicCache.dungeonFails.updateAndGet((List<CausalRelation> list) -> {
@@ -47,17 +47,17 @@ public class DungeonDeath implements BapHandleable {
     }
 
     protected static String getSuspect(String patternStr, Matcher matcher) {
-        if(patternStr.equals(Constants.kDungeonDeathBP)) {
+        if (patternStr.equals(Constants.kDungeonDeathBP)) {
             return "Fire";
-        } else if(patternStr.equals(Constants.kDungeonDeathCP)) {
+        } else if (patternStr.equals(Constants.kDungeonDeathCP)) {
             return "Crusher";
-        } else if(patternStr.equals(Constants.kDungeonDeathDP)) {
+        } else if (patternStr.equals(Constants.kDungeonDeathDP)) {
             return "Disconnect";
-        } else if(patternStr.equals(Constants.kDungeonDeathGP)) {
+        } else if (patternStr.equals(Constants.kDungeonDeathGP)) {
             return "Death";
-        } else if(patternStr.equals(Constants.kDungeonDeathMP)) {
+        } else if (patternStr.equals(Constants.kDungeonDeathMP)) {
             return "Mob";
-        } else if(patternStr.equals(Constants.kDungeonDeathTP)) {
+        } else if (patternStr.equals(Constants.kDungeonDeathTP)) {
             return "Trap";
         } else {
             return matcher.group(2);

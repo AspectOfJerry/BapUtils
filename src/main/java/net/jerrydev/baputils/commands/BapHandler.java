@@ -54,7 +54,7 @@ public class BapHandler extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        if(args.length == 0) {
+        if (args.length == 0) {
             // Display main/options GUI
             BapUtils.setActiveGui(new BapGui());
 
@@ -72,8 +72,8 @@ public class BapHandler extends CommandBase {
 
         final String subcommand = args[0].toLowerCase();
 
-        for(final BapExecutable subCmd : subcommands) {
-            if(subCmd.getName().equals(subcommand) || subCmd.getAliases().contains(subcommand)) {
+        for (final BapExecutable subCmd : subcommands) {
+            if (subCmd.getName().equals(subcommand) || subCmd.getAliases().contains(subcommand)) {
                 subCmd.execute(Arrays.asList(args).subList(1, args.length)); // remove subcommand name from args
                 return;
             }

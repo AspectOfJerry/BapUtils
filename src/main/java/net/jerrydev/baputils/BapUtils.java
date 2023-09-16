@@ -54,7 +54,7 @@ public class BapUtils {
     }
 
     public static void clientVerbose(String message) {
-        if(BapSettingsGui.INSTANCE.getClientChatVerbose()) {
+        if (BapSettingsGui.INSTANCE.getClientChatVerbose()) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
                 ccolorize(CCodes.GRAY, kClientPrefix) + " " + ccolorize(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC), message)
             ));

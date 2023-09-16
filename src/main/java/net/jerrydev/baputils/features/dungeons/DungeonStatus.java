@@ -17,7 +17,7 @@ import static net.jerrydev.baputils.utils.Debug.dout;
 public final class DungeonStatus {
     public static void onRunEnd(String scoreMessage) {
         dout("Dungeon run ended. Running post-dungeon tasks.");
-        if(AtomicCache.dungeonFails.get().isEmpty()) {
+        if (AtomicCache.dungeonFails.get().isEmpty()) {
             dout("No skill issues this run!");
             return;
         }
@@ -28,11 +28,11 @@ public final class DungeonStatus {
                 Thread.sleep(500);
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
-                if(BapSettingsGui.INSTANCE.getDungeonBreakdown()) {
+                if (BapSettingsGui.INSTANCE.getDungeonBreakdown()) {
                     clientMessage(ccolorize(CCodes.YELLOW, "Dungeon run breakdown:"));
                     AtomicCache.dungeonFails.get().forEach((CausalRelation event) -> {
-                        if(event.leftGreen) {
-                            if(event.positive) {
+                        if (event.leftGreen) {
+                            if (event.positive) {
                                 // used by puzzle completions
                                 clientMessage(ccolorize(CCodes.GREEN, event.actor)
                                     + " " + ccolorize(CCodes.DARK_GREEN, ChatEmojis.LEFT_ARROW.c)
@@ -45,7 +45,7 @@ public final class DungeonStatus {
                                 + " " + ccolorize(CCodes.RED, event.target));
                             return;
                         }
-                        if(event.positive) {
+                        if (event.positive) {
                             // heh?
                             clientMessage(ccolorize(CCodes.RED, event.actor)
                                 + " " + ccolorize(CCodes.DARK_GREEN, ChatEmojis.LEFT_ARROW.c)
@@ -63,11 +63,11 @@ public final class DungeonStatus {
                     return list;
                 });
 
-                if(BapSettingsGui.INSTANCE.getAutoRequeueMaster()
+                if (BapSettingsGui.INSTANCE.getAutoRequeueMaster()
                     && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
                     AutoRequeue.handle();
                 }
-            } catch(final InterruptedException e) {
+            } catch (final InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }).start();

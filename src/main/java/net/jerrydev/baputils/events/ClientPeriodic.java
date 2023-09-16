@@ -16,12 +16,12 @@ public class ClientPeriodic {
     @NonBlocking
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onTick(TickEvent.ClientTickEvent event) {
-        if(event.phase != TickEvent.Phase.START) {
+        if (event.phase != TickEvent.Phase.START) {
             return;
         }
 
-        if(activeGui != null) {
-            if(Minecraft.getMinecraft().thePlayer.openContainer == Minecraft.getMinecraft().thePlayer.inventoryContainer) {
+        if (activeGui != null) {
+            if (Minecraft.getMinecraft().thePlayer.openContainer == Minecraft.getMinecraft().thePlayer.inventoryContainer) {
                 Minecraft.getMinecraft().displayGuiScreen(activeGui);
                 activeGui = null;
                 Debug.dout("Queued gui is active, clearing queue");

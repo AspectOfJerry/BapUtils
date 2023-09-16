@@ -17,7 +17,7 @@ public final class AutoRequeue implements BapHandleable {
             try {
                 final CatacombsFloors floor = AtomicCache.lastCatacombsFloor.get();
 
-                if(floor == null) {
+                if (floor == null) {
                     errorMessage("Couldn't find the last catacombs floor. This is impossible!" +
                         " Please open a bug report at " + Constants.kGitHubIssues);
                     return;
@@ -34,7 +34,7 @@ public final class AutoRequeue implements BapHandleable {
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
                 queueCommand("joindungeon " + floor.commandCode);
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }).start();

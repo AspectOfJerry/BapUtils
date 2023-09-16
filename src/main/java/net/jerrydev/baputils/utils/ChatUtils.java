@@ -16,7 +16,7 @@ public final class ChatUtils {
     public static String ccolorize(List<CCodes> colorsL, String message) {
         final StringBuilder colors = new StringBuilder();
 
-        for(final CCodes color : colorsL) {
+        for (final CCodes color : colorsL) {
             colors.append(color.colorCode);
         }
 
@@ -28,14 +28,14 @@ public final class ChatUtils {
     }
 
     public static String autoTrueFalse(String tf) {
-        if(tf == null) {
+        if (tf == null) {
             return "null";
         }
 
-        if(tf.equalsIgnoreCase("true")) {
+        if (tf.equalsIgnoreCase("true")) {
             return ccolorize(CCodes.GREEN, tf);
         }
-        if(tf.equalsIgnoreCase("false")) {
+        if (tf.equalsIgnoreCase("false")) {
             return ccolorize(CCodes.RED, tf);
         }
 
@@ -54,7 +54,7 @@ public final class ChatUtils {
 
         final StringBuilder rgbMessage = new StringBuilder();
 
-        for(int i = 0; i < message.length(); i++) {
+        for (int i = 0; i < message.length(); i++) {
             final char character = message.charAt(i);
             final CCodes color = rgbCCodes[i % rgbCCodes.length];
             rgbMessage.append(color.colorCode).append(character);
@@ -74,7 +74,7 @@ public final class ChatUtils {
 
         final StringBuilder rainbowMessage = new StringBuilder();
 
-        for(int i = 0; i < message.length(); i++) {
+        for (int i = 0; i < message.length(); i++) {
             final char character = message.charAt(i);
             final CCodes color = rainbowCCodes[i % rainbowCCodes.length];
             rainbowMessage.append(color.colorCode).append(character);
@@ -137,11 +137,11 @@ public final class ChatUtils {
      * @author org.apache.commons.lang3.StringUtils
      */
     public static String leftPad(String str, int size, char padChar) {
-        if(str == null) {
+        if (str == null) {
             return null;
         } else {
             final int pads = size - stripColorCodes(str).length();
-            if(pads <= 0) {
+            if (pads <= 0) {
                 return str;
             } else {
                 return (pads > 8192) ? leftPad(str, size, String.valueOf(padChar)) : repeat(padChar, pads).concat(str);
@@ -153,29 +153,29 @@ public final class ChatUtils {
      * @author org.apache.commons.lang3.StringUtils
      */
     public static String leftPad(String str, int size, String padStr) {
-        if(str == null) {
+        if (str == null) {
             return null;
         } else {
-            if(isEmpty(padStr)) {
+            if (isEmpty(padStr)) {
                 padStr = " ";
             }
 
             final int padLen = padStr.length();
             final int strLen = stripColorCodes(str).length();
             final int pads = size - strLen;
-            if(pads <= 0) {
+            if (pads <= 0) {
                 return str;
-            } else if((padLen == 1) && (pads <= 8192)) {
+            } else if ((padLen == 1) && (pads <= 8192)) {
                 return leftPad(str, size, padStr.charAt(0));
-            } else if(pads == padLen) {
+            } else if (pads == padLen) {
                 return padStr.concat(str);
-            } else if(pads < padLen) {
+            } else if (pads < padLen) {
                 return padStr.substring(0, pads).concat(str);
             } else {
                 final char[] padding = new char[pads];
                 final char[] padChars = padStr.toCharArray();
 
-                for(int i = 0; i < pads; ++i) {
+                for (int i = 0; i < pads; ++i) {
                     padding[i] = padChars[i % padLen];
                 }
 

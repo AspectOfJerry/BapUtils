@@ -45,7 +45,7 @@ public final class Debug {
     public static void dout(String message) {
         logger.log(Level.INFO, "[DBG]" + message);
 
-        if(BapSettingsGui.INSTANCE.getClientChatDebug()) {
+        if (BapSettingsGui.INSTANCE.getClientChatDebug()) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ChatUtils.ccolorize(ChatUtils.CCodes.DARK_GREEN, kClientPrefix) + " " + ChatUtils.ccolorize(ChatUtils.CCodes.GRAY, message)));
         }
     }

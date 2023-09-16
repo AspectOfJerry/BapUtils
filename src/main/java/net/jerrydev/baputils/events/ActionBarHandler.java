@@ -14,7 +14,7 @@ public class ActionBarHandler {
           1 : 'System' message, displayed as standard text.
           2 : 'Status' message, displayed above action bar, where song notifications are.
          */
-        if(event.type != 1) {
+        if (event.type != 1) {
             return;
         }
     }

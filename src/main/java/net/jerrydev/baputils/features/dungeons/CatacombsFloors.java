@@ -37,8 +37,8 @@ public enum CatacombsFloors {
 
     @Nullable
     public static CatacombsFloors getFloorByCode(String code) {
-        for(final CatacombsFloors floor : CatacombsFloors.values()) {
-            if(floor.floorCode.equals(code.toLowerCase())) {
+        for (final CatacombsFloors floor : CatacombsFloors.values()) {
+            if (floor.floorCode.equals(code.toLowerCase())) {
                 return floor;
             }
         }
@@ -47,8 +47,8 @@ public enum CatacombsFloors {
 
     @Nullable
     public static CatacombsFloors getFloorByChatName(String name) {
-        for(final CatacombsFloors floor : CatacombsFloors.values()) {
-            if(floor.chatName.equals(name)) {
+        for (final CatacombsFloors floor : CatacombsFloors.values()) {
+            if (floor.chatName.equals(name)) {
                 return floor;
             }
         }
