@@ -29,7 +29,8 @@ public class BapHandler extends CommandBase {
         new BapTakeover(),
         new BapTrust(),
         new BapUuid(),
-        new BapWarp()
+        new BapWarp(),
+        new BapRoulette()
     );
 
     @Override
