@@ -40,7 +40,7 @@ public final class BapColors implements BapExecutable {
     public void execute(List<String> args) {
         clientMessage(ccolorize(CCodes.GREEN, "Minecraft color codes:"));
 
-        for(final CCodes c : CCodes.values()) {
+        for (final CCodes c : CCodes.values()) {
             clientMessage(c.colorCode.replaceAll("§", "&") + " " + ccolorize(c, c.toString()), false);
         }
     }

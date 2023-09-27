@@ -2,9 +2,8 @@ package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.Constants;
 import net.jerrydev.baputils.commands.BapExecutable;
-import net.jerrydev.baputils.commands.BapHandler;
+import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
-import net.jerrydev.baputils.utils.Debug;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +12,6 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.BapUtils.errorMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
-import static net.jerrydev.baputils.utils.Debug.dout;
 
 public final class BapHelp implements BapExecutable {
     @Override
@@ -48,23 +46,17 @@ public final class BapHelp implements BapExecutable {
             try {
                 clientMessage(ccolorize(CCodes.YELLOW, "lmao just look at the code"));
 
-                dout("Sleep 2000ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(2000);
-                dout("Resume " + Debug.getThreadInfoFormatted());
 
                 clientMessage("...");
 
-                dout("Sleep 1500ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(1500);
-                dout("Resume " + Debug.getThreadInfoFormatted());
 
                 clientMessage(ccolorize(CCodes.YELLOW, "ok fine maybe i'll help you out a bit"));
 
-                dout("Sleep 1500ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(1500);
-                dout("Resume " + Debug.getThreadInfoFormatted());
 
-                final List<String> bapAliases = new ArrayList<>(BapHandler.commandAliases);
+                final List<String> bapAliases = new ArrayList<>(BapCommand.commandAliases);
 
                 bapAliases.set(bapAliases.indexOf("uwa"), ccolorize(CCodes.LIGHT_PURPLE, "uwa"));
                 bapAliases.set(bapAliases.indexOf("pig"), ccolorize(CCodes.AQUA, "pig"));
@@ -77,10 +69,10 @@ public final class BapHelp implements BapExecutable {
                     + ccolorize(CCodes.GOLD, "|" + String.join("|", bapAliases))
                     + "\n" + ccolorize(CCodes.GRAY, "  - Displays the main GUI"));
 
-                for(final BapExecutable subCmd : BapHandler.subcommands) {
+                for (final BapExecutable subCmd : BapCommand.subcommands) {
                     clientMessage(subCmd.getUsage() + "\n" + ccolorize(CCodes.GRAY, "  - " + subCmd.getDesc()));
                 }
-            } catch(final InterruptedException err) {
+            } catch (final InterruptedException err) {
                 errorMessage("InterruptedException in BapHelp. How did you even manage to do that?");
             }
         }).start();

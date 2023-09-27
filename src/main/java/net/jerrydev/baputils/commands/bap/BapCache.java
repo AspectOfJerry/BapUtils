@@ -42,11 +42,12 @@ public final class BapCache implements BapExecutable {
     @Override
     public void execute(List<String> args) {
         clientMessage(ccolorize(CCodes.GREEN, "Here are the values currently stored in our fancy AtomicCache"));
-        for(final String s : Arrays.asList(
+        for (final String s : Arrays.asList(
             "- boolean isInParty: " + autoTrueFalse(String.valueOf(AtomicCache.isInParty.get())),
             "- String lastPartyLeader: " + autoTrueFalse(AtomicCache.lastPartyLeader.get()),
             "- CatacombsFloors lastCatacombsFloor: " + autoTrueFalse(String.valueOf(AtomicCache.lastCatacombsFloor.get())),
-            "- boolean inDungeon: " + autoTrueFalse(String.valueOf(AtomicCache.inDungeon.get()))
+            "- boolean inDungeon: " + autoTrueFalse(String.valueOf(AtomicCache.inDungeon.get())),
+            "- List<String> serverChatQueue (size): " + AtomicCache.serverChatQueue.get().size()
         )) {
             clientMessage(ccolorize(CCodes.GRAY, s, false));
         }

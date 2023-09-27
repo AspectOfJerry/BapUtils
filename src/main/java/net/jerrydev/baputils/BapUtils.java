@@ -1,6 +1,6 @@
 package net.jerrydev.baputils;
 
-import net.jerrydev.baputils.commands.BapHandler;
+import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.events.ChatListener;
 import net.jerrydev.baputils.events.ClientPeriodic;
@@ -36,7 +36,7 @@ public class BapUtils {
         logger.log(Level.INFO, "HELLO from " + kModName + "! You are on Minecraft Forge version 1.8.9.");
 
         // Register slash (/) commands
-        ClientCommandHandler.instance.registerCommand(new BapHandler());
+        ClientCommandHandler.instance.registerCommand(new BapCommand());
 
         // Register events
         MinecraftForge.EVENT_BUS.register(new ChatListener());
@@ -63,24 +63,48 @@ public class BapUtils {
 
 
     public static void queueServerMessage(String message) {
-        Minecraft.getMinecraft().thePlayer.sendChatMessage(message);
+        AtomicCache.serverChatQueue.updateAndGet((list) -> {
+            list.add(message);
+            return list;
+        });
     }
 
     public static void queueServerMessage(String message, boolean addPrefix) {
-        Minecraft.getMinecraft().thePlayer.sendChatMessage(addPrefix ? (kServerPrefix + " > " + message) : message);
+        AtomicCache.serverChatQueue.updateAndGet((list) -> {
+            list.add(addPrefix ? (kServerPrefix + " > " + message) : message);
+            return list;
+        });
     }
 
     public static void queuePartyChat(String message) {
-        Minecraft.getMinecraft().thePlayer.sendChatMessage((isLocalDev ? "." : "") + "/party chat " + message);
+        AtomicCache.serverChatQueue.updateAndGet((list) -> {
+            list.add((isLocalDev ? "." : "") + "/party chat " + message);
+            return list;
+        });
     }
 
     public static void queuePartyChat(String message, boolean addPrefix) {
-        Minecraft.getMinecraft().thePlayer.sendChatMessage((isLocalDev ? "." : "") + "/party chat " + (addPrefix ? "bap > " : "") + message);
+        AtomicCache.serverChatQueue.updateAndGet((list) -> {
+            list.add((isLocalDev ? "." : "") + "/party chat " + (addPrefix ? kServerPrefix + " > " : "") + message);
+            return list;
+        });
     }
 
-    public static void queueCommand(String command) {
+    public static void sendCommand(String command) {
         Debug.dout("Executing: /" + command);
         Minecraft.getMinecraft().thePlayer.sendChatMessage((isLocalDev ? "." : "") + "/" + command);
+    }
+
+    public static void sendCommand(String command, boolean pushToQueue) {
+        if (pushToQueue) {
+            Debug.dout("Executing: /" + command);
+            AtomicCache.serverChatQueue.updateAndGet((list) -> {
+                list.add((isLocalDev ? "." : "") + "/" + command);
+                return list;
+            });
+        } else {
+            sendCommand(command);
+        }
     }
 
     public static void clientMessage(String message) {

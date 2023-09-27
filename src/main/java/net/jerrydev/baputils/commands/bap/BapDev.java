@@ -44,10 +44,6 @@ public final class BapDev implements BapExecutable {
         // what are partial ticks?
         //WaypointRenderer.renderBeaconBeam(0, 100, 0, 0xFF00FF, 1.0f, 10);
 
-        //queueClientMessage(ccolorize(CCodes.GRAY, "BapGui (kt) options gui test"));
-        //BapUtils.setActiveGui(new BapGui());
-
-
         // minecraft username to uuid
         /* try {
             final String req = BapUtils.httpGetRequest("https://api.mojang.com/users/profiles/minecraft/aspectofjerry");
