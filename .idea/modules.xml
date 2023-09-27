@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BapUtils.iml" filepath="$PROJECT_DIR$/.idea/modules/BapUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BapUtils.main.iml" filepath="$PROJECT_DIR$/.idea/modules/BapUtils.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BapUtils.test.iml" filepath="$PROJECT_DIR$/.idea/modules/BapUtils.test.iml" />
     </modules>

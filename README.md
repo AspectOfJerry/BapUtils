@@ -4,9 +4,13 @@ Welcome to BapUtils, a Hypixel Skyblock mod featuring a variety of random utilit
 
 To download the latest release, visit: <https://github.com/AspectOfJerry/BapUtils/releases/>
 
-# Documentation
-
 Please visit <https://bap.jerrydev.net/> for an up-to-date documentation (updated every release/pre-release).
+
+## Important developer notice
+
+Please visit <https://bap.jerrydev.net/developer-reference> to configure your IDE.
+
+# Info
 
 ## Features (TBD)
 
