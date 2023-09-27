@@ -52,7 +52,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
 
     @Override
     public void execute(List<String> args) throws CommandException {
-        if(args.isEmpty()) {
+        if (args.isEmpty()) {
             BapUtils.throwCommandException("You must specify a dungeon floor ([fm][0-7])");
             return;
         }
@@ -61,29 +61,20 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
 
         final CatacombsFloors floor = CatacombsFloors.getFloorByCode(floorName);
 
-        if(floor == null) {
+        if (floor == null) {
             commandError("Unknown floor name of " + floorName + ". Valid floor names are [fm][0-7].");
             return;
         }
 
-        new Thread(() -> {
-            try {
-                queueCommand("party list");
-                dout("Sleep " + Constants.kCommandDelayMs + "ms " + Debug.getThreadInfoFormatted());
-                Thread.sleep(Constants.kCommandDelayMs);
-                dout("Resume " + Debug.getThreadInfoFormatted());
+        sendCommand("party list", true);
 
-                if((AtomicCache.lastPartyLeader.get() != null)
-                    && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
-                    commandError("You are already the party leader!");
-                    return;
-                }
+        if ((AtomicCache.lastPartyLeader.get() != null)
+            && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
+            commandError("You are already the party leader!");
+            return;
+        }
 
-                queuePartyChat("$jd." + floorName);
-            } catch(final InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+        queuePartyChat("$jd." + floorName);
     }
 
     @Override
@@ -93,7 +84,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
 
     @Override
     public void handle(List<String> args) {
-        if(!BapSettingsGui.INSTANCE.getJoinDungeonMaster()) {
+        if (!BapSettingsGui.INSTANCE.getJoinDungeonMaster()) {
             dout("JoinDungeon is disabled.");
             return;
         }
@@ -103,7 +94,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
         final String[] messageSplit = cleanMessage.split(" ");
         final String sender = messageSplit[2].replaceAll(":", "");
 
-        if(sender.equals(Minecraft.getMinecraft().thePlayer.getName())) {
+        if (sender.equals(Minecraft.getMinecraft().thePlayer.getName())) {
             dout("We are the sender, ignoring");
             return;
         }
@@ -111,7 +102,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
         final Pattern pattern = Pattern.compile(Constants.kJoinDungeonP);
         final Matcher matcher = pattern.matcher(cleanMessage);
 
-        if(!matcher.find()) {
+        if (!matcher.find()) {
             errorMessage("JoinDungeon no groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
             return;
         }
@@ -119,24 +110,21 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
         final String floorName = matcher.group(1);
         final CatacombsFloors floor = CatacombsFloors.getFloorByCode(floorName);
 
-        if(floor == null) {
+        if (floor == null) {
             commandError("Unknown floor name of " + floorName + ".");
             return;
         }
 
         new Thread(() -> {
             try {
-                queueCommand("party list");
-                dout("Sleep " + Constants.kChatDelayMs + "ms " + Debug.getThreadInfoFormatted());
-                Thread.sleep(Constants.kChatDelayMs);
-                dout("Resume " + Debug.getThreadInfoFormatted());
+                sendCommand("party list", true);
 
-                if(AtomicCache.lastPartyLeader.get() == null) {
+                if (AtomicCache.lastPartyLeader.get() == null) {
                     warnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
                     dout("Check the cached party leader using /bap cache");
                 }
 
-                if(!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
+                if (!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
                     && (AtomicCache.lastPartyLeader.get() != null)) {
                     clientVerbose("We are not party leader");
                     dout("We are not leader; not entering a run. Latest party leader is: " + AtomicCache.lastPartyLeader);
@@ -151,8 +139,8 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
                 Thread.sleep(3000);
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
-                queueCommand("joindungeon " + floor.commandCode);
-            } catch(final InterruptedException err) {
+                sendCommand("joindungeon " + floor.commandCode);
+            } catch (final InterruptedException err) {
                 errorMessage("InterruptedException: JoinDungeon failed! An error occurred while transferring the party.");
             }
         }).start();
@@ -162,25 +150,22 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
         final Pattern pattern = Pattern.compile(Constants.kAutoJoinInP);
         final Matcher matcher = pattern.matcher(cleanMessage);
 
-        if(!matcher.find()) {
+        if (!matcher.find()) {
             errorMessage("AutoJoinIn, no groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
             return;
         }
 
         new Thread(() -> {
             try {
-                if(AtomicCache.lastPartyLeader.get() == null) {
-                    queueCommand("party list");
-                    dout("Sleep " + Constants.kCommandDelayMs + "ms " + Debug.getThreadInfoFormatted());
-                    Thread.sleep(Constants.kCommandDelayMs);
-                    dout("Resume " + Debug.getThreadInfoFormatted());
+                if (AtomicCache.lastPartyLeader.get() == null) {
+                    sendCommand("party list", true);
                 }
-                if(!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
+                if (!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
                     dout("We are not the party leader, ignoring");
                     return;
                 }
 
-                if(Math.abs(Integer.parseInt(matcher.group(2))) > 127) {
+                if (Math.abs(Integer.parseInt(matcher.group(2))) > 127) {
                     warnMessage("AutoJoinIn delay exceeds 127 seconds, ignoring");
                     return;
                 }
@@ -188,24 +173,24 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
                 final byte delaySeconds = (byte) Math.abs(Byte.parseByte(matcher.group(2)));
                 CatacombsFloors floor = AtomicCache.lastCatacombsFloor.get();
                 // Group 3 may or may not be provided
-                if(matcher.group(3) != null) {
+                if (matcher.group(3) != null) {
                     final String floorName = matcher.group(3);
                     floor = CatacombsFloors.getFloorByCode(floorName);
                 }
 
-                if(floor == null) {
+                if (floor == null) {
                     commandError("Couldn't find the last catacombs floor and no floor was provided.");
                     return;
                 }
 
                 queuePartyChat("Joining " + floor.shortName + " in " + delaySeconds + "s!", false);
 
-                dout("Sleep 3000ms " + Debug.getThreadInfoFormatted());
+                dout("Sleep " + delaySeconds * 1000 + "ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(delaySeconds * 1000);
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
-                queueCommand("joindungeon " + floor.commandCode);
-            } catch(InterruptedException e) {
+                sendCommand("joindungeon " + floor.commandCode);
+            } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }).start();

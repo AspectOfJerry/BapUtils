@@ -41,7 +41,7 @@ public final class BapUuid implements BapExecutable {
 
     @Override
     public void execute(List<String> args) throws CommandException {
-        if(args.isEmpty()) {
+        if (args.isEmpty()) {
             BapUtils.throwCommandException("You must specify a player.");
             return;
         }

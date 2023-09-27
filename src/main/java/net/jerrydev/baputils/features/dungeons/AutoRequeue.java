@@ -33,7 +33,7 @@ public final class AutoRequeue implements BapHandleable {
                 Thread.sleep(BapSettingsGui.INSTANCE.getAutoRequeueDelay() * 1000L);
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
-                queueCommand("joindungeon " + floor.commandCode);
+                sendCommand("joindungeon " + floor.commandCode);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

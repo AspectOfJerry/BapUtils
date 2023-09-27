@@ -38,6 +38,9 @@ public final class AtomicCache {
     @Nullable
     public static final AtomicReference<String> lastPartyLeader = new AtomicReference<>(null);
 
+    // chat
+    public static final AtomicReference<List<String>> serverChatQueue = new AtomicReference<>(new CopyOnWriteArrayList<>());
+
     // dungeons
     @Nullable
     public static final AtomicBoolean inDungeon = new AtomicBoolean(false);

@@ -1,5 +1,6 @@
 package net.jerrydev.baputils.events;
 
+import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 public class ClientPeriodic {
     @Nullable
     public static volatile GuiScreen activeGui = null;
+    private static byte serverChatCd = 5;
 
     @NonBlocking
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -27,5 +29,14 @@ public class ClientPeriodic {
                 Debug.dout("Queued gui is active, clearing queue");
             }
         }
+
+        if (serverChatCd == 0) {
+            if (!AtomicCache.serverChatQueue.get().isEmpty()) {
+                Minecraft.getMinecraft().thePlayer.sendChatMessage(AtomicCache.serverChatQueue.get().remove(0));
+            }
+            serverChatCd = 5;
+        }
+
+        serverChatCd--;
     }
 }

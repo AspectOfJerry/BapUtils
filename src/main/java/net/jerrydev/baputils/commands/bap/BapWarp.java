@@ -47,24 +47,15 @@ public final class BapWarp implements BapExecutable, BapHandleable {
 
     @Override
     public void execute(List<String> args) {
-        new Thread(() -> {
-            try {
-                queueCommand("party list");
-                dout("Sleep 250ms " + Debug.getThreadInfoFormatted());
-                Thread.sleep(250);
-                dout("Resume " + Debug.getThreadInfoFormatted());
+        sendCommand("party list", true);
 
-                if((AtomicCache.lastPartyLeader.get() != null)
-                    && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
-                    BapUtils.commandError("You are already the party leader!");
-                    return;
-                }
+        if ((AtomicCache.lastPartyLeader.get() != null)
+            && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
+            BapUtils.commandError("You are already the party leader!");
+            return;
+        }
 
-                queuePartyChat("$warp");
-            } catch(InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+        queuePartyChat("$warp");
     }
 
     @Override
@@ -74,7 +65,7 @@ public final class BapWarp implements BapExecutable, BapHandleable {
 
     @Override
     public void handle(List<String> args) {
-        if(!BapSettingsGui.INSTANCE.getPartyWarpMaster()) {
+        if (!BapSettingsGui.INSTANCE.getPartyWarpMaster()) {
             dout("PartyWarp is disabled.");
             return;
         }
@@ -84,24 +75,21 @@ public final class BapWarp implements BapExecutable, BapHandleable {
         final String[] messageSplit = cleanMessage.split(" ");
         final String sender = messageSplit[2].replaceAll(":", "");
 
-        if(sender.equals(Minecraft.getMinecraft().thePlayer.getName())) {
+        if (sender.equals(Minecraft.getMinecraft().thePlayer.getName())) {
             dout("We are the sender, ignoring");
             return;
         }
 
         new Thread(() -> {
             try {
-                queueCommand("party list");
-                dout("Sleep " + Constants.kCommandDelayMs + "ms " + Debug.getThreadInfoFormatted());
-                Thread.sleep(Constants.kCommandDelayMs);
-                dout("Resume " + Debug.getThreadInfoFormatted());
+                sendCommand("party list", true);
 
-                if(AtomicCache.lastPartyLeader.get() == null) {
+                if (AtomicCache.lastPartyLeader.get() == null) {
                     warnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
                     dout("Check the cached party leader using /bap cache");
                 }
 
-                if(!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
+                if (!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
                     && (AtomicCache.lastPartyLeader.get() != null)) {
                     clientVerbose("We are not party leader");
                     dout("We are not leader; not warping. Latest party leader is: " + AtomicCache.lastPartyLeader);
@@ -113,8 +101,8 @@ public final class BapWarp implements BapExecutable, BapHandleable {
                 Thread.sleep(2000);
                 Debug.dout("Resume " + Debug.getThreadInfoFormatted());
 
-                queueCommand("party warp");
-            } catch(InterruptedException err) {
+                sendCommand("party warp");
+            } catch (InterruptedException err) {
                 BapUtils.errorMessage("InterruptedException: Takeover failed! An error occurred while transferring the party.");
             }
         }).start();

@@ -41,7 +41,7 @@ public final class BapTrust implements BapExecutable {
 
     @Override
     public void execute(List<String> args) throws CommandException {
-        if(args.isEmpty()) {
+        if (args.isEmpty()) {
             BapUtils.throwCommandException("Your must specify a player.");
             return;
         }

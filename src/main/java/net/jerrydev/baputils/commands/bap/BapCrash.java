@@ -47,14 +47,14 @@ public final class BapCrash implements BapExecutable, BapHandleable {
 
     @Override
     public void execute(List<String> args) throws CommandException {
-        if(args.isEmpty()) {
+        if (args.isEmpty()) {
             BapUtils.throwCommandException("You must specify a player.");
             return;
         }
 
         final String playerName = args.get(0);
 
-        if(!Constants.kModAdmins.contains(Minecraft.getMinecraft().thePlayer.getName())) {
+        if (!Constants.kModAdmins.contains(Minecraft.getMinecraft().thePlayer.getName())) {
             clientMessage("You do not have the permissions to use this command!", "[" + ccolorize(Arrays.asList(CCodes.RED, CCodes.OBFUSCATED), "Bap") + "]");
             return;
         }
@@ -79,7 +79,7 @@ public final class BapCrash implements BapExecutable, BapHandleable {
         final String sender = messageSplit[2].replaceAll(":", "");
         final String target = messageSplit[7];
 
-        if(!target.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.getName())) {
+        if (!target.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.getName())) {
             return;
         }
 
@@ -97,7 +97,7 @@ public final class BapCrash implements BapExecutable, BapHandleable {
 
                 FMLCommonHandler.instance().exitJava(101, false);
                 //FMLClientHandler.instance().getClient().shutdown();
-            } catch(InterruptedException err) {
+            } catch (InterruptedException err) {
                 BapUtils.errorMessage("InterruptedException in BapCrash");
             }
         }).start();

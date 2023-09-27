@@ -1,10 +1,10 @@
 package net.jerrydev.baputils.utils;
 
 public class CausalRelation {
-    public String actor;
-    public String target;
-    public boolean leftGreen;
-    public boolean positive;
+    public final String actor;
+    public final String target;
+    public final boolean leftGreen;
+    public final boolean positive;
 
     public CausalRelation(String _actor, String _target, boolean _leftGreen, boolean _positive) {
         this.actor = _actor;

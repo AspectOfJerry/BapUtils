@@ -60,7 +60,7 @@ class BapGui : WindowScreen(ElementaVersion.V2) {
             y = SiblingConstraint(20f)
             textScale = PixelConstraint(2.2f)
         }.onMouseClick { (event) ->
-            BapUtils.queueCommand("bap help")
+            BapUtils.sendCommand("bap help")
         }.onMouseEnter {
             animate {
                 setTextScaleAnimation(

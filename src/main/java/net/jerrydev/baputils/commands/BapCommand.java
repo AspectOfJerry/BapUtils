@@ -14,8 +14,8 @@ import static net.jerrydev.baputils.BapUtils.clientVerbose;
 import static net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
-public class BapHandler extends CommandBase {
-    public static final List<String> commandAliases = Arrays.asList("bp", "baputils", "baputilities", "uwa", "pig", "tom", "fishing");
+public class BapCommand extends CommandBase {
+    public static final List<String> commandAliases = Arrays.asList("baputils", "baputilities", "uwa", "pig", "tom", "fishing");
     public static final List<BapExecutable> subcommands = Arrays.asList(
         new BapCache(),
         new BapColors(),
@@ -25,12 +25,12 @@ public class BapHandler extends CommandBase {
         new BapHelp(),
         new BapJoinDungeon(),
         new BapOptions(),
+        new BapRoulette(),
         new BapSettings(),
         new BapTakeover(),
         new BapTrust(),
         new BapUuid(),
-        new BapWarp(),
-        new BapRoulette()
+        new BapWarp()
     );
 
     @Override

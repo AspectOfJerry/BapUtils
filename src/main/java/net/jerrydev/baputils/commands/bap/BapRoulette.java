@@ -1,16 +1,18 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.commands.BapExecutable;
-import net.jerrydev.baputils.utils.ChatUtils;
-import net.jerrydev.baputils.utils.MsDelay;
+import net.jerrydev.baputils.utils.ChatUtils.CCodes;
+import net.jerrydev.baputils.utils.Delay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandException;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
+import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
 public class BapRoulette implements BapExecutable {
@@ -21,13 +23,13 @@ public class BapRoulette implements BapExecutable {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("rlt", "rou");
+        return Collections.emptyList();
     }
 
     @Override
     public String getUsage() {
-        return ccolorize(ChatUtils.CCodes.YELLOW, "/bap " + this.getName())
-                + ccolorize(ChatUtils.CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
+            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
     }
 
     @Override
@@ -37,21 +39,29 @@ public class BapRoulette implements BapExecutable {
 
     @Override
     public String getDesc() {
-        return "Rolls a number between 1 and 10. If It's 10, you crash.";
+        return "Rolls a number between 1 and 10. If it's 10, you crash.";
     }
 
     @Override
     public void execute(List<String> args) throws CommandException {
-        Random random = new Random();
+        SecureRandom secureRandom;
+        try {
+            secureRandom = SecureRandom.getInstance("SHA1PRNG");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        int randomInt = secureRandom.nextInt(10) + 1; // Generates an integer in the range [1, 10]
 
-        int rolledNumber = random.nextInt(10) + 1;
-        if (rolledNumber == 10) {
-            BapUtils.clientMessage("§4You Rolled §1" + rolledNumber+1 + "§4. Crashing in 2 seconds.");
-            new MsDelay(() -> {
-            }, 2000);
-            Minecraft.getMinecraft().shutdown();
+        if (randomInt == 10) {
+            clientMessage(ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "-")
+                + ccolorize(CCodes.DARK_RED, " You rolled: " + (randomInt) + ". Goodbye! ")
+                + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "-"));
+
+            Delay.setTimeout(() -> Minecraft.getMinecraft().shutdown(), 2000);
         } else {
-            BapUtils.clientMessage("§bYou Rolled §1" + rolledNumber+1 + "§b. You survived.");
+            clientMessage(ccolorize(CCodes.GOLD, "You rolled ")
+                + ccolorize(CCodes.YELLOW, String.valueOf(randomInt))
+                + ccolorize(CCodes.GOLD, " and are safe."));
         }
     }
 }
