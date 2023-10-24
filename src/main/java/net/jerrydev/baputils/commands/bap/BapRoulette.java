@@ -1,6 +1,6 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Delay;
 import net.minecraft.client.Minecraft;
@@ -15,7 +15,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
-public class BapRoulette implements BapExecutable {
+public class BapRoulette implements IBapRunnable {
     @Override
     public String getName() {
         return "roulette";
@@ -43,7 +43,7 @@ public class BapRoulette implements BapExecutable {
     }
 
     @Override
-    public void execute(List<String> args) throws CommandException {
+    public void run(List<String> args) throws CommandException {
         SecureRandom secureRandom;
         try {
             secureRandom = SecureRandom.getInstance("SHA1PRNG");

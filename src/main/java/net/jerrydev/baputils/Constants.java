@@ -9,7 +9,7 @@ import java.util.List;
 public final class Constants {
     public static final String kModId = "baputils";
     public static final String kModName = "BapUtils";
-    public static final String kModVersion = "0.8.2";
+    public static final String kModVersion = "0.8.5-alpha";
     public static final String kUserAgent = kModId + "/" + kModVersion;
     public static final String kGitHubRepo = "https://github.com/AspectOfJerry/BapUtils/";
     public static final String kGitHubIssues = kGitHubRepo + "issues";
@@ -21,7 +21,7 @@ public final class Constants {
     public static final String kClientPrefix = "[Bap]";
     public static final String kServerPrefix = "bap";
     public static final byte kChatDelayMs = 50;
-    public static final int kCommandDelayMs = 250;
+    public static final int kServerChatDelayMs = 200;
 
     @RegExp
     public static final String kMcUserP = "[a-zA-Z0-9_]{2,16}";
@@ -39,7 +39,7 @@ public final class Constants {
         "^The party was transferred to (" + kMcUserP + ") by (.*)$"
     );
     @RegExp
-    public static final String kAutoJoinInP = "^Party > (" + kMcUserP + "): (?:g|go|enter)(?:ing)? in ([0-9]+?)(?:sec)?s?.([fm][0-7])?$";
+    public static final String kAutoJoinInP = "^Party > (" + kMcUserP + "): (?:go|enter)(?:ing)? (?:in )?(now|\\d+).*?([fm][0-7])?$";
     @RegExp
     public static final String kInPartyP = "^You have joined (" + kMcUserP + ")'s party!$";
     public static final List<String> kNotInPartyPs = Arrays.asList(

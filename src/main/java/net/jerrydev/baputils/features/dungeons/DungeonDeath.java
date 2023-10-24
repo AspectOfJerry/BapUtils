@@ -3,7 +3,7 @@ package net.jerrydev.baputils.features.dungeons;
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.BapHandleable;
+import net.jerrydev.baputils.commands.IBapHandleable;
 import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.utils.CausalRelation;
 import net.jerrydev.baputils.utils.ChatEmojis;
@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public class DungeonDeath implements BapHandleable {
+public class DungeonDeath implements IBapHandleable {
     @Override
     public List<String> getPatterns() {
         return Constants.kDungeonDeathPs;

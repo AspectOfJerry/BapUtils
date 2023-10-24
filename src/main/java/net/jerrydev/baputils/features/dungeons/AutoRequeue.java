@@ -2,7 +2,7 @@ package net.jerrydev.baputils.features.dungeons;
 
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.BapHandleable;
+import net.jerrydev.baputils.commands.IBapHandleable;
 import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.utils.Debug;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.*;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class AutoRequeue implements BapHandleable {
+public final class AutoRequeue implements IBapHandleable {
     public static void handle() {
         new Thread(() -> {
             try {

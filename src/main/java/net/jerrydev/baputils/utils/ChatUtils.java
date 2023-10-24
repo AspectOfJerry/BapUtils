@@ -27,19 +27,19 @@ public final class ChatUtils {
         return color.colorCode + message + (addReset ? CCodes.RESET.colorCode : "");
     }
 
-    public static String autoTrueFalse(String tf) {
-        if (tf == null) {
+    public static String autoTF(String str) {
+        if (str == null) {
             return "null";
         }
 
-        if (tf.equalsIgnoreCase("true")) {
-            return ccolorize(CCodes.GREEN, tf);
+        if (str.equalsIgnoreCase("true")) {
+            return ccolorize(CCodes.GREEN, str);
         }
-        if (tf.equalsIgnoreCase("false")) {
-            return ccolorize(CCodes.RED, tf);
+        if (str.equalsIgnoreCase("false")) {
+            return ccolorize(CCodes.RED, str);
         }
 
-        return ccolorize(CCodes.GRAY, tf);
+        return ccolorize(CCodes.GRAY, str);
     }
 
     /**

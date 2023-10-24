@@ -2,6 +2,7 @@ package net.jerrydev.baputils;
 
 import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.core.BapSettingsGui;
+import net.jerrydev.baputils.events.ActionBarHandler;
 import net.jerrydev.baputils.events.ChatListener;
 import net.jerrydev.baputils.events.ClientPeriodic;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
@@ -27,7 +28,7 @@ import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 @Mod(modid = Constants.kModId, version = Constants.kModVersion, clientSideOnly = true)
 public class BapUtils {
     // dev
-    public static final boolean isLocalDev = false;
+    public static final boolean isLocalDev = true;
 
     public static final Logger logger = LogManager.getLogger(kModId);
 
@@ -39,8 +40,11 @@ public class BapUtils {
         ClientCommandHandler.instance.registerCommand(new BapCommand());
 
         // Register events
-        MinecraftForge.EVENT_BUS.register(new ChatListener());
-        MinecraftForge.EVENT_BUS.register(new ClientPeriodic());
+        Arrays.asList(
+            new ChatListener(),
+            new ActionBarHandler(),
+            new ClientPeriodic()
+        ).forEach(MinecraftForge.EVENT_BUS::register);
     }
 
     @Mod.EventHandler

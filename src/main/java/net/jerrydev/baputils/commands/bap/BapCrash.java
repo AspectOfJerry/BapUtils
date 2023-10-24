@@ -2,8 +2,8 @@ package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.BapExecutable;
-import net.jerrydev.baputils.commands.BapHandleable;
+import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.IBapHandleable;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.*;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
-public final class BapCrash implements BapExecutable, BapHandleable {
+public final class BapCrash implements IBapRunnable, IBapHandleable {
     @Override
     public String getName() {
         return "crash";
@@ -46,7 +46,7 @@ public final class BapCrash implements BapExecutable, BapHandleable {
     }
 
     @Override
-    public void execute(List<String> args) throws CommandException {
+    public void run(List<String> args) throws CommandException {
         if (args.isEmpty()) {
             BapUtils.throwCommandException("You must specify a player.");
             return;

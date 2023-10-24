@@ -4,7 +4,7 @@ import net.minecraft.command.CommandException;
 
 import java.util.List;
 
-public interface BapExecutable {
+public interface IBapRunnable {
     String getName();
 
     List<String> getAliases();
@@ -15,5 +15,5 @@ public interface BapExecutable {
 
     String getDesc();
 
-    void execute(List<String> args) throws CommandException;
+    void run(List<String> args) throws CommandException;
 }

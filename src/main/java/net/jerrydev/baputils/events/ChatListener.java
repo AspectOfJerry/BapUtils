@@ -2,7 +2,7 @@ package net.jerrydev.baputils.events;
 
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.BapHandleable;
+import net.jerrydev.baputils.commands.IBapHandleable;
 import net.jerrydev.baputils.commands.bap.BapCrash;
 import net.jerrydev.baputils.commands.bap.BapJoinDungeon;
 import net.jerrydev.baputils.commands.bap.BapTakeover;
@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static net.jerrydev.baputils.BapUtils.clientVerbose;
 import static net.jerrydev.baputils.BapUtils.errorMessage;
 import static net.jerrydev.baputils.Constants.*;
 import static net.jerrydev.baputils.utils.ChatUtils.cleanString;
@@ -99,6 +100,7 @@ public class ChatListener {
             } else {
                 AtomicCache.lastCatacombsFloor.set(newFloor);
                 dout("Updated lastCatacombsFloor to " + newFloor + " from " + oldFloor);
+                clientVerbose("Detected floor change from " + oldFloor.floorCode + " to " + newFloor.floorCode);
             }
             return;
         }
@@ -153,9 +155,9 @@ public class ChatListener {
         }
 
         /*
-            BapHandleable
+            IBapHandleable
          */
-        final List<BapHandleable> handleables = Arrays.asList(
+        Arrays.asList(
             new BapWarp(),
             new BapTakeover(),
             new DungeonDeath(),
@@ -163,15 +165,13 @@ public class ChatListener {
             new BapJoinDungeon(),
             new BapCrash(),
             new PuzzleSolved()
-        );
-
-        for (final BapHandleable handler : handleables) {
+        ).forEach((IBapHandleable handler) -> {
             for (final String pattern : handler.getPatterns()) {
                 if (cleanMessage.matches(pattern)) {
                     handler.handle(Collections.singletonList(cleanMessage));
                     return;
                 }
             }
-        }
+        });
     }
 }

@@ -1,7 +1,7 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
-import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.minecraft.command.CommandException;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
-public final class BapUuid implements BapExecutable {
+public final class BapUuid implements IBapRunnable {
     @Override
     public String getName() {
         return "uuid";
@@ -40,7 +40,7 @@ public final class BapUuid implements BapExecutable {
     }
 
     @Override
-    public void execute(List<String> args) throws CommandException {
+    public void run(List<String> args) throws CommandException {
         if (args.isEmpty()) {
             BapUtils.throwCommandException("You must specify a player.");
             return;

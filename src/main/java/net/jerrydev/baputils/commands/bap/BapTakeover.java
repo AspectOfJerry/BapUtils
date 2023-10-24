@@ -3,8 +3,8 @@ package net.jerrydev.baputils.commands.bap;
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.BapExecutable;
-import net.jerrydev.baputils.commands.BapHandleable;
+import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.IBapHandleable;
 import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,7 @@ import static net.jerrydev.baputils.BapUtils.*;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class BapTakeover implements BapExecutable, BapHandleable {
+public final class BapTakeover implements IBapRunnable, IBapHandleable {
     @Override
     public String getName() {
         return "takeover";
@@ -45,7 +45,7 @@ public final class BapTakeover implements BapExecutable, BapHandleable {
     }
 
     @Override
-    public void execute(List<String> args) {
+    public void run(List<String> args) {
         sendCommand("party list", true);
 
         if ((AtomicCache.lastPartyLeader.get() != null)

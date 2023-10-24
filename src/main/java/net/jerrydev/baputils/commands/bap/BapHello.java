@@ -2,7 +2,7 @@ package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.utils.ChatUtils;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
@@ -10,7 +10,7 @@ import net.jerrydev.baputils.utils.Debug;
 import java.util.Arrays;
 import java.util.List;
 
-public final class BapHello implements BapExecutable {
+public final class BapHello implements IBapRunnable {
     @Override
     public String getName() {
         return "hello";
@@ -38,7 +38,7 @@ public final class BapHello implements BapExecutable {
     }
 
     @Override
-    public void execute(List<String> args) {
+    public void run(List<String> args) {
         BapUtils.clientMessage(ChatUtils.ccolorize(CCodes.GREEN, "Hello, World from the client! You are on version " + Constants.kModVersion), true);
         BapUtils.warnMessage("Hello from the warning message chat!");
         BapUtils.commandError("Hello from the error message chat!");

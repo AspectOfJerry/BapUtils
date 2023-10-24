@@ -1,7 +1,8 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
-import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.Constants;
+import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.guis.BapGui;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 
@@ -9,8 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class BapOptions implements BapExecutable {
+public final class BapOptions implements IBapRunnable {
     @Override
     public String getName() {
         return "options";
@@ -38,7 +40,8 @@ public final class BapOptions implements BapExecutable {
     }
 
     @Override
-    public void execute(List<String> args) {
+    public void run(List<String> args) {
+        dout("You are on version " + Constants.kModVersion + "!");
         BapUtils.setActiveGui(new BapGui());
     }
 }

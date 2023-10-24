@@ -1,5 +1,6 @@
 package net.jerrydev.baputils;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import net.jerrydev.baputils.features.dungeons.CatacombsFloors;
 import net.jerrydev.baputils.utils.CausalRelation;
 import org.jetbrains.annotations.Nullable;
@@ -40,6 +41,10 @@ public final class AtomicCache {
 
     // chat
     public static final AtomicReference<List<String>> serverChatQueue = new AtomicReference<>(new CopyOnWriteArrayList<>());
+
+    // phyx
+    public static final AtomicDouble playerVelocityMPS = new AtomicDouble(0.0);
+    public static final AtomicDouble playerVelocityKPH = new AtomicDouble(0.0);
 
     // dungeons
     @Nullable

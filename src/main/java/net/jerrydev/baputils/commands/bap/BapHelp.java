@@ -1,7 +1,7 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 
@@ -13,7 +13,7 @@ import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.BapUtils.errorMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
-public final class BapHelp implements BapExecutable {
+public final class BapHelp implements IBapRunnable {
     @Override
     public String getName() {
         return "help";
@@ -41,7 +41,7 @@ public final class BapHelp implements BapExecutable {
     }
 
     @Override
-    public void execute(List<String> args) {
+    public void run(List<String> args) {
         new Thread(() -> {
             try {
                 clientMessage(ccolorize(CCodes.YELLOW, "lmao just look at the code"));
@@ -69,7 +69,7 @@ public final class BapHelp implements BapExecutable {
                     + ccolorize(CCodes.GOLD, "|" + String.join("|", bapAliases))
                     + "\n" + ccolorize(CCodes.GRAY, "  - Displays the main GUI"));
 
-                for (final BapExecutable subCmd : BapCommand.subcommands) {
+                for (final IBapRunnable subCmd : BapCommand.subcommands) {
                     clientMessage(subCmd.getUsage() + "\n" + ccolorize(CCodes.GRAY, "  - " + subCmd.getDesc()));
                 }
             } catch (final InterruptedException err) {

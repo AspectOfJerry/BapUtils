@@ -2,7 +2,7 @@ package net.jerrydev.baputils.features.dungeons;
 
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.BapHandleable;
+import net.jerrydev.baputils.commands.IBapHandleable;
 import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.utils.CausalRelation;
 
@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 import static net.jerrydev.baputils.BapUtils.queueServerMessage;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class PuzzleFail implements BapHandleable {
+public final class PuzzleFail implements IBapHandleable {
     @Override
     public List<String> getPatterns() {
         return Collections.singletonList(Constants.kPuzzleFailP);

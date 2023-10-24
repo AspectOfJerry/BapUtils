@@ -1,7 +1,10 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
+import net.jerrydev.baputils.utils.Ntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
-public final class BapDev implements BapExecutable {
+public final class BapDev implements IBapRunnable {
     @Override
     public String getName() {
         return "dev";
@@ -38,8 +41,19 @@ public final class BapDev implements BapExecutable {
     }
 
     @Override
-    public void execute(List<String> args) {
-        clientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
+    public void run(List<String> args) {
+        // clientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
+
+        clientMessage(ccolorize(CCodes.GREEN, "Nearby mobs:"));
+        List<Entity> nearbyMobs = Ntity.getNearbyMobs(Minecraft.getMinecraft().thePlayer, 10F);
+
+        for (Entity mob : nearbyMobs) {
+            clientMessage(
+                ccolorize(CCodes.GRAY, "(" + mob.getEntityId() + ")") + " "
+                    + ccolorize(CCodes.GREEN, mob.getName()) + " "
+                    + ccolorize(CCodes.GOLD, "[" + (Math.round(mob.getDistanceToEntity(Minecraft.getMinecraft().thePlayer) * 1000.0F) / 1000.0F) + "m]")
+            );
+        }
 
         // what are partial ticks?
         //WaypointRenderer.renderBeaconBeam(0, 100, 0, 0xFF00FF, 1.0f, 10);

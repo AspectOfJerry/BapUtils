@@ -3,8 +3,8 @@ package net.jerrydev.baputils.commands.bap;
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.BapExecutable;
-import net.jerrydev.baputils.commands.BapHandleable;
+import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.IBapHandleable;
 import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.features.dungeons.CatacombsFloors;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
@@ -22,7 +22,7 @@ import static net.jerrydev.baputils.BapUtils.*;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class BapJoinDungeon implements BapExecutable, BapHandleable {
+public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
     @Override
     public String getName() {
         return "joindungeon";
@@ -51,7 +51,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
     }
 
     @Override
-    public void execute(List<String> args) throws CommandException {
+    public void run(List<String> args) throws CommandException {
         if (args.isEmpty()) {
             BapUtils.throwCommandException("You must specify a dungeon floor ([fm][0-7])");
             return;
@@ -121,13 +121,12 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
 
                 if (AtomicCache.lastPartyLeader.get() == null) {
                     warnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
-                    dout("Check the cached party leader using /bap cache");
                 }
 
                 if (!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
                     && (AtomicCache.lastPartyLeader.get() != null)) {
                     clientVerbose("We are not party leader");
-                    dout("We are not leader; not entering a run. Latest party leader is: " + AtomicCache.lastPartyLeader);
+                    dout("We are not the party leader (+" + AtomicCache.lastPartyLeader + ", ignoring.");
                     return;
                 }
 
@@ -161,7 +160,7 @@ public final class BapJoinDungeon implements BapExecutable, BapHandleable {
                     sendCommand("party list", true);
                 }
                 if (!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
-                    dout("We are not the party leader, ignoring");
+                    dout("We are not the party leader (+" + AtomicCache.lastPartyLeader + ", ignoring.");
                     return;
                 }
 

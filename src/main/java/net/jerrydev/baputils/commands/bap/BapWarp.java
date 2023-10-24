@@ -3,8 +3,8 @@ package net.jerrydev.baputils.commands.bap;
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.BapExecutable;
-import net.jerrydev.baputils.commands.BapHandleable;
+import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.IBapHandleable;
 import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.utils.ChatUtils;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
@@ -18,7 +18,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.*;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class BapWarp implements BapExecutable, BapHandleable {
+public final class BapWarp implements IBapRunnable, IBapHandleable {
     @Override
     public String getName() {
         return "warp";
@@ -46,7 +46,7 @@ public final class BapWarp implements BapExecutable, BapHandleable {
     }
 
     @Override
-    public void execute(List<String> args) {
+    public void run(List<String> args) {
         sendCommand("party list", true);
 
         if ((AtomicCache.lastPartyLeader.get() != null)
@@ -92,7 +92,7 @@ public final class BapWarp implements BapExecutable, BapHandleable {
                 if (!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())
                     && (AtomicCache.lastPartyLeader.get() != null)) {
                     clientVerbose("We are not party leader");
-                    dout("We are not leader; not warping. Latest party leader is: " + AtomicCache.lastPartyLeader);
+                    dout("We are not the party leader (+" + AtomicCache.lastPartyLeader + ", ignoring.");
                     return;
                 }
 

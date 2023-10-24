@@ -1,6 +1,6 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.commands.BapExecutable;
+import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
-public final class BapColors implements BapExecutable {
+public final class BapColors implements IBapRunnable {
     @Override
     public String getName() {
         return "colors";
@@ -37,7 +37,7 @@ public final class BapColors implements BapExecutable {
     }
 
     @Override
-    public void execute(List<String> args) {
+    public void run(List<String> args) {
         clientMessage(ccolorize(CCodes.GREEN, "Minecraft color codes:"));
 
         for (final CCodes c : CCodes.values()) {
