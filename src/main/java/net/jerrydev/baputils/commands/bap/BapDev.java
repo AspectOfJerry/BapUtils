@@ -45,7 +45,7 @@ public final class BapDev implements IBapRunnable {
         // clientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
 
         clientMessage(ccolorize(CCodes.GREEN, "Nearby mobs:"));
-        List<Entity> nearbyMobs = Ntity.getNearbyMobs(Minecraft.getMinecraft().thePlayer, 10F);
+        List<Entity> nearbyMobs = Ntity.getNearbyMobs(Minecraft.getMinecraft().thePlayer, 12F);
 
         for (Entity mob : nearbyMobs) {
             clientMessage(

@@ -23,6 +23,8 @@ public class ClientPeriodic {
     private double totalDistance = 0.0; // Total distance traveled
     private int totalTicks = 0; // Total ticks elapsed
 
+    private double rollingAverageSpeedMPS = 0.0; // Rolling average speed in m/s
+
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) {
@@ -63,15 +65,18 @@ public class ClientPeriodic {
                 AtomicCache.playerVelocityMPS.set(Math.round(velocityInBlocksPerSecond * 100000.0) / 100000.0);
                 AtomicCache.playerVelocityKPH.set(Math.round(velocityInKPH * 100000.0) / 100000.0);
 
-                // Calculate average velocity using a tick window
-                if (Math.abs(totalTicks) > 30) {
+                // Update the rolling average speed
+                totalDistance += distance;
+                totalTicks += ticksElapsed;
+                // Adjust this to control the window size
+                int rollingAverageWindow = 4;
+                if (totalTicks > rollingAverageWindow) {
+                    rollingAverageSpeedMPS = totalDistance / ((double) totalTicks / 20);
                     totalDistance = 0;
                     totalTicks = 0;
                 }
-                totalDistance += distance;
-                totalTicks += ticksElapsed;
-                double averageSpeedMPS = totalDistance / ((double) totalTicks / 20); // Convert to m/s
-                AtomicCache.playerAvgVelocityMPS.set(Math.round(averageSpeedMPS * 100000.0) / 100000.0);
+
+                AtomicCache.playerAvgVelocityMPS.set(Math.round(rollingAverageSpeedMPS * 100000.0) / 100000.0);
             }
 
             lastPos = currentPos;
