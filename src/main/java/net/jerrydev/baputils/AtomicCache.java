@@ -45,6 +45,7 @@ public final class AtomicCache {
     // phyx
     public static final AtomicDouble playerVelocityMPS = new AtomicDouble(0.0);
     public static final AtomicDouble playerVelocityKPH = new AtomicDouble(0.0);
+    public static final AtomicDouble playerAvgVelocityMPS = new AtomicDouble(0.0);
 
     // dungeons
     @Nullable

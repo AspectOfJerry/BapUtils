@@ -35,6 +35,14 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Speedometer",
+        description = "Show your current speed at the top left of your screen.",
+        category = "General"
+    )
+    var speedometer = true
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Allow Party Takeover",
         description = "Allow other players to take your party.",
         category = "Party",

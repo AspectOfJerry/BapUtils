@@ -20,6 +20,9 @@ public class ClientPeriodic {
     private Vec3 lastPos;
     private int lastTick = 0;
 
+    private double totalDistance = 0.0; // Total distance traveled
+    private int totalTicks = 0; // Total ticks elapsed
+
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) {
@@ -54,11 +57,21 @@ public class ClientPeriodic {
                 double distance = currentPos.distanceTo(lastPos);
 
                 double velocityInBlocksPerTick = distance / ticksElapsed;
-                double velocityInBlocksPerSecond = velocityInBlocksPerTick * 20; // assuming 20 client TPS
+                double velocityInBlocksPerSecond = velocityInBlocksPerTick * 20; // Assuming 20 client TPS
                 double velocityInKPH = velocityInBlocksPerSecond * 3.6;
 
                 AtomicCache.playerVelocityMPS.set(Math.round(velocityInBlocksPerSecond * 100000.0) / 100000.0);
                 AtomicCache.playerVelocityKPH.set(Math.round(velocityInKPH * 100000.0) / 100000.0);
+
+                // Calculate average velocity using a tick window
+                if (Math.abs(totalTicks) > 30) {
+                    totalDistance = 0;
+                    totalTicks = 0;
+                }
+                totalDistance += distance;
+                totalTicks += ticksElapsed;
+                double averageSpeedMPS = totalDistance / ((double) totalTicks / 20); // Convert to m/s
+                AtomicCache.playerAvgVelocityMPS.set(Math.round(averageSpeedMPS * 100000.0) / 100000.0);
             }
 
             lastPos = currentPos;
