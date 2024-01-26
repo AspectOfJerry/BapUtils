@@ -16,13 +16,10 @@ Please visit <https://bap.jerrydev.net/developer-reference> to configure your ID
 
 <details open>
   <summary>Here some features we would like to add</summary>
-
-- Better dragon name in the m7 boss fight (might not happen because there is already a sbe/skytils feature that let you
-  do this).
-- Display dragon HP.
+  
 - Display dungeon secret route (might not happen or will take a really long time to make).
-
-</details>
+- Mining profit display like soopy v2 but doesn't break (it will only display m/h and we plan on adding a reset button)
+- Maybe foraging update qol (if it ever comes out)
 
 ## Socials
 
