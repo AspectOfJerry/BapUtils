@@ -11,7 +11,7 @@ public class Ntity {
         if (player == null || player.getEntityWorld() == null) {
             return null;
         }
-        
+
         List<Entity> nearbyMobs = new ArrayList<>();
 
         List<Entity> entities = player.getEntityWorld().getEntitiesWithinAABBExcludingEntity(player,

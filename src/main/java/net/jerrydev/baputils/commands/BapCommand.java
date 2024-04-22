@@ -27,6 +27,7 @@ public class BapCommand extends CommandBase {
         new BapHelp(),
         new BapJoinDungeon(),
         new BapOptions(),
+        new BapRadar(),
         new BapRoulette(),
         new BapSettings(),
         new BapTakeover(),

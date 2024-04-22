@@ -1,13 +1,16 @@
 package net.jerrydev.baputils.commands.bap;
 
+import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Ntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
@@ -43,28 +46,6 @@ public final class BapDev implements IBapRunnable {
     @Override
     public void run(List<String> args) {
         // clientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
-
-        clientMessage(ccolorize(CCodes.GREEN, "Nearby mobs:"));
-        List<Entity> nearbyMobs = Ntity.getNearbyMobs(Minecraft.getMinecraft().thePlayer, 12F);
-
-        for (Entity mob : nearbyMobs) {
-            clientMessage(
-                ccolorize(CCodes.GRAY, "(" + mob.getEntityId() + ")") + " "
-                    + ccolorize(CCodes.GREEN, mob.getName()) + " "
-                    + ccolorize(CCodes.GOLD, "[" + (Math.round(mob.getDistanceToEntity(Minecraft.getMinecraft().thePlayer) * 1000.0F) / 1000.0F) + "m]")
-            );
-        }
-
-        // what are partial ticks?
-        //WaypointRenderer.renderBeaconBeam(0, 100, 0, 0xFF00FF, 1.0f, 10);
-
-        // minecraft username to uuid
-        /* try {
-            final String req = BapUtils.httpGetRequest("https://api.mojang.com/users/profiles/minecraft/aspectofjerry");
-
-            System.out.println(req);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } */
+        AtomicCache.lastPartyLeader.set("AspectOfJerry");
     }
 }

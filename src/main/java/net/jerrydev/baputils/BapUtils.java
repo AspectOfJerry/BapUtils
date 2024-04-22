@@ -24,12 +24,13 @@ import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 
 import static net.jerrydev.baputils.Constants.*;
+
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
 @Mod(modid = Constants.kModId, version = Constants.kModVersion, clientSideOnly = true)
 public class BapUtils {
     // dev
-    public static final boolean isLocalDev = false;
+    public static final boolean isLocalDev = true;
 
     public static final Logger logger = LogManager.getLogger(kModId);
 

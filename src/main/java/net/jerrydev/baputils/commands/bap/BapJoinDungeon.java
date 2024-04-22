@@ -23,6 +23,9 @@ import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
 public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
+    private static Thread sleeper;
+
+
     @Override
     public String getName() {
         return "joindungeon";
@@ -143,6 +146,7 @@ public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
                 errorMessage("InterruptedException: JoinDungeon failed! An error occurred while transferring the party.");
             }
         }).start();
+
     }
 
     public static void autoJoinIn(String cleanMessage) {
@@ -154,7 +158,17 @@ public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
             return;
         }
 
-        new Thread(() -> {
+        final byte delaySeconds = Byte.parseByte(matcher.group(2));
+
+        if (sleeper != null) {
+            sleeper.interrupt();
+        }
+
+        if (delaySeconds < 0) {
+            return;
+        }
+
+        sleeper = new Thread(() -> {
             try {
                 if (AtomicCache.lastPartyLeader.get() == null) {
                     sendCommand("party list", true);
@@ -169,7 +183,6 @@ public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
                     return;
                 }
 
-                final byte delaySeconds = (byte) Math.abs(Byte.parseByte(matcher.group(2)));
                 CatacombsFloors floor = AtomicCache.lastCatacombsFloor.get();
                 // Group 3 may or may not be provided
                 if (matcher.group(3) != null) {
@@ -192,6 +205,8 @@ public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }).start();
+        });
+
+        sleeper.start();
     }
 }
