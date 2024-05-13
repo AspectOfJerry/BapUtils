@@ -14,7 +14,7 @@ Please visit <https://bap.jerrydev.net/developer-reference> to configure your ID
 
 ## Features (TBD)
 
-<details open>
+<details close>
   <summary>Here some features we would like to add</summary>
   
 - Display dungeon secret route (might not happen or will take a really long time to make).
