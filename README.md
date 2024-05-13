@@ -20,6 +20,7 @@ Please visit <https://bap.jerrydev.net/developer-reference> to configure your ID
 - Display dungeon secret route (might not happen or will take a really long time to make).
 - Mining profit display like soopy v2 but doesn't break (it will only display m/h and we plan on adding a reset button)
 - Maybe foraging update qol (if it ever comes out)
+- Mining min pristine procs tracker
 
 ## Socials
 
