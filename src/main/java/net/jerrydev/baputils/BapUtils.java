@@ -8,6 +8,7 @@ import net.jerrydev.baputils.events.ClientPeriodic;
 import net.jerrydev.baputils.events.OnRenderGameOverlay;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
+import net.jerrydev.baputils.utils.Snack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.CommandException;
@@ -27,18 +28,22 @@ import static net.jerrydev.baputils.Constants.*;
 
 import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
 
+
 @Mod(modid = Constants.kModId, version = Constants.kModVersion, clientSideOnly = true)
 public class BapUtils {
     // dev
-    public static final boolean isLocalDev = true;
-
+    public static final boolean isLocalDev = false;
     public static final Logger logger = LogManager.getLogger(kModId);
+
+    public static final Snack snack = new Snack("Iris");
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         logger.log(Level.INFO, "HELLO from " + kModName + "! You are on Minecraft Forge version 1.8.9.");
 
-        // Register slash (/) commands
+        snack.consume(); // inside joke
+
+        // Register commands
         ClientCommandHandler.instance.registerCommand(new BapCommand());
 
         // Register events
