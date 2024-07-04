@@ -10,6 +10,8 @@ import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.logger;
 import static net.jerrydev.baputils.Constants.kClientPrefix;
+import static net.jerrydev.baputils.utils.ChatUtils.CCodes;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
 public final class Debug {
     /**
@@ -43,10 +45,10 @@ public final class Debug {
      * @param message Message to be printed to the client chat.
      */
     public static void dout(String message) {
-        logger.log(Level.INFO, "[DBG]" + message);
+        logger.log(Level.INFO, "[DEBUG]" + message);
 
         if (BapSettingsGui.INSTANCE.getClientChatDebug()) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ChatUtils.ccolorize(ChatUtils.CCodes.DARK_GREEN, kClientPrefix) + " " + ChatUtils.ccolorize(ChatUtils.CCodes.GRAY, message)));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(cc(CCodes.DARK_GREEN, kClientPrefix) + " " + cc(CCodes.GRAY, message)));
         }
     }
 }

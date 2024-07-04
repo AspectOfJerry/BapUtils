@@ -42,6 +42,32 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
     var speedometer = true
 
     @Property(
+        type = PropertyType.SLIDER,
+        min = 1,
+        max = 64,
+        name = "Radar scan range",
+        description = "Range in blocks for the radar (/bap radar|r) to scan for entities.",
+        category = "General"
+    )
+    var radarScanRange = 16
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Toggle radar LOS check",
+        description = "Also performs a line-of-sight check on scanned mobs.",
+        category = "General"
+    )
+    var radarLOSCheck = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Toggle entity count display",
+        description = "Toggle the display of the entity count in the bottom left corner of the screen.",
+        category = "General"
+    )
+    var displayEntityCount = false
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Allow Party Takeover",
         description = "Allow other players to take your party.",
@@ -116,7 +142,7 @@ object BapSettingsGui : Vigilant(File("./config/jerrydev/baputils/modconfig.toml
         description = "Delay in seconds before requeueing after a dungeon run. There is a 3s-ish delay before auto requeue kicks in.",
         category = "Dungeons"
     )
-    var autoRequeueDelay = 0
+    var autoRequeueDelay = 8
 
     @Property(
         type = PropertyType.SWITCH,

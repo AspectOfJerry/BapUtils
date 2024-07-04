@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.clientMessage;
-import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
 public final class DungeonStatus {
@@ -29,32 +29,32 @@ public final class DungeonStatus {
                 dout("Resume " + Debug.getThreadInfoFormatted());
 
                 if (BapSettingsGui.INSTANCE.getDungeonBreakdown()) {
-                    clientMessage(ccolorize(CCodes.YELLOW, "Dungeon run breakdown:"));
+                    clientMessage(cc(CCodes.YELLOW, "Dungeon run breakdown:"));
                     AtomicCache.dungeonFails.get().forEach((CausalRelation event) -> {
                         if (event.leftGreen) {
                             if (event.positive) {
                                 // used by puzzle completions
-                                clientMessage(ccolorize(CCodes.GREEN, event.actor)
-                                    + " " + ccolorize(CCodes.DARK_GREEN, ChatEmojis.LEFT_ARROW.c)
-                                    + " " + ccolorize(CCodes.GREEN, event.target));
+                                clientMessage(cc(CCodes.GREEN, event.actor)
+                                    + " " + cc(CCodes.DARK_GREEN, ChatEmojis.LEFT_ARROW.c)
+                                    + " " + cc(CCodes.GREEN, event.target));
                                 return;
                             }
                             // used by puzzle fails
-                            clientMessage(ccolorize(CCodes.GREEN, event.actor)
-                                + " " + ccolorize(CCodes.DARK_RED, ChatEmojis.LEFT_ARROW.c)
-                                + " " + ccolorize(CCodes.RED, event.target));
+                            clientMessage(cc(CCodes.GREEN, event.actor)
+                                + " " + cc(CCodes.DARK_RED, ChatEmojis.LEFT_ARROW.c)
+                                + " " + cc(CCodes.RED, event.target));
                             return;
                         }
                         if (event.positive) {
                             // heh?
-                            clientMessage(ccolorize(CCodes.RED, event.actor)
-                                + " " + ccolorize(CCodes.DARK_GREEN, ChatEmojis.LEFT_ARROW.c)
-                                + " " + ccolorize(CCodes.GREEN, event.target));
+                            clientMessage(cc(CCodes.RED, event.actor)
+                                + " " + cc(CCodes.DARK_GREEN, ChatEmojis.LEFT_ARROW.c)
+                                + " " + cc(CCodes.GREEN, event.target));
                         }
                         // used by player deaths
-                        clientMessage(ccolorize(CCodes.RED, event.actor)
-                            + " " + ccolorize(CCodes.DARK_RED, ChatEmojis.LEFT_ARROW.c)
-                            + " " + ccolorize(CCodes.GREEN, event.target));
+                        clientMessage(cc(CCodes.RED, event.actor)
+                            + " " + cc(CCodes.DARK_RED, ChatEmojis.LEFT_ARROW.c)
+                            + " " + cc(CCodes.GREEN, event.target));
                     });
                 }
 

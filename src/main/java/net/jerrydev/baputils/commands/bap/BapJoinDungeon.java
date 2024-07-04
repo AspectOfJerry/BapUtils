@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static net.jerrydev.baputils.BapUtils.*;
-import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
 public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
@@ -38,9 +38,9 @@ public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
 
     @Override
     public String getUsage() {
-        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
-            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
-            + ccolorize(CCodes.YELLOW, " <floor>");
+        return cc(CCodes.YELLOW, "/bap " + this.getName())
+            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
+            + cc(CCodes.YELLOW, " <floor>");
     }
 
     @Override

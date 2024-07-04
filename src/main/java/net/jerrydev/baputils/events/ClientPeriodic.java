@@ -49,6 +49,8 @@ public class ClientPeriodic {
         }
         serverChatCd--;
 
+        // features
+
         if (player != null && player.getEntityWorld() != null) {
             Vec3 currentPos = new Vec3(player.posX, player.posY, player.posZ);
 
@@ -69,7 +71,7 @@ public class ClientPeriodic {
                 totalDistance += distance;
                 totalTicks += ticksElapsed;
                 // Adjust this to control the window size
-                int rollingAverageWindow = 4;
+                int rollingAverageWindow = 10;
                 if (totalTicks > rollingAverageWindow) {
                     rollingAverageSpeedMPS = totalDistance / ((double) totalTicks / 20);
                     totalDistance = 0;

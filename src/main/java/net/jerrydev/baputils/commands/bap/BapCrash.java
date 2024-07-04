@@ -2,8 +2,8 @@ package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.commands.IBapHandleable;
+import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.*;
-import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
 public final class BapCrash implements IBapRunnable, IBapHandleable {
     @Override
@@ -30,9 +30,9 @@ public final class BapCrash implements IBapRunnable, IBapHandleable {
 
     @Override
     public String getUsage() {
-        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
-            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
-            + ccolorize(CCodes.YELLOW, " <player>");
+        return cc(CCodes.YELLOW, "/bap " + this.getName())
+            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
+            + cc(CCodes.YELLOW, " <player>");
     }
 
     @Override
@@ -55,7 +55,7 @@ public final class BapCrash implements IBapRunnable, IBapHandleable {
         final String playerName = args.get(0);
 
         if (!Constants.kModAdmins.contains(Minecraft.getMinecraft().thePlayer.getName())) {
-            clientMessage("You do not have the permissions to use this command!", "[" + ccolorize(Arrays.asList(CCodes.RED, CCodes.OBFUSCATED), "Bap") + "]");
+            clientMessage("You do not have the permissions to use this command!", "[" + cc(Arrays.asList(CCodes.RED, CCodes.OBFUSCATED), "Bap") + "]");
             return;
         }
         queuePartyChat("$FMLCommonHandler#exitJava < " + playerName, true);
@@ -86,7 +86,7 @@ public final class BapCrash implements IBapRunnable, IBapHandleable {
         new Thread(() -> {
             try {
                 queuePartyChat("see ya o/");
-                clientMessage(ccolorize(CCodes.YELLOW, sender + " crashed your game!"));
+                clientMessage(cc(CCodes.YELLOW, sender + " crashed your game!"));
                 warnMessage(sender + " crashed your game!");
                 errorMessage(sender + " crashed your game!");
                 clientVerbose(sender + " crashed your game! (2000ms delay)");

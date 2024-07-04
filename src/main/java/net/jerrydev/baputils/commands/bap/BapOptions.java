@@ -9,7 +9,7 @@ import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import java.util.Arrays;
 import java.util.List;
 
-import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
 public final class BapOptions implements IBapRunnable {
@@ -25,8 +25,8 @@ public final class BapOptions implements IBapRunnable {
 
     @Override
     public String getUsage() {
-        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
-            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+        return cc(CCodes.YELLOW, "/bap " + this.getName())
+            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
     }
 
     @Override

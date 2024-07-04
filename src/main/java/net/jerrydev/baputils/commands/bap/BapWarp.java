@@ -3,10 +3,9 @@ package net.jerrydev.baputils.commands.bap;
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.commands.IBapHandleable;
+import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.core.BapSettingsGui;
-import net.jerrydev.baputils.utils.ChatUtils;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
@@ -16,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.*;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
 public final class BapWarp implements IBapRunnable, IBapHandleable {
@@ -31,8 +31,8 @@ public final class BapWarp implements IBapRunnable, IBapHandleable {
 
     @Override
     public String getUsage() {
-        return ChatUtils.ccolorize(CCodes.YELLOW, "/bap " + this.getName())
-            + ChatUtils.ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+        return cc(CCodes.YELLOW, "/bap " + this.getName())
+            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
     }
 
     @Override

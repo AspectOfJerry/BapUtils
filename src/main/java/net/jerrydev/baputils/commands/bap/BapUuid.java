@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.clientMessage;
-import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
 public final class BapUuid implements IBapRunnable {
     @Override
@@ -24,9 +24,9 @@ public final class BapUuid implements IBapRunnable {
 
     @Override
     public String getUsage() {
-        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
-            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
-            + ccolorize(CCodes.YELLOW, " <player>");
+        return cc(CCodes.YELLOW, "/bap " + this.getName())
+            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
+            + cc(CCodes.YELLOW, " <player>");
     }
 
     @Override
@@ -46,6 +46,6 @@ public final class BapUuid implements IBapRunnable {
             return;
         }
 
-        clientMessage(ccolorize(Arrays.asList(CCodes.GRAY, CCodes.ITALIC), "This command is currently under development... zzz..."));
+        clientMessage(cc(Arrays.asList(CCodes.GRAY, CCodes.ITALIC), "This command is currently under development... zzz..."));
     }
 }

@@ -13,11 +13,11 @@ import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.clientVerbose;
 import static net.jerrydev.baputils.utils.ChatUtils.CCodes;
-import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
 public class BapCommand extends CommandBase {
-    public static final List<String> commandAliases = Arrays.asList("baputils", "baputilities", "uwa", "pig", "tom", "fishing");
+    public static final List<String> commandAliases = Arrays.asList("baputils", "baputilities", "jerry", "pig", "tom", "fishing");
     public static final List<IBapRunnable> subcommands = Arrays.asList(
         new BapCache(),
         new BapColors(),
@@ -85,6 +85,6 @@ public class BapCommand extends CommandBase {
         }
 
         BapUtils.throwCommandException("Unknown subcommand: " + subcommand);
-        clientVerbose(ccolorize(CCodes.GRAY, "Use /bap help for a list of commands."));
+        clientVerbose(cc(CCodes.GRAY, "Use /bap help for a list of commands."));
     }
 }

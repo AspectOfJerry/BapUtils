@@ -9,14 +9,14 @@ import java.util.List;
 public final class Constants {
     public static final String kModId = "baputils";
     public static final String kModName = "BapUtils";
-    public static final String kModVersion = "0.8.5-beta";
+    public static final String kModVersion = "0.9.0-beta";
     public static final String kUserAgent = kModId + "/" + kModVersion;
     public static final String kGitHubRepo = "https://github.com/AspectOfJerry/BapUtils/";
     public static final String kGitHubIssues = kGitHubRepo + "issues";
     public static final String kModDocs = "https://bap.jerrydev.net";
 
     public static final List<String> kModAdmins = Arrays.asList("AspectOfJerry", "Tomassy");
-    public static final List<String> kModMvps = Arrays.asList(kModAdmins + "FailingPig", "Uwa_lovely", "FishingIsMagic", "NotQuittingYet");
+    public static final List<String> kModMvps = Arrays.asList(kModAdmins + "FailingPig", "FishingIsMagic");
 
     public static final String kClientPrefix = "[Bap]";
     public static final String kServerPrefix = "bap";

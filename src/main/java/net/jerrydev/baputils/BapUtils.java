@@ -25,8 +25,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 
 import static net.jerrydev.baputils.Constants.*;
-
-import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
 
 @Mod(modid = Constants.kModId, version = Constants.kModVersion, clientSideOnly = true)
@@ -68,7 +67,7 @@ public class BapUtils {
     public static void clientVerbose(String message) {
         if (BapSettingsGui.INSTANCE.getClientChatVerbose()) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-                ccolorize(CCodes.GRAY, kClientPrefix) + " " + ccolorize(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC), message)
+                cc(CCodes.GRAY, kClientPrefix) + " " + cc(Arrays.asList(CCodes.DARK_GRAY, CCodes.ITALIC), message)
             ));
         }
     }
@@ -121,19 +120,19 @@ public class BapUtils {
 
     public static void clientMessage(String message) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            ccolorize(CCodes.AQUA, kClientPrefix) + " " + message
+            cc(CCodes.AQUA, kClientPrefix) + " " + message
         ));
     }
 
     public static void clientMessage(String message, boolean addPrefix) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            addPrefix ? (ccolorize(CCodes.AQUA, kClientPrefix) + " " + message) : message
+            addPrefix ? (cc(CCodes.AQUA, kClientPrefix) + " " + message) : message
         ));
     }
 
     public static void clientMessage(String message, CCodes prefixColor) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            ccolorize(prefixColor, kClientPrefix) + " " + message
+            cc(prefixColor, kClientPrefix) + " " + message
         ));
     }
 
@@ -144,24 +143,24 @@ public class BapUtils {
     }
 
     public static void commandError(String message) {
-        clientMessage(ccolorize(CCodes.RED, message), CCodes.RED);
+        clientMessage(cc(CCodes.RED, message), CCodes.RED);
     }
 
     public static void errorMessage(String message) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            ccolorize(CCodes.RED, kClientPrefix + " Error: " + message)
+            cc(CCodes.RED, kClientPrefix + " Error: " + message)
         ));
         logger.log(Level.ERROR, message);
     }
 
     public static void warnMessage(String message) {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(
-            ccolorize(CCodes.GOLD, kClientPrefix + " Warning: " + message)
+            cc(CCodes.GOLD, kClientPrefix + " Warning: " + message)
         ));
         logger.log(Level.WARN, message);
     }
 
     public static void throwCommandException(String message) throws CommandException {
-        throw new CommandException(ccolorize(CCodes.RED, kClientPrefix) + ccolorize(CCodes.RED, " Error: " + message));
+        throw new CommandException(cc(CCodes.RED, kClientPrefix) + cc(CCodes.RED, " Error: " + message));
     }
 }

@@ -1,19 +1,13 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
-import net.jerrydev.baputils.utils.Ntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static net.jerrydev.baputils.BapUtils.clientMessage;
-import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
 public final class BapDev implements IBapRunnable {
     @Override
@@ -28,9 +22,9 @@ public final class BapDev implements IBapRunnable {
 
     @Override
     public String getUsage() {
-        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
-            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
-            + ccolorize(CCodes.YELLOW, " <...>");
+        return cc(CCodes.YELLOW, "/bap " + this.getName())
+            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()))
+            + cc(CCodes.YELLOW, " <...>");
     }
 
     @Override
@@ -45,7 +39,6 @@ public final class BapDev implements IBapRunnable {
 
     @Override
     public void run(List<String> args) {
-        // clientMessage(ccolorize(CCodes.GRAY, "zzz... nothing here..."));
-        AtomicCache.lastPartyLeader.set("AspectOfJerry");
+        clientMessage(cc(CCodes.GRAY, "zzz... nothing here..."));
     }
 }

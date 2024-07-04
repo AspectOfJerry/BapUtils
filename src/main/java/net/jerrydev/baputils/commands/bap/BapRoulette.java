@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.clientMessage;
-import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
 public class BapRoulette implements IBapRunnable {
     @Override
@@ -28,8 +28,8 @@ public class BapRoulette implements IBapRunnable {
 
     @Override
     public String getUsage() {
-        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
-            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+        return cc(CCodes.YELLOW, "/bap " + this.getName())
+            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
     }
 
     @Override
@@ -45,23 +45,25 @@ public class BapRoulette implements IBapRunnable {
     @Override
     public void run(List<String> args) throws CommandException {
         SecureRandom secureRandom;
+
         try {
             secureRandom = SecureRandom.getInstance("SHA1PRNG");
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+
         int randomInt = secureRandom.nextInt(10) + 1; // Generates an integer in the range [1, 10]
 
         if (randomInt == 10) {
-            clientMessage(ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "-")
-                + ccolorize(CCodes.DARK_RED, " You rolled: " + (randomInt) + ". Goodbye! ")
-                + ccolorize(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "-"));
+            clientMessage(cc(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "-")
+                + cc(CCodes.DARK_RED, " You rolled: " + (randomInt) + ". Goodbye! ")
+                + cc(Arrays.asList(CCodes.DARK_RED, CCodes.OBFUSCATED), "-"));
 
             Delay.setTimeout(() -> Minecraft.getMinecraft().shutdown(), 2000);
         } else {
-            clientMessage(ccolorize(CCodes.GOLD, "You rolled ")
-                + ccolorize(CCodes.YELLOW, String.valueOf(randomInt))
-                + ccolorize(CCodes.GOLD, " and are safe."));
+            clientMessage(cc(CCodes.GOLD, "You rolled ")
+                + cc(CCodes.YELLOW, String.valueOf(randomInt))
+                + cc(CCodes.GOLD, " and are safe."));
         }
     }
 }

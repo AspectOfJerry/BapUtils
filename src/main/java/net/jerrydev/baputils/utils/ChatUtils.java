@@ -9,11 +9,11 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.repeat;
 
 public final class ChatUtils {
-    public static String ccolorize(CCodes color, String message) {
+    public static String cc(CCodes color, String message) {
         return color.colorCode + message + CCodes.RESET.colorCode;
     }
 
-    public static String ccolorize(List<CCodes> colorsL, String message) {
+    public static String cc(List<CCodes> colorsL, String message) {
         final StringBuilder colors = new StringBuilder();
 
         for (final CCodes color : colorsL) {
@@ -23,23 +23,14 @@ public final class ChatUtils {
         return colors + message + CCodes.RESET.colorCode;
     }
 
-    public static String ccolorize(CCodes color, String message, boolean addReset) {
+    public static String cc(CCodes color, String message, boolean addReset) {
         return color.colorCode + message + (addReset ? CCodes.RESET.colorCode : "");
     }
 
     public static String autoTF(String str) {
-        if (str == null) {
-            return "null";
-        }
-
-        if (str.equalsIgnoreCase("true")) {
-            return ccolorize(CCodes.GREEN, str);
-        }
-        if (str.equalsIgnoreCase("false")) {
-            return ccolorize(CCodes.RED, str);
-        }
-
-        return ccolorize(CCodes.GRAY, str);
+        return str.replaceAll("true", cc(CCodes.GREEN, "true"))
+            .replaceAll("false", cc(CCodes.RED, "false"))
+            .replaceAll("null", cc(CCodes.GRAY, "null"));
     }
 
     /**

@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.clientMessage;
-import static net.jerrydev.baputils.utils.ChatUtils.ccolorize;
+import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
 public final class BapColors implements IBapRunnable {
     @Override
@@ -22,8 +22,8 @@ public final class BapColors implements IBapRunnable {
 
     @Override
     public String getUsage() {
-        return ccolorize(CCodes.YELLOW, "/bap " + this.getName())
-            + ccolorize(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+        return cc(CCodes.YELLOW, "/bap " + this.getName())
+            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
     }
 
     @Override
@@ -38,10 +38,10 @@ public final class BapColors implements IBapRunnable {
 
     @Override
     public void run(List<String> args) {
-        clientMessage(ccolorize(CCodes.GREEN, "Minecraft color codes:"));
+        clientMessage(cc(CCodes.GREEN, "Minecraft color codes:"));
 
         for (final CCodes c : CCodes.values()) {
-            clientMessage(c.colorCode.replaceAll("§", "&") + " " + ccolorize(c, c.toString()), false);
+            clientMessage(c.colorCode.replaceAll("§", "&") + " " + cc(c, c.toString()), false);
         }
     }
 }
