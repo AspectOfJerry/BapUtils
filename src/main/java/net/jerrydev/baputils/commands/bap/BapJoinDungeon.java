@@ -3,7 +3,7 @@ package net.jerrydev.baputils.commands.bap;
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
-import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.BaseCommand;
 import net.jerrydev.baputils.commands.IBapHandleable;
 import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.features.dungeons.CatacombsFloors;
@@ -22,7 +22,7 @@ import static net.jerrydev.baputils.BapUtils.*;
 import static net.jerrydev.baputils.utils.ChatUtils.cc;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
+public final class BapJoinDungeon extends BaseCommand implements IBapHandleable {
     private static Thread sleeper;
 
 
@@ -71,9 +71,16 @@ public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
 
         sendCommand("party list", true);
 
+        if (!AtomicCache.isInParty.get()) {
+            dout("Assuming solo run, joining dungeon");
+            return;
+        }
+
         if ((AtomicCache.lastPartyLeader.get() != null)
             && AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
-            commandError("You are already the party leader!");
+            dout("Already the party leader, joining dungeon");
+
+            sendCommand("joindungeon " + floor.commandCode);
             return;
         }
 
@@ -106,7 +113,7 @@ public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
         final Matcher matcher = pattern.matcher(cleanMessage);
 
         if (!matcher.find()) {
-            errorMessage("JoinDungeon no groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
+            errorMessage("JoinDungeon no Regex groups found. This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
             return;
         }
 
@@ -114,13 +121,15 @@ public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
         final CatacombsFloors floor = CatacombsFloors.getFloorByCode(floorName);
 
         if (floor == null) {
-            commandError("Unknown floor name of " + floorName + ".");
+            commandError("Unknown floor name of " + floorName + ". This is impossible! Please open a bug report at " + Constants.kGitHubIssues);
             return;
         }
 
         new Thread(() -> {
             try {
                 sendCommand("party list", true);
+
+                Thread.sleep(250);
 
                 if (AtomicCache.lastPartyLeader.get() == null) {
                     warnMessage("Couldn't find the latest party leader, what's going on!? Continuing execution anyway.");
@@ -174,7 +183,7 @@ public final class BapJoinDungeon implements IBapRunnable, IBapHandleable {
                     sendCommand("party list", true);
                 }
                 if (!AtomicCache.lastPartyLeader.get().equals(Minecraft.getMinecraft().thePlayer.getName())) {
-                    dout("We are not the party leader (+" + AtomicCache.lastPartyLeader + ", ignoring.");
+                    dout("We are not the party leader (" + AtomicCache.lastPartyLeader + "), ignoring.");
                     return;
                 }
 

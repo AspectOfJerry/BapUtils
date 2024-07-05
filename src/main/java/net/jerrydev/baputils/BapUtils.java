@@ -35,6 +35,9 @@ public class BapUtils {
     public static final Logger logger = LogManager.getLogger(kModId);
 
     public static final Snack snack = new Snack("Iris");
+    public static final Snack snack1 = new Snack("Iris");
+    public static final Snack snack2 = new Snack("Iris");
+
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {

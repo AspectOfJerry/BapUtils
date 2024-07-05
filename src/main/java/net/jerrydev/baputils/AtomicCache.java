@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * - Use AtomicBoolean.get() and AtomicBoolean.compareAndSet() for AtomicBoolean fields.
  * - Use AtomicReference.get() and AtomicReference.set() for AtomicReference fields.
  * <p>
- * By following this guideline, you can use this caching solution effectively in a multi-threaded
+ * By following this guideline, you can use this caching solution effectively in a multithreaded
  * environment without compromising data integrity.
  */
 public final class AtomicCache {
@@ -50,6 +50,7 @@ public final class AtomicCache {
     // dungeons
     @Nullable
     public static final AtomicBoolean inDungeon = new AtomicBoolean(false);
+    @Nullable
     public static final AtomicReference<CatacombsFloors> lastCatacombsFloor = new AtomicReference<>(null);
     @Nullable
     public static final AtomicReference<List<CausalRelation>> dungeonFails = new AtomicReference<>(new CopyOnWriteArrayList<>());

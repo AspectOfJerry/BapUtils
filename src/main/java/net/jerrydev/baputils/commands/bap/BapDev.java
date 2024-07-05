@@ -1,6 +1,6 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.BaseCommand;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 
 import java.util.Collections;
@@ -9,7 +9,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
-public final class BapDev implements IBapRunnable {
+public final class BapDev extends BaseCommand {
     @Override
     public String getName() {
         return "dev";

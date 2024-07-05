@@ -1,7 +1,7 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
-import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.BaseCommand;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.minecraft.command.CommandException;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
-public final class BapTrust implements IBapRunnable {
+public final class BapTrust extends BaseCommand {
     @Override
     public String getName() {
         return "trust";

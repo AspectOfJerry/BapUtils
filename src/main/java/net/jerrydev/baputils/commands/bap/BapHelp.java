@@ -2,10 +2,9 @@ package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.Constants;
 import net.jerrydev.baputils.commands.BapCommand;
-import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.BaseCommand;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.BapUtils.errorMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
-public final class BapHelp implements IBapRunnable {
+public final class BapHelp extends BaseCommand {
     @Override
     public String getName() {
         return "help";
@@ -26,13 +25,12 @@ public final class BapHelp implements IBapRunnable {
 
     @Override
     public String getUsage() {
-        return cc(CCodes.YELLOW, "/bap " + this.getName())
-            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+        return super.getUsage();
     }
 
     @Override
     public byte getRequiredParams() {
-        return 0;
+        return super.getRequiredParams();
     }
 
     @Override
@@ -56,20 +54,13 @@ public final class BapHelp implements IBapRunnable {
 
                 Thread.sleep(1500);
 
-                final List<String> bapAliases = new ArrayList<>(BapCommand.commandAliases);
-
-                bapAliases.set(bapAliases.indexOf("jerry"), cc(CCodes.AQUA, "pig"));
-                bapAliases.set(bapAliases.indexOf("pig"), cc(CCodes.LIGHT_PURPLE, "pig"));
-                bapAliases.set(bapAliases.indexOf("tom"), cc(CCodes.RED, "tom"));
-                bapAliases.set(bapAliases.indexOf("fishing"), cc(CCodes.GREEN, "fishing"));
-
                 clientMessage(cc(CCodes.GREEN, "Commands with their aliases (v" + Constants.kModVersion + "):"));
 
                 clientMessage(cc(CCodes.YELLOW, "/bap")
-                    + cc(CCodes.GOLD, "|" + String.join("|", bapAliases))
+                    + cc(CCodes.GOLD, "|" + String.join("|", BapCommand.commandAliases))
                     + "\n" + cc(CCodes.GRAY, "  - Displays the main GUI"));
 
-                for (final IBapRunnable subCmd : BapCommand.subcommands) {
+                for (final BaseCommand subCmd : BapCommand.subcommands) {
                     clientMessage(subCmd.getUsage() + "\n" + cc(CCodes.GRAY, "  - " + subCmd.getDesc()));
                 }
             } catch (final InterruptedException err) {

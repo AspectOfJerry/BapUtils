@@ -3,10 +3,9 @@ package net.jerrydev.baputils.commands.bap;
 import net.jerrydev.baputils.AtomicCache;
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
+import net.jerrydev.baputils.commands.BaseCommand;
 import net.jerrydev.baputils.commands.IBapHandleable;
-import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.core.BapSettingsGui;
-import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.minecraft.client.Minecraft;
 
 import java.util.Arrays;
@@ -14,10 +13,9 @@ import java.util.Collections;
 import java.util.List;
 
 import static net.jerrydev.baputils.BapUtils.*;
-import static net.jerrydev.baputils.utils.ChatUtils.cc;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
-public final class BapTakeover implements IBapRunnable, IBapHandleable {
+public final class BapTakeover extends BaseCommand implements IBapHandleable {
     @Override
     public String getName() {
         return "takeover";
@@ -30,13 +28,12 @@ public final class BapTakeover implements IBapRunnable, IBapHandleable {
 
     @Override
     public String getUsage() {
-        return cc(CCodes.YELLOW, "/bap " + this.getName())
-            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+        return super.getUsage();
     }
 
     @Override
     public byte getRequiredParams() {
-        return 0;
+        return super.getRequiredParams();
     }
 
     @Override

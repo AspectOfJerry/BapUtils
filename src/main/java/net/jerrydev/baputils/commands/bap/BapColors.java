@@ -1,6 +1,6 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.BaseCommand;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
-public final class BapColors implements IBapRunnable {
+public final class BapColors extends BaseCommand {
     @Override
     public String getName() {
         return "colors";
@@ -22,13 +22,12 @@ public final class BapColors implements IBapRunnable {
 
     @Override
     public String getUsage() {
-        return cc(CCodes.YELLOW, "/bap " + this.getName())
-            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+        return super.getUsage();
     }
 
     @Override
     public byte getRequiredParams() {
-        return 0;
+        return super.getRequiredParams();
     }
 
     @Override

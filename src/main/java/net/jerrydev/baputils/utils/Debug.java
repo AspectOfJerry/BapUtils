@@ -45,7 +45,7 @@ public final class Debug {
      * @param message Message to be printed to the client chat.
      */
     public static void dout(String message) {
-        logger.log(Level.INFO, "[DEBUG]" + message);
+        logger.log(Level.INFO, "[DEBUG] " + message);
 
         if (BapSettingsGui.INSTANCE.getClientChatDebug()) {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(cc(CCodes.DARK_GREEN, kClientPrefix) + " " + cc(CCodes.GRAY, message)));

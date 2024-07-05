@@ -1,6 +1,6 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.BaseCommand;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Delay;
 import net.minecraft.client.Minecraft;
@@ -15,7 +15,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
-public class BapRoulette implements IBapRunnable {
+public class BapRoulette extends BaseCommand {
     @Override
     public String getName() {
         return "roulette";
@@ -23,18 +23,17 @@ public class BapRoulette implements IBapRunnable {
 
     @Override
     public List<String> getAliases() {
-        return Collections.emptyList();
+        return super.getAliases();
     }
 
     @Override
     public String getUsage() {
-        return cc(CCodes.YELLOW, "/bap " + this.getName())
-            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+        return super.getUsage();
     }
 
     @Override
     public byte getRequiredParams() {
-        return 0;
+        return super.getRequiredParams();
     }
 
     @Override

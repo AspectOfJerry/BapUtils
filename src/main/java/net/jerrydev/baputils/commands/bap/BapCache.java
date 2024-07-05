@@ -1,7 +1,7 @@
 package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.AtomicCache;
-import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.BaseCommand;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.autoTF;
 import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
-public final class BapCache implements IBapRunnable {
+public final class BapCache extends BaseCommand {
     @Override
     public String getName() {
         return "cache";
@@ -31,12 +31,12 @@ public final class BapCache implements IBapRunnable {
 
     @Override
     public byte getRequiredParams() {
-        return 0;
+        return super.getRequiredParams();
     }
 
     @Override
     public String getDesc() {
-        return "Displays currently cached info";
+        return "Displays currently cached data";
     }
 
     @Override
