@@ -9,7 +9,7 @@ import java.util.List;
 public final class Constants {
     public static final String kModId = "baputils";
     public static final String kModName = "BapUtils";
-    public static final String kModVersion = "0.9.0";
+    public static final String kModVersion = "0.9.0-rc";
     public static final String kUserAgent = kModId + "/" + kModVersion;
     public static final String kGitHubRepo = "https://github.com/AspectOfJerry/BapUtils/";
     public static final String kGitHubIssues = kGitHubRepo + "issues";
