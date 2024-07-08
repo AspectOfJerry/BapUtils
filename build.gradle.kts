@@ -156,12 +156,12 @@ tasks.shadowJar {
     configurations = listOf(shadowImpl)
 
     // Relocate Kotlin standard library to avoid conflicts
-//    relocate("kotlin", "net.jerrydev.kotlin")
+    // relocate("kotlin", "net.jerrydev.kotlin")
 
-    // Relocate other dependencies as necessary
-    relocate("gg.essential.vigilance", "net.jerrydev.vigilance")
-    relocate("gg.essential.elementa", "net.jerrydev.elementa")
-    relocate("gg.essential.universalcraft", "net.jerrydev.universalcraft")
+    // Relocate other dependencies as necessary (LEAVE THE SEMICOLONS)
+    relocate("gg.essential:vigilance", "net.jerrydev.vigilance")
+    relocate("gg.essential:elementa", "net.jerrydev.elementa")
+    relocate("gg.essential:universalcraft", "net.jerrydev.universalcraft")
 }
 
 // Ensure Kotlin classes are compiled before the JAR is packaged
