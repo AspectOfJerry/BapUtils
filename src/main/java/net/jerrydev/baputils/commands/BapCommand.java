@@ -17,8 +17,8 @@ import static net.jerrydev.baputils.utils.ChatUtils.cc;
 import static net.jerrydev.baputils.utils.Debug.dout;
 
 public class BapCommand extends CommandBase {
-    public static final List<String> commandAliases = Arrays.asList("baputils", "baputilities", "jerry", "pig", "tom", "fishing");
-    public static final List<IBapRunnable> subcommands = Arrays.asList(
+    public static final List<String> commandAliases = Arrays.asList("baputils", "baputilities");
+    public static final List<BaseCommand> subcommands = Arrays.asList(
         new BapCache(),
         new BapColors(),
         new BapCrash(),
@@ -77,7 +77,7 @@ public class BapCommand extends CommandBase {
 
         final String subcommand = args[0].toLowerCase();
 
-        for (final IBapRunnable subCmd : subcommands) {
+        for (final BaseCommand subCmd : subcommands) {
             if (subCmd.getName().equals(subcommand) || subCmd.getAliases().contains(subcommand)) {
                 subCmd.run(Arrays.asList(args).subList(1, args.length)); // remove subcommand name from args
                 return;

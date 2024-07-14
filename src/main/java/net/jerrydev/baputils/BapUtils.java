@@ -2,7 +2,6 @@ package net.jerrydev.baputils;
 
 import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.core.BapSettingsGui;
-import net.jerrydev.baputils.events.ActionBarHandler;
 import net.jerrydev.baputils.events.ChatListener;
 import net.jerrydev.baputils.events.ClientPeriodic;
 import net.jerrydev.baputils.events.OnRenderGameOverlay;
@@ -48,7 +47,6 @@ public class BapUtils {
         // Register events
         Arrays.asList(
             new ChatListener(),
-            new ActionBarHandler(),
             new ClientPeriodic(),
             new OnRenderGameOverlay()
         ).forEach(MinecraftForge.EVENT_BUS::register);

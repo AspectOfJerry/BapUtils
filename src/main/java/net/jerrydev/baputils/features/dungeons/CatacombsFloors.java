@@ -21,6 +21,7 @@ public enum CatacombsFloors {
     MASTER7("m7", true, "MASTER_CATACOMBS_FLOOR_SEVEN", "MM Catacombs, Floor VII");
 
 
+    @Nullable
     public final String floorCode;
     public final boolean isMaster;
     public final String commandCode;

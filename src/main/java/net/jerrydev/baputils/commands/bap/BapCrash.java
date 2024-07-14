@@ -2,8 +2,8 @@ package net.jerrydev.baputils.commands.bap;
 
 import net.jerrydev.baputils.BapUtils;
 import net.jerrydev.baputils.Constants;
+import net.jerrydev.baputils.commands.BaseCommand;
 import net.jerrydev.baputils.commands.IBapHandleable;
-import net.jerrydev.baputils.commands.IBapRunnable;
 import net.jerrydev.baputils.utils.ChatUtils.CCodes;
 import net.jerrydev.baputils.utils.Debug;
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.*;
 import static net.jerrydev.baputils.utils.ChatUtils.cc;
 
-public final class BapCrash implements IBapRunnable, IBapHandleable {
+public final class BapCrash extends BaseCommand implements IBapHandleable {
     @Override
     public String getName() {
         return "crash";
@@ -37,7 +37,7 @@ public final class BapCrash implements IBapRunnable, IBapHandleable {
 
     @Override
     public byte getRequiredParams() {
-        return 0;
+        return super.getRequiredParams();
     }
 
     @Override

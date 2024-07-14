@@ -33,6 +33,26 @@ public class Ntity {
         return nearbyEntities;
     }
 
+    public static List<Entity> getNearbyMobs(EntityPlayer player, float range) {
+        if (player == null || player.getEntityWorld() == null) {
+            return null;
+        }
+
+        List<Entity> nearbyMobs = new ArrayList<>();
+
+        List<Entity> entities = player.getEntityWorld()
+            .getEntitiesWithinAABBExcludingEntity(player, player.getEntityBoundingBox().expand(range, range, range));
+
+        for (Entity entity : entities) {
+            if (entity instanceof EntityPlayer) {
+                continue;
+            }
+            nearbyMobs.add(entity);
+        }
+
+        return nearbyMobs;
+    }
+
     public static List<Boolean> checkLineOfSight(List<Entity> entities) {
         List<Boolean> lineOfSightResults = new ArrayList<>();
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;

@@ -1,6 +1,6 @@
 package net.jerrydev.baputils.commands.bap;
 
-import net.jerrydev.baputils.commands.IBapRunnable;
+import net.jerrydev.baputils.commands.BaseCommand;
 import net.jerrydev.baputils.core.BapSettingsGui;
 import net.jerrydev.baputils.utils.Ntity;
 import net.minecraft.client.Minecraft;
@@ -13,7 +13,7 @@ import java.util.List;
 import static net.jerrydev.baputils.BapUtils.clientMessage;
 import static net.jerrydev.baputils.utils.ChatUtils.*;
 
-public class BapRadar implements IBapRunnable {
+public class BapRadar extends BaseCommand {
     @Override
     public String getName() {
         return "radar";
@@ -26,25 +26,24 @@ public class BapRadar implements IBapRunnable {
 
     @Override
     public String getUsage() {
-        return cc(CCodes.YELLOW, "/bap " + this.getName())
-            + cc(CCodes.GOLD, "|" + String.join("|", this.getAliases()));
+        return super.getUsage();
     }
 
     @Override
     public byte getRequiredParams() {
-        return 0;
+        return super.getRequiredParams();
     }
 
     @Override
     public String getDesc() {
-        return "";
+        return "Prints a list of nearby entities";
     }
 
     @Override
     public void run(List<String> args) throws CommandException {
         final int scanRadius = BapSettingsGui.INSTANCE.getRadarScanRange();
 
-        clientMessage(cc(CCodes.GREEN, "Nearby entities within " + scanRadius + "m:"));
+        clientMessage(cc(CCodes.GREEN, "Entities within " + scanRadius + "m:"));
         List<Entity> nearbyEntities = Ntity.getNearbyEntities(Minecraft.getMinecraft().thePlayer, (float) scanRadius);
 
         if (BapSettingsGui.INSTANCE.getRadarLOSCheck()) {

@@ -9,7 +9,7 @@ import java.util.List;
 public final class Constants {
     public static final String kModId = "baputils";
     public static final String kModName = "BapUtils";
-    public static final String kModVersion = "0.9.0-beta";
+    public static final String kModVersion = "0.9.0-rc";
     public static final String kUserAgent = kModId + "/" + kModVersion;
     public static final String kGitHubRepo = "https://github.com/AspectOfJerry/BapUtils/";
     public static final String kGitHubIssues = kGitHubRepo + "issues";
@@ -21,7 +21,7 @@ public final class Constants {
     public static final String kClientPrefix = "[Bap]";
     public static final String kServerPrefix = "bap";
     public static final byte kChatDelayMs = 50;
-    public static final int kServerChatDelayMs = 200;
+    public static final int kServerChatDelayMs = 250;
 
     @RegExp
     public static final String kMcUserP = "[a-zA-Z0-9_]{2,16}";
@@ -35,7 +35,6 @@ public final class Constants {
     public static final String kCatacombsJoinP = "-+?\\n(" + kMcUserP + ") entered (.*, .*)!\\n-+?";
     public static final List<String> kPLeaderPs = Arrays.asList(
         "^Party Leader: (" + kMcUserP + ") ●$",
-        kCatacombsJoinP,
         "^The party was transferred to (" + kMcUserP + ") by (.*)$"
     );
     @RegExp

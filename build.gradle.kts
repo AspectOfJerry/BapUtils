@@ -9,7 +9,7 @@ plugins {
 
 // Constants
 group = "net.jerrydev"
-version = "0.9.0-beta"
+version = "0.9.0-rc"
 
 // val baseGroup = "net.jerrydev"
 val mcVersion: String = "1.8.9"
@@ -30,7 +30,7 @@ loom {
             // If you don't want mixins, remove these lines
             property("mixin.debug", "true")
             property("asmhelper.verbose", "true")
-            //arg("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
+            arg("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
             arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
             arg("--mixin", "mixins.$modid.json")
         }
@@ -75,6 +75,8 @@ dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
+
+    // do not change the next 3 build numbers unless you know what you're doing
     implementation("gg.essential:vigilance-1.8.9-forge:284")
     // vigilance dependencies
     implementation("gg.essential:elementa-1.8.9-forge:590")
@@ -82,9 +84,9 @@ dependencies {
     implementation("gg.essential:universalcraft-1.8.9-forge:211")
 
     compileOnly("gg.essential:essential-1.8.9-forge:12132+g6e2bf4dc5")
-    shadowImpl("gg.essential:loader-launchwrapper:1.2.1")
+    shadowImpl("gg.essential:loader-launchwrapper:1.2.2")
 
-    //shadowImpl("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22")
+//    shadowImpl("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.0")
 
     // If you don't want mixins, remove these lines
     shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
@@ -110,7 +112,7 @@ tasks.withType(Jar::class) {
         this["ForceLoadAsMod"] = "true"
 
         // If you don't want mixins, remove these lines
-        //this["TweakClass"] = "org.spongepowered.asm.launch.MixinTweaker"
+        // this["TweakClass"] = "org.spongepowered.asm.launch.MixinTweaker"
         this["TweakClass"] = "gg.essential.loader.stage0.EssentialSetupTweaker"
         this["MixinConfigs"] = "mixins.$modid.json"
     }
@@ -144,27 +146,29 @@ tasks.jar {
 }
 
 tasks.shadowJar {
-    destinationDirectory.set(layout.buildDirectory.dir("badjars")) // is this needed
+    // Set the output directory and naming for the JAR
     archiveBaseName.set("BapUtils")
     archiveClassifier.set("dev")
-    configurations = listOf(shadowImpl)
+    destinationDirectory.set(layout.buildDirectory.dir("libs"))
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
-    doLast {
-        configurations.forEach {
-            println("Copying jars into mod: ${it.files}")
-        }
-    }
+    // Specify configurations to include in the shadow JAR
+    configurations = listOf(shadowImpl)
 
-    println("Relocating packages to net.jerrydev.<>")
+    // Relocate Kotlin standard library to avoid conflicts
+    // relocate("kotlin", "net.jerrydev.kotlin")
+
+    // Relocate other dependencies as necessary (LEAVE THE SEMICOLONS)
     relocate("gg.essential:vigilance", "net.jerrydev.vigilance")
-    // vigilance dependencies
     relocate("gg.essential:elementa", "net.jerrydev.elementa")
-    // elementa dependencies
     relocate("gg.essential:universalcraft", "net.jerrydev.universalcraft")
-
-    // If you want to include other dependencies and shadow them, you can relocate them in here
-    fun relocate(name: String) = relocate(name, "$group.deps.$name")
 }
 
-tasks.assemble.get().dependsOn(tasks.remapJar)
+// Ensure Kotlin classes are compiled before the JAR is packaged
+tasks.build {
+    dependsOn(tasks.shadowJar)
+}
+
+tasks.assemble {
+    dependsOn(tasks.shadowJar)
+}

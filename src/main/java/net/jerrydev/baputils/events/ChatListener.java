@@ -14,9 +14,11 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,7 +89,7 @@ public class ChatListener {
                 return;
             }
 
-            final CatacombsFloors oldFloor = AtomicCache.lastCatacombsFloor.get();
+            @Nullable final CatacombsFloors oldFloor = AtomicCache.lastCatacombsFloor.get();
             final CatacombsFloors newFloor = CatacombsFloors.getFloorByChatName(matcher.group(2));
 
             if (newFloor == null) {
@@ -95,12 +97,12 @@ public class ChatListener {
                 return;
             }
 
-            if ((oldFloor != null) && newFloor.floorCode.equals(oldFloor.floorCode)) {
+            if ((oldFloor != null) && Objects.equals(newFloor.floorCode, oldFloor.floorCode)) {
                 dout("No changes for lastCatacombsFloor");
             } else {
                 AtomicCache.lastCatacombsFloor.set(newFloor);
                 dout("Updated lastCatacombsFloor to " + newFloor + " from " + oldFloor);
-                clientVerbose("Detected floor change from " + oldFloor.floorCode + " to " + newFloor.floorCode);
+                clientVerbose("Detected floor change from " + (oldFloor == null ? "None" : oldFloor.floorCode) + " to " + newFloor.floorCode);
             }
             return;
         }
@@ -113,7 +115,7 @@ public class ChatListener {
             final Matcher matcher = pattern.matcher(cleanMessage);
             if (matcher.find()) {
                 final String partyLeader = matcher.group(1);
-                //final String partyLeader = pattern.matcher(cleanMessage).group(1); // not separating matcher declaration bc y not
+                // final String partyLeader = pattern.matcher(cleanMessage).group(1); // not separating matcher declaration bc y not
 
                 AtomicCache.lastPartyLeader.set(partyLeader);
                 dout("Updated lastPartyLeader to " + partyLeader);

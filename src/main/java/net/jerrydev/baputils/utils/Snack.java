@@ -1,7 +1,10 @@
 package net.jerrydev.baputils.utils;
 
+/**
+ * Inside joke
+ */
 public class Snack {
-    String name;
+    private final String name;
 
     public Snack(String name) {
         this.name = name;
