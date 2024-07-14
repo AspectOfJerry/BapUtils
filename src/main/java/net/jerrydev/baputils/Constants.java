@@ -21,7 +21,7 @@ public final class Constants {
     public static final String kClientPrefix = "[Bap]";
     public static final String kServerPrefix = "bap";
     public static final byte kChatDelayMs = 50;
-    public static final int kServerChatDelayMs = 200;
+    public static final int kServerChatDelayMs = 250;
 
     @RegExp
     public static final String kMcUserP = "[a-zA-Z0-9_]{2,16}";

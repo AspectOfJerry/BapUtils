@@ -2,7 +2,6 @@ package net.jerrydev.baputils;
 
 import net.jerrydev.baputils.commands.BapCommand;
 import net.jerrydev.baputils.core.BapSettingsGui;
-import net.jerrydev.baputils.events.ActionBarHandler;
 import net.jerrydev.baputils.events.ChatListener;
 import net.jerrydev.baputils.events.ClientPeriodic;
 import net.jerrydev.baputils.events.OnRenderGameOverlay;
@@ -35,9 +34,6 @@ public class BapUtils {
     public static final Logger logger = LogManager.getLogger(kModId);
 
     public static final Snack snack = new Snack("Iris");
-    public static final Snack snack1 = new Snack("Iris");
-    public static final Snack snack2 = new Snack("Iris");
-
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
@@ -51,7 +47,6 @@ public class BapUtils {
         // Register events
         Arrays.asList(
             new ChatListener(),
-            new ActionBarHandler(),
             new ClientPeriodic(),
             new OnRenderGameOverlay()
         ).forEach(MinecraftForge.EVENT_BUS::register);

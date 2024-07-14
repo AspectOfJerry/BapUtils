@@ -43,7 +43,7 @@ public class BapRadar extends BaseCommand {
     public void run(List<String> args) throws CommandException {
         final int scanRadius = BapSettingsGui.INSTANCE.getRadarScanRange();
 
-        clientMessage(cc(CCodes.GREEN, "Nearby entities within " + scanRadius + "m:"));
+        clientMessage(cc(CCodes.GREEN, "Entities within " + scanRadius + "m:"));
         List<Entity> nearbyEntities = Ntity.getNearbyEntities(Minecraft.getMinecraft().thePlayer, (float) scanRadius);
 
         if (BapSettingsGui.INSTANCE.getRadarLOSCheck()) {

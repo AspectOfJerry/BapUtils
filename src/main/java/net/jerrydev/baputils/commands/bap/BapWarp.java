@@ -93,7 +93,7 @@ public final class BapWarp extends BaseCommand implements IBapHandleable {
                     return;
                 }
 
-                queuePartyChat("Warping the party in 2s.");
+                queuePartyChat("Warping the party in 2s");
                 Debug.dout("Sleep 2000ms " + Debug.getThreadInfoFormatted());
                 Thread.sleep(2000);
                 Debug.dout("Resume " + Debug.getThreadInfoFormatted());
