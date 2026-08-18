@@ -1,3 +1,8 @@
+# Archive note
+
+This project has been archived following Hypixel Skyblock's transition to the latest Minecraft versions (26+).
+You can find the new one here <https://github.com/jerryxfu/BapUtils>
+
 # BapUtils
 
 Welcome to BapUtils, a Hypixel Skyblock mod featuring a variety of random utility features.
